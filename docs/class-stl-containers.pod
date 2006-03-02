@@ -1,0 +1,900 @@
+=pod 
+
+=head1 NAME
+
+Class::STL::Containers - Perl extension for STL-like object management
+
+=head1 SYNOPSIS
+
+  use Class::STL::Containers;
+
+  # MyPrint Unary Function
+  {
+    package MyPrint;
+    use base qw(Class::STL::Utilities::UnaryFunction);
+    sub do
+    {
+      my $self = shift;
+      my $elem = shift;
+      print $self->arg(), $elem->data(), "\n";
+    }
+  }
+
+  # Deque container...
+  my $d = Class::STL::Containers::Deque->new();
+  $d->push_back($d->factory(data => 'first'));
+  $d->push_back($d->factory(data => 'second'));
+  $d->push_back($d->factory(data => 'third'));
+  $d->push_back($d->factory(data => 'fourth'));
+  $d->push_back($d->factory(data => 'fifth'));
+  $d->push_front($d->factory(data => 'seventh'));
+  $d->pop_front(); # remove element at front.
+  $d->pop_back(); # remove element at back.
+  $d->foreach(MyPrint->new('DATA:'));
+
+  # Algorithms -- find_if()
+  print "Element 'second' was ", $l1->find_if(MyFind->new("second")) ? 'found' : 'not found', "\n";
+
+  # MyFind Unary Function
+  {
+    package MyFind;
+    use base qw(Class::STL::Utilities::UnaryFunction);
+    sub do
+    {
+      my $self = shift;
+      my $elem = shift;
+      return $elem->data() eq $self->arg() ? $elem : 0;
+    }
+  }
+
+  # Algorithms -- foreach()
+  l1->foreach(MyPrint->new("DATA:"));
+
+  # Vector container...
+  my $v = Class::STL::Containers::Vector->new();
+  $v->push_back($v->factory(data => 'first'));
+  $v->push_back($v->factory(data => 'second'));
+  $v->push_back($v->factory(data => 'third'));
+  $v->push_back($v->factory(data => 'fourth'));
+  $v->push_back($v->factory(data => 'fifth'));
+  
+  my $e = $v->at(0); # return pointer to first element.
+  $e->print(MyPrint->new('Element-0:')); # Element-0:first
+  $e = $v->at($v->size()-1); # return pointer to last element.
+  $e->print(MyPrint->new('Element-last:')); # Element-last:fifth
+  $e = $v->at(2); # return pointer to 3rd element (idx=2).
+  $e->print(MyPrint->new('Element-2:')); # Element-2:third
+
+  # Priority Queue
+  my $p = Class::STL::Containers::PriorityQueue->new();
+  $p->push($p->factory(priority => 10, data => 'ten'));
+  $p->push($p->factory(priority => 2, data => 'two'));
+  $p->push($p->factory(priority => 12, data => 'twelve'));
+  $p->push($p->factory(priority => 3, data => 'three'));
+  $p->push($p->factory(priority => 11, data => 'eleven'));
+  $p->push($p->factory(priority => 1, data => 'one'));
+  $p->push($p->factory(priority => 1, data => 'one-2'));
+  $p->push($p->factory(priority => 12, data => 'twelve-2'));
+  $p->push($p->factory(priority => 20, data => 'twenty'), $p->factory(priority => 0, data => 'zero'));
+  print "\$p->size()=", $p->size(), "\n";
+  $p->top()->print(MyPrint->new('$p->top:'));
+  $p->top()->priority(7); # change priority for top element.
+  $p->refresh(); # refresh required after priority change.
+  $p->pop(); # remove element with highest priority.
+  $p->top()->print(MyPrint->new('$p->top:'));
+  $p->foreach(MyPrint->new('DATA:'));
+
+  # Algorithms -- remove_if()
+  $v->remove_if($v->equal_to($v->back())); # remove element equal to back() -- ie remove last element.
+  $v->remove_if($v->matches('^fi')); # remove all elements that match reg-ex '^fi'
+
+
+  # Sort list according to elements cmp() function
+  $v->sort();
+
+  # Swap two elements
+  $v->swap($v->front(), $v->back());
+
+  # Queue containers -- FIFO
+  my $v = Class::STL::Containers::Queue->new();
+  $v->push($v->factory(data => 'first'));
+  $v->push($v->factory(data => 'second'));
+  $v->push($v->factory(data => 'third'));
+  $v->push($v->factory(data => 'fourth'));
+  $v->push($v->factory(data => 'fifth'));
+  $v->back()->print(MyPrint->new('Back:')); # Back:fifth
+  $v->front()->print(MyPrint->new('Front:')); # Front:first
+  $v->pop(); # pop element first in
+  $v->push($v->factory(data => 'sixth'));
+  $v->back()->print(MyPrint->new('Back:')); # Back:sixth
+  $v->front()->print(MyPrint->new('Front:')); # Front:second
+
+  # Iterators
+  my $i = $v->iterator()->first();
+  while (!$i->at_end())
+  {
+    $i->p_element()->print(MyPrint->new('DATA:'));
+    $i->next();
+  }
+
+  # Iterators -- reverse_iterator
+  my $ri = Class::STL::Iterators::Reverse->new($v->iterator())->first();
+  while (!$ri->at_end())
+  {
+    $ri->p_element()->print(MyPrint->new('DATA:'));
+    $ri->next();
+  }
+
+  # Compare iterators
+  print '$ri->first() and $p->iterator()->last() are ', $ri->eq($p->iterator()) ? 'equal' : 'not equal', "\n";
+  	# ...equal
+
+  # Iterator traversal
+  my $i2 = Class::STL::Iterator->new($p->begin());
+  while ($i2->le($p->end())) # end() points to last element (unlike STL-end which points to AFTER last element)
+  {
+    $i2->p_element()->print(MyPrint->new('DATA:'));
+    $i2->next();
+  }
+
+=head1 DESCRIPTION
+
+These modules provide object container management with a framework similar to STL 
+(Standard Template Library from C++).  The usual container types are provided (list, 
+vector, deque, queue, stack, priority_queue and also, tree) together with some basic 
+algorithms (find_if, remove_if, foreach) and a very basic iterator type. This package is usefull
+to get up and going quickly with Perl OO program development.
+Please note that the argument and return types may vary from the STL specification.
+
+=cut --------------------------------------------------------------------------------
+
+=head1 F<CLASS Class::STL::Containers::Abstract>
+
+This is the I<abstract> base class for all other container classes. Objects should not be constructed directly from this class, but from any of the derived container classes. Common functions are documented here.
+
+=head2 Extends I<Class::STL::Element,  Class::STL::Algorithms>
+
+=over
+
+=item F<new>
+
+I<container-ref new ( [ option-hash ] );>
+
+I<container-ref new ( container-ref );>
+
+I<container-ref new ( element [, ...] );>
+
+
+The I<new> function constructs an object for this class and returns a blessed reference to this object. All forms accept an optional I<hash> containing any of the following key-value pairs: I<name>, I<element_type>.
+
+The second form is a I<copy constructor>. It requires another container reference as the argument and will return a copy of this container.
+
+The third for requires one or more element refs as arguments. These elements will be copied into the newly constructed container.
+
+
+=item F<factory>
+
+I<element-ref factory ( %attributes );>
+
+The I<factory> function constructs a new element object and returns a reference to this. The type of object created is as specified by the I<element_type> container attribute. The I<attributes> argument consists of a hash and is passed on to the element class I<new> function. Override this function if you want to avoid the 'eval' call.
+
+
+=item F<swap>
+
+I<void swap ( element-1, element-2 );>
+
+This function will swap the positions within the container of the two elements specified in the aruments.
+
+
+=item F<erase>
+
+I<void erase ( element [, ...] );>
+
+The I<erase> function requires one or more elements as arguments. It will look for these elements within the container and delete them from the container.
+
+
+=item F<pop>
+
+I<void pop ( );>
+
+The I<pop> function requires no arguments. It will remove the element at the I<top> of the container.
+
+
+=item F<push>
+
+I<void push ( element [, ...] );>
+
+The I<push> function requires one or more arguments consisting of elements. This will append the element(s) to the end of the container.
+
+
+=item F<clear>
+
+I<void clear ( );>
+
+This function will delete all the elements from the container.
+
+
+=item F<begin>
+
+I<iterator-ref begin ( );>
+
+The I<begin> function sets the container's iterator to point to the I<first> element and returns a reference to this itererator.
+
+
+=item F<end>
+
+I<iterator-ref end ( );>
+
+The I<end> function sets the container's iterator to point to the I<last> element and returns a reference to this itererator.
+
+
+=item F<rbegin>
+
+I<iterator-ref rbegin ( );>
+
+The I<rbegin> function is the reverse of the I<begin> function -- it sets the container's iterator to point to the I<last> element and returns a reference to this itererator.
+
+
+=item F<rend>
+
+I<iterator-ref rend ( );>
+
+The I<rend> function is the reverse of the I<end> function -- it sets the container's iterator to point to the first element and returns a reference to this itererator.
+
+
+=item F<size>
+
+I<int size ( );>
+
+The I<size> function requires no arguments. It will return an integer value containing the number of elements in the container.
+
+
+=item F<empty>
+
+I<bool empty ( );>
+
+This function returns I<'1'> if the container is empty (ie. contains no elements), and I<'0'> if the container contains one or more elements.
+
+
+=item F<to_array>
+
+I<array to_array ( );>
+
+The I<to_array> function returns an array containing the elements (references) from the container.
+
+
+=item F<eq>
+
+I<bool eq ( container-ref );>
+
+The I<eq> function compares the I<elements> in this container with the I<elements> in the container refered to by the argument I<container-ref>. The elements are compared using the element I<eq> function. The function will return I<'1'> if both containers contain the same number of elements and all elements in one container are equal to, and in the same order as, all elements in the I<container-ref> container.
+
+
+=item F<ne>
+
+I<bool ne ( container-ref );>
+
+Inverse of I<eq> function.
+
+
+=item F<gt>
+
+I<bool gt ( container-ref );>
+
+Similar to I<eq> function except comparison done for I<greater-than> using elements I<gt> function.
+
+
+=item F<ge>
+
+I<bool ge ( container-ref );>
+
+Similar to I<eq> function except comparison done for I<greater-than-or-equal> using elements I<ge> function.
+
+
+=item F<lt>
+
+I<bool lt ( container-ref );>
+
+Similar to I<eq> function except comparison done for I<less-than> using elements I<lt> function.
+
+
+=item F<le>
+
+I<bool le ( container-ref );>
+
+Similar to I<eq> function except comparison done for I<less-than-or-equal> using elements I<le> function.
+
+
+=back
+
+=cut --------------------------------------------------------------------------------
+
+=head1 F<CLASS Class::STL::Containers::List>
+
+A list container can have elements pushed and popped from both ends, and also inserted at any location. Access to the elements is sequential.
+
+
+=head2 Extends I<Class::STL::Containers::Deque>
+
+=over
+
+=item F<reverse>
+
+I<void reverse ( );>
+
+The I<reverse> function will alter the order of the elements in list by reversing their order.
+
+
+=item F<sort>
+
+I<void sort ( );>
+
+The I<sort> function will alter the order of the elements in list by sorting the elements. Sorting is done based on the elements I<cmp> comparison function.
+
+
+=back
+
+=head2 Example
+
+=begin
+
+  use Class::STL::Containers;
+
+  # Construct the list object:
+  my $list = Class::STL::Containers::List->new(); 
+
+  # Append elements to the list; 
+  # Elements are constructed with the factory function:
+  $list->push_back($list->factory(data => 'first')); 
+  $list->push_back($list->factory(data => 'second')); 
+  $list->push_back($list->factory(data => 'third'));
+  $list->push_back($list->factory(data => 'fourth'));
+  $list->push_back($list->factory(data => 'fifth'));
+
+  # Display the number of elements in the list:
+  print "Size:", $list->size(), "\n"; # Size:5
+
+  # Reverse the order of elements in the list:
+  $list->reverse(); 
+
+  # Display the contents of the element at the front of the list:
+  $list->front()->print(MyPrint->new('front:')); 
+
+  # Display the contents of the element at the back of the list:
+  $list->back()->print(MyPrint->new('back:')); 
+
+  # Display the contents of all the elements in the list:
+  $list->foreach(MyPrint->new('DATA:'));
+
+  # Return an array of all elements-refs:
+  my @arr = $l1->to_array(); 
+
+  # Delete all elements from list:
+  $list->clear(); 
+
+  print "Size:", $list->size(), "\n"; # Size:0
+  print '$list container is ', 
+    $list->empty() ? 'empty' : 'not empty', "\n"; 
+
+  # MyPrint Unary Function Object:
+  {
+    package MyPrint;
+    use base qw(Class::STL::Utilities::UnaryFunction);
+    sub do
+    {
+      my $self = shift;
+      my $elem = shift;
+      print $self->arg(), $elem->data(), "\n";
+    }
+  }
+
+=end
+
+
+=cut --------------------------------------------------------------------------------
+
+=head1 F<CLASS Class::STL::Containers::Vector>
+
+A vector allows for random access to its elements via the I<at> function.
+
+
+=head2 Extends I<Class::STL::Containers::Abstract>
+
+=over
+
+=item F<push_back>
+
+I<void push_back ( element [, ...] );>
+
+The I<push_back> function requires one or more arguments consisting of elements. This will append the element(s) to the end of the I<vector>.
+
+
+=item F<pop_back>
+
+I<void pop_back ( );>
+
+The I<pop_back> function requires no arguments. It will remove the element at the I<top> of the I<vector>.
+
+
+=item F<back>
+
+I<element-ref back ( );>
+
+The I<back> function requires no arguments. It returns a reference to the element at the I<back> of the I<vector>.
+
+
+=item F<front>
+
+The I<front> function requires no arguments. It returns a reference to the element at the I<front> of the I<vector>.
+
+
+
+=item F<at>
+
+I<element-ref at ( index );>
+
+The I<at> function requires an I<index> argument. This function will return a reference to the element at the location within the I<vector> specified by the argument I<index>.
+
+=back
+
+
+=cut --------------------------------------------------------------------------------
+
+=head1 F<CLASS Class::STL::Containers::Deque>
+
+A double-ended container. Elements can be I<pushed> and I<popped> at both ends.
+
+
+=head2 Extends I<Class::STL::Containers::Vector>
+
+=over
+
+=item F<push_front>
+
+I<void push_front ( element [, ...] );>
+
+The I<push_front> function requires one or more arguments consisting of elements. This will insert the element(s) to the front of the I<deque>.
+
+
+=item F<pop_front>
+
+I<void pop_front ( );>
+
+The I<pop_front> function requires no arguments. It will remove the element at the I<front> of the I<deque>.
+
+
+=back
+
+
+=cut --------------------------------------------------------------------------------
+
+=head1 F<CLASS Class::STL::Containers::Queue>
+
+A queue is a FIFO (first-in-first-out) container. Elements can be I<pushed> at the back and I<popped> from the front.
+
+
+=head2 Extends I<Class::STL::Containers::Abstract>
+
+=over
+
+=item F<push>
+
+I<void push ( element [, ...] );>
+
+The I<push> function requires one or more arguments consisting of elements. This will append the element(s) to the back of the I<queue>.
+
+
+=item F<pop>
+
+I<void pop ( );>
+
+The I<pop> function requires no arguments. It will remove the element at the I<front> of the I<queue>. This is the earliest inserted element.
+
+
+=item F<back>
+
+I<element-ref back ( );>
+
+The I<back> function requires no arguments. It returns a reference to the element at the I<back> of the I<queue>. This is the element last inserted.
+
+
+=item F<front>
+
+I<element-ref front ( );>
+
+The I<front> function requires no arguments. It returns a reference to the element at the I<front> of the I<queue>. This is the earliest inserted element.
+
+
+=back
+
+
+
+=cut --------------------------------------------------------------------------------
+
+=head1 F<CLASS Class::STL::Containers::Stack>
+
+A stack is a LIFO (last-in-first-out) container. Elements can be I<pushed> at the top and I<popped> from the top.
+
+
+=head2 Extends I<Class::STL::Containers::Abstract>
+
+=over
+
+=item F<push>
+
+I<void push ( element [, ...] );>
+
+The I<push> function requires one or more arguments consisting of elements. This will append the element(s) to the top of the I<stack>.
+
+
+=item F<pop>
+
+I<void pop ( );>
+
+The I<pop> function requires no arguments. It will remove the element at the I<top> of the I<stack>. This is the last inserted element.
+
+
+=item F<top>
+
+I<element-ref top ( );>
+
+The I<top> function requires no arguments. It returns a reference to the element at the I<top> of the I<stack>. This is the last inserted element.
+
+
+=back
+
+
+=cut --------------------------------------------------------------------------------
+
+=head1 F<CLASS Class::STL::Containers::Tree>
+
+A tree is a hierarchical structure. Each element within a I<tree> container can be either a simple element or another container object. The overridden I<to_array> function will traverse the tree and return an array consisting of all the I<nodes> in the tree.
+
+
+=head2 Extends I<Class::STL::Containers::Deque>
+
+=over
+
+=item F<to_array>
+
+I<array to_array ( );>
+
+The overridden I<to_array> function will traverse the tree and return an array consisting of all the element I<nodes> in the tree container.
+
+
+=back
+
+=head2 Examples
+
+=begin
+
+  # Tree containers; construct two trees from 
+  # previously construced containers:
+  my $t1 = Class::STL::Containers::Tree->new($l1);
+  my $t2 = Class::STL::Containers::Tree->new($l2);
+
+  # Construct a third tree:
+  my $tree = Class::STL::Containers::Tree->new(); 
+
+  # Add other tree containers as elements to this tree:
+  $tree->push_back($tree->factory($t1));
+  $tree->push_back($tree->factory($t2));
+
+  # Search for element ('pink') in tree:
+  if (my $f = $tree->find_if(MyFind->new("pink"))) {
+    print "FOUND:", $f->data(), "\n";
+  } else {
+    print "'pink' NOT FOUND", "\n";
+  }
+
+  # Traverse tree returning all element nodes:
+  my @tarr = $tree->to_array(); 
+
+=end
+
+
+=cut --------------------------------------------------------------------------------
+
+=head1 F<CLASS Class::STL::Containers::PriorityQueue>
+
+A priority queue will maintain the order of the elements based on their priority, with highest priority elements at the top of the container. Elements contained in a priority queue must be of the type, or derived from, I<Class::STL::Element::Priority>. This element type contains the attribute I<priority>, and needs to have its value set whenever an object of this element type is constructed.
+
+
+=head2 Extends I<Class::STL::Containers::Vector>
+
+
+=head2 Element Type I<Class::STL::Element::Priority>
+
+
+=over
+
+=item F<push>
+
+I<void push ( element [, ...] );>
+
+The I<push> function requires one or more arguments consisting of elements. This will place the element(s) in the queue according to their priority value.
+
+
+=item F<pop>
+
+I<void pop_back ( );>
+
+The I<pop> function requires no arguments. It will remove the element with the highest priority.
+
+
+=item F<top>
+
+I<element-ref top ( );>
+
+The I<top> function requires no arguments. It returns a reference to the element with the highest priority.
+
+
+=item F<refresh>
+
+I<void refresh ( );>
+
+The I<refresh> function should be called whenever the priority value for an element has been order. This will update the ordering of the elements if required.
+
+
+=back
+
+=cut --------------------------------------------------------------------------------
+
+=head1 F<CLASS Class::STL::Algorithms>
+
+This module contains various algorithm functions.
+
+Each of these functions require a single argument consisting of a I<unary-function-object>. This object must be derived from I<Class::STL::Utilities::UnaryFunction>. Standard utility functions are provided in the I<Class::STL::Utilities> module. A I<unary-function-object> contains the function I<do>. This I<do> function will, in turn, be called by the algorithm for each element traversed. The algorithm will pass the element reference as the argument to the I<do> function. 
+
+
+=head2 Extends I<Class::STL::Utilities>
+
+=over
+
+=item F<remove_if>
+
+The I<remove_if> function will traverse the container (or all element nodes in the case of a I<tree> container) and remove the elements that evaluate to true by the argument I<unary-function-object> I<do> function.  
+
+
+=item F<find_if>
+
+The I<find_if> function will traverse the container (or all element nodes in the case of a I<tree> container) and return the first element that evaluate to true by the argument I<unary-function-object> I<do> function.  
+
+
+=item F<foreach>
+
+The I<find_if> function will traverse the container (or all element nodes in the case of a I<tree> container) and call the I<unary-function-object> I<do> function for each element.  
+
+=back
+
+=head2 Examples
+
+=begin
+
+  # Display all elements in list container '$list' 
+  # using unary-function-object 'MyPrint' and algorithm 'foreach':
+  $list->foreach(MyPrint->new('DATA:'));
+
+  # Algorithms -- remove_if()
+  # Remove element equal to back() -- ie remove last element:
+  $list->remove_if($list->equal_to($list->back())); 
+
+  # Remove all elements that match regular expression '^fi':
+  $list->remove_if($list->matches('^fi')); 
+
+  # Search for element ('pink') in tree:
+  if (my $f = $tree->find_if(MyFind->new("pink"))) {
+    print "FOUND:", $f->data(), "\n";
+  } else {
+    print "'pink' NOT FOUND", "\n";
+  }
+
+  # MyPrint unary function object:
+  {
+    package MyPrint;
+    use base qw(Class::STL::Utilities::UnaryFunction);
+    sub do
+    {
+      my $self = shift;
+      my $elem = shift;
+      print $self->arg(), $elem->data(), "\n";
+    }
+  }
+
+  # MyFind Unary function object:
+  {
+    package MyFind;
+    use base qw(Class::STL::Utilities::UnaryFunction);
+    sub do
+    {
+      my $self = shift;
+      my $elem = shift;
+      return $elem->data() eq $self->arg() ? $elem : 0;
+    }
+  }
+
+=end
+
+=cut --------------------------------------------------------------------------------
+
+=head1 F<CLASS Class::STL::Utilities>
+
+This module contains various utility function objects. Each object will be constructed automatically when the function name (eg. 'equal_to') is used. Each of the function objects are derived from either I<Class::STL::Utilities::UnaryFunction> or I<Class::STL::Utilities::BinaryFunction>. These classes contain the function I<do> which requires one argument consisting of an element reference. Any value (including I<void>) can be returned. The I<unary> objects contain the attribute I<arg>, and the I<binary> objects contain the attributes I<arg1> and I<arg2>. These attributes are initialised when the function object is constructed and are available to the function object.
+
+=over
+
+=item F<equal_to>
+
+This function-object will return the result of I<equality> between its argument and the object I<arg> attribute's value. The element's I<eq> function is used for the comparison.
+
+
+=item F<not_equal_to>
+
+This function is the inverse of I<equal_to>.
+
+=item F<greater>
+
+This function-object will return the result of I<greater-than> comparison between its argument and the object I<arg> attribute's value. The element's I<gt> function is used for the comparison.
+
+
+=item F<greater_equal>
+
+This function-object will return the result of I<greater-than-or-equal> comparison between its argument and the object I<arg> attribute's value. The element's I<ge> function is used for the comparison.
+
+
+=item F<less>
+
+This function-object will return the result of I<less-than> comparison between its argument and the object I<arg> attribute's value. The element's I<lt> function is used for the comparison.
+
+
+=item F<less_equal>
+
+This function-object will return the result of I<less-than-or-equal> comparison between its argument and the object I<arg> attribute's value. The element's I<le> function is used for the comparison.
+
+
+=item F<compare>
+
+This function-object will return the result of I<compare> comparison between its argument and the object I<arg> attribute's value. The element's I<cmp> function is used for the comparison.
+
+
+=item F<matches>
+
+This function-object will return the result of regular expression comparison between its argument and the object I<arg> attribute's (regular expression) value. The element's I<match> function is used for the comparison.
+
+=back
+
+
+
+=cut --------------------------------------------------------------------------------
+
+=head1 F<CLASS Class::STL::Iterators>
+
+This module contains the iterator classes. 
+
+=over
+
+=item F<new>
+
+
+=item F<first>
+
+
+=item F<next>
+
+
+=item F<last>
+
+
+=item F<prev>
+
+
+=item F<set>
+
+
+=item F<jump>
+
+
+=item F<at_end>
+
+
+=item F<eq>
+
+
+=item F<ne>
+
+
+=item F<lt>
+
+
+=item F<le>
+
+
+=item F<gt>
+
+
+=item F<ge>
+
+
+=item F<cmp>
+
+
+=back
+
+=head2 Examples
+
+=begin
+
+  # Return iterator pointing to first element:
+  my $i = $v->iterator()->first();
+
+  # Iterate all elements in container:
+  while (!$i->at_end())
+  {
+    $i->p_element()->print(MyPrint->new('DATA:'));
+    $i->next();
+  }
+
+  # Reverse Iterator:
+  my $ri = Class::STL::Iterators::Reverse->new($v->iterator())->first();
+  while (!$ri->at_end())
+  {
+    $ri->p_element()->print(MyPrint->new('DATA:'));
+    $ri->next();
+  }
+
+  # Compare iterators
+  print '$ri->first() and $p->iterator()->last() are ', 
+    $ri->eq($p->iterator()) ? 'equal' : 'not equal', "\n";
+  	# ...equal
+
+  # Iterator traversal
+  my $i2 = Class::STL::Iterator->new($p->begin());
+
+  # end() points to last element 
+  # (unlike STL-end which points to AFTER last element)
+  while ($i2->le($p->end()))
+  {
+    $i2->p_element()->print(MyPrint->new('DATA:'));
+    $i2->next();
+  }
+ 
+=end
+
+=cut --------------------------------------------------------------------------------
+
+=head1 SEE ALSO
+
+This framwork mimicks the C++/STL Container-Iterators-Algorithms library.
+
+=cut --------------------------------------------------------------------------------
+
+=head1 AUTHOR
+
+m gaffiero, E<lt>gaffie@users.sourceforge.net<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2006 by Mario Gaffiero
+
+
+This file is part of Class::STL::Containers(TM).
+
+
+Class::STL::Containers is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+
+Class::STL::Containers is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+
+You should have received a copy of the GNU General Public License
+along with Class::STL::Containers; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+
+=cut

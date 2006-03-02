@@ -1,0 +1,40 @@
+Class-STL-Containers version 0.01
+=================================
+
+These modules provide object container management with a framework similar to STL 
+(Standard Template Library from C++).  The usual container types are provided (list, 
+vector, deque, queue, stack, priority_queue and also, tree) together with some basic 
+algorithms (find_if, remove_if, foreach) and a very basic iterator type. This package is usefull
+to get up and going quickly with Perl OO program development.
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+DEPENDENCIES
+
+COPYRIGHT AND LICENCE
+
+Copyright (C) 2006 by Mario Gaffiero
+
+This file is part of Class::STL::Containers(TM).
+
+Class::STL::Containers is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+Class::STL::Containers is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Class::STL::Containers; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
