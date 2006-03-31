@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# vim:ts=4 sw=4
 # ----------------------------------------------------------------------------------------------------
 #  Name		: Class::STL::Element.pm
 #  Created	: 22 February 2006
@@ -24,61 +25,54 @@
 # ----------------------------------------------------------------------------------------------------
 # Modification History
 # When          Version     Who     What
+# 14/03/2006	0.02		mg		Fixed Class::STL::Element->new() function.
 # ----------------------------------------------------------------------------------------------------
 # TO DO:
 # ----------------------------------------------------------------------------------------------------
 require 5.005_62;
 use strict;
-use attributes qw(get reftype);
 use warnings;
 use vars qw($VERSION $BUILD);
 use lib './lib';
+use Class::STL::DataMembers;
 $VERSION = '0.01';
-$BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
+$BUILD = 'Monday March 27 21:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Element;
 	use UNIVERSAL qw(isa can);
-	sub BEGIN
-	{
-		our $this = __PACKAGE__;
-		our @attr = qw( data data_type );
-		eval ("sub attr { my \$self = shift; return (qw(@{[ join(' ', @attr) ]})); } ");
-		foreach (@attr) {
-			eval (" sub $_ { my \$self = shift; \$self->{$this}->{@{[ uc($_) ]}} = shift if (\@_);
-			return \$self->{$this}->{@{[ uc($_) ]}}; } ");
-		}
-	}
+	sub BEGIN { Class::STL::DataMembers->new(qw( data data_type )); }
 	sub new
 	{
 		my $proto = shift;
 		my $class = ref($proto) || $proto;
 		my $self = {};
 		bless($self, $class);
-		my @params;
-		foreach (@_)
+		$self->data_type('string');
+		while (@_)
 		{
-			if (ref eq 'ARRAY')
-			{
-				CORE::push(@params, $_);
+			my $p = shift;
+			if (!ref($p) && $p eq 'data') {
+				$self->data(shift);
 			}
-			elsif (ref && $_->isa(__PACKAGE__)) # copy ctor
-			{
-				CORE::push(@params, 'data', $_->data(), 'data_type', $_->data_type());
+			elsif (!ref($p) && $p eq 'data_type') {
+				$self->data_type(shift);
 			}
-			elsif (ref)
-			{
-				CORE::push(@params, 'data', $_);
+			elsif (ref($p) eq 'ARRAY') {
+				$self->data($p);
 			}
-			else
+			elsif (ref($p) && $p->isa(__PACKAGE__)) # copy ctor
 			{
-				CORE::push(@params, $_);
+				$self->data($p->data());
+				$self->data_type($p->data_type());
 			}
 		}
-		my %p = @params;
-		$self->data($p{'data'});
-		$self->data_type($p{'data_type'} || 'string');
 		return $self;
+	}
+	sub clone
+	{
+		my $self = shift;
+		return $self->new($self);
 	}
 	sub eq # (element)
 	{
@@ -141,18 +135,18 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		my $other = shift;
 		return $self->eq($other) ? 0 : $self->lt($other) ? -1 : 1;
 	}
-	sub match # (element)
-	{
-		my $self = shift;
-		my $regex = shift;
-		return $self->data() =~ /@{[ $regex ]}/;
-	}
-	sub print # (UnaryFuncation)
-	{
-		my $self = shift;
-		my $util = shift;
-		$util->do($self);
-	}
+#<	sub match # (element)
+#<	{
+#<		my $self = shift;
+#<		my $regex = shift;
+#<		return $self->data() =~ /@{[ $regex ]}/ ? $self : 0;
+#<	}
+#<	sub print # (UnaryFunction)
+#<	{
+#<		my $self = shift;
+#<		my $util = shift;
+#<		$util->do($self);
+#<	}
 }
 # ----------------------------------------------------------------------------------------------------
 1;

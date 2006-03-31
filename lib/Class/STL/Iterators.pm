@@ -27,27 +27,42 @@
 # ----------------------------------------------------------------------------------------------------
 # TO DO:
 # ----------------------------------------------------------------------------------------------------
+package Class::STL::Iterators;
 require 5.005_62;
 use strict;
-use attributes qw(get reftype);
 use warnings;
-use vars qw($VERSION $BUILD);
+use vars qw( $VERSION $BUILD @EXPORT );
+use Exporter;
+@EXPORT = qw( iterator reverse_iterator forward_iterator );
 use lib './lib';
+use Class::STL::DataMembers;
 $VERSION = '0.01';
 $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
+	package Class::STL::Iterators;
+	use vars qw( $AUTOLOAD );
+	sub AUTOLOAD
+	{
+		(my $func = $AUTOLOAD) =~ s/.*:://;
+		return Class::STL::Iterators::BiDirectional->new(@_) if ($func eq 'iterator');
+		return Class::STL::Iterators::Forward->new(@_) if ($func eq 'forward_iterator');
+		return Class::STL::Iterators::Reverse->new(@_) if ($func eq 'reverse_iterator');
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
 	package Class::STL::Iterators::Abstract;
 	use base qw(Class::STL::Element); 
-	sub BEGIN
-	{
-		our $this = __PACKAGE__;
-		our @attr = qw( p_element arr_idx );
-		eval ("sub attr { my \$self = shift; return (qw(@{[ join(' ', @attr) ]})); } ");
-		foreach (@attr) {
-			eval (" sub $_ { my \$self = shift; \$self->{$this}->{@{[ uc($_) ]}} = shift if (\@_);
-					return \$self->{$this}->{@{[ uc($_) ]}}; } ");
-		}
+	use overload '++' => '_incr', '--' => '_decr', '=' => 'clone', 'bool' => '_bool',
+		'==' => 'eq', '!=' => 'ne', '>' => 'gt', '<' => 'lt', '>=' => 'ge', '<=' => 'le', '<=>' => 'cmp';
+	sub BEGIN 
+	{ 
+		Class::STL::DataMembers->new(
+			qw( p_element p_container ),
+			Class::STL::DataMembers::Attributes->new(name => 'arr_idx', default => -1),
+			Class::STL::DataMembers::Attributes->new(name => 'data_type', default => 'array'),
+		);
 	}
 	sub new
 	{
@@ -62,19 +77,17 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 			}
 			elsif (ref && $_->isa(__PACKAGE__)) # copy ctor
 			{
-				CORE::push(@params, 'arr_idx', $_->arr_idx(), 'data', $_->data());
+				CORE::push(@params, 'arr_idx', $_->arr_idx(), 'data', $_->data(),
+					'p_container' => $_->p_container());
 			}
 			else
 			{
 				CORE::push(@params, $_);
 			}
 		}
-		my %p = @params;
-		$self = $class->SUPER::new(%p, data_type => 'array');
+		$self = $class->SUPER::new(@params); #, data_type => 'array');
 		bless($self, $class);
-		$self->data($p{'data'}) if (defined($p{'data'}));
-		$self->arr_idx(-1);
-		$self->arr_idx($p{'arr_idx'}) if (defined($p{'arr_idx'}));
+		$self->members_init(@params);
 		$self->set($self->arr_idx()); # always set p_element via set();
 		return $self;
 	}
@@ -82,6 +95,7 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 	{
 		my $self = shift;
 		my $idx = shift;
+		$idx = $self->p_container()->size()-1 if ($idx >= $self->p_container()->size());
 		$self->arr_idx($idx);
 		return if ($idx == -1);
 		$self->p_element(${$self->data()}[$idx]);
@@ -102,55 +116,78 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		my $self = shift;
 		return $self->arr_idx == -1 ? 1 : 0;
 	}
+	sub at_start # (void)
+	{
+		my $self = shift;
+		return $self->arr_idx == -1 ? 1 : 0;
+	}
 	sub eq # (element)
 	{
 		my $self = shift;
 		my $other = shift;
-		return $self->arr_idx() == -1 && $other->arr_idx() == -1
-			|| (
-					$self->arr_idx() != -1 && $other->arr_idx() != -1
-					&& $self->p_element() == $other->p_element()
-				);
+		return !$self->at_end() && !$other->at_end()
+			&& $self->arr_idx() == $other->arr_idx()
+			&& $self->p_element() == $other->p_element();
 	}
 	sub ne # (element)
 	{
 		my $self = shift;
-		return !$self->eq(shift);
+		return $self->eq(shift) ? 0 : 1;
 	}
 	sub gt # (element)
 	{
 		my $self = shift;
 		my $other = shift;
-		return $self->arr_idx() != -1 && $other->arr_idx() != -1
+		return !$self->at_end() && !$other->at_end()
 			&& $self->arr_idx() > $other->arr_idx();
 	}
 	sub ge # (element)
 	{
 		my $self = shift;
 		my $other = shift;
-		return $self->arr_idx() != -1 && $other->arr_idx() != -1
+		return !$self->at_end() && !$other->at_end()
 			&& $self->arr_idx() >= $other->arr_idx();
 	}
 	sub lt # (element)
 	{
 		my $self = shift;
 		my $other = shift;
-		return $self->arr_idx() != -1 && $other->arr_idx() != -1
+		return !$self->at_end() && !$other->at_end()
 			&& $self->arr_idx() < $other->arr_idx();
 	}
 	sub le # (element)
 	{
 		my $self = shift;
 		my $other = shift;
-		return $self->arr_idx() != -1 && $other->arr_idx() != -1
+		return !$self->at_end() && !$other->at_end()
 			&& $self->arr_idx() <= $other->arr_idx();
 	}
 	sub cmp # (element)
 	{
 		my $self = shift;
 		my $other = shift;
-		return $self->eq($other)
-			? 0 : $self->lt($other) ? -1 : 1;
+		return $self->eq($other) ? 0 : $self->lt($other) ? -1 : 1;
+	}
+	sub _incr
+	{
+		my $self = shift;
+		return $self->next();
+	}
+	sub _decr
+	{
+		my $self = shift;
+		return $self->prev();
+	}
+	sub clone
+	{
+		my $self = shift;
+		return $self->new($self);
+	}
+	sub _bool
+	{
+		my $self = shift;
+		return $self;
+#>		return $self->at_end();
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -170,7 +207,7 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		my $self = shift;
 		(!@{$self->data()})
 			? $self->arr_idx(-1)
-			: $self->set($#{$self->data});
+			: $self->set($#{$self->data()});
 		return $self; # iterator
 	}
 	sub prev # (void)
@@ -198,14 +235,9 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Iterators::Forward;
-	use base qw(Class::STL::Iterators::Abstract); 
-	sub prev # (void)
-	{
-		my $self = shift;
-		die "Function 'prev' not available for ", __PACKAGE__;
-	}
+	use base qw(Class::STL::Iterators::BiDirectional); 
+	sub BEGIN { Class::STL::Members::Disable->new( qw ( prev last ) ); }
 }
-
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Iterators::Reverse;

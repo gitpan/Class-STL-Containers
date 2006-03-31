@@ -3,29 +3,31 @@ use strict;
 use warnings;
 use lib './lib';
 use Class::STL::Containers;
+use Class::STL::Algorithms;
+use Class::STL::Utilities;
 
 print ">>>$0>>>:\n";
-my $v = Class::STL::Containers::List->new();
+my $v = list();
 $v->push_back($v->factory(data => 'first'));
 $v->push_back($v->factory(data => 'second'));
 $v->push_back($v->factory(data => 'third'));
 $v->push_back($v->factory(data => 'fourth'));
 $v->push_back($v->factory(data => 'fifth'));
 
-$v->foreach(MyPrint->new('Original:'));
+print "Original:\n"; ::foreach($v->begin(), $v->end(), MyPrint->new());
 print '$v->sort();', "\n";
 $v->sort();
-$v->foreach(MyPrint->new('Sorted:'));
+print "Sorted:\n"; ::foreach($v->begin(), $v->end(), MyPrint->new());
 
 # ----------------------------------------------------------------------------------------------------
 {
 	package MyPrint;
-	use base qw(Class::STL::Utilities::UnaryFunction);
-	sub do
+	use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
+	sub function_operator
 	{
 		my $self = shift;
-		my $elem = shift;
-		print $self->arg(), $elem->data(), "\n";
+		my $element = shift;
+		print "Data:", $element->data(), "\n";
 	}
 }
 # ----------------------------------------------------------------------------------------------------

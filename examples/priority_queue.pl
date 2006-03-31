@@ -3,9 +3,11 @@ use strict;
 use warnings;
 use lib './lib';
 use Class::STL::Containers;
+use Class::STL::Algorithms;
+use Class::STL::Utilities;
 
 print ">>>$0>>>>\n";
-my $p = Class::STL::Containers::PriorityQueue->new();
+my $p = priority_queue();
 $p->push($p->factory(priority => 10, data => 'ten'));
 $p->push($p->factory(priority => 2, data => 'two'));
 $p->push($p->factory(priority => 12, data => 'twelve'));
@@ -16,27 +18,27 @@ $p->push($p->factory(priority => 1, data => 'one-2'));
 $p->push($p->factory(priority => 12, data => 'twelve-2'));
 $p->push($p->factory(priority => 20, data => 'twenty'), $p->factory(priority => 0, data => 'zero'));
 print "\$p->size()=", $p->size(), "\n";
-$p->top()->print(MyPrint->new('$p->top:'));
-$p->foreach(MyPrint->new('DATA:'));
+print "\$p->top():"; MyPrint->new()->function_operator($p->top());
+::foreach($p->begin(), $p->end(), MyPrint->new());
 print '$p->top()->priority(7);', "\n";
 print '$p->refresh();', "\n";
 $p->top()->priority(7);
 $p->refresh();
-$p->foreach(MyPrint->new('DATA:'));
-$p->top()->print(MyPrint->new('$p->top:'));
+::foreach($p->begin(), $p->end(), MyPrint->new());
+print "\$p->top():"; MyPrint->new()->function_operator($p->top());
 print '$p->pop();'. "\n";
 $p->pop();
-$p->top()->print(MyPrint->new('$p->top:'));
+print "\$p->top():"; MyPrint->new()->function_operator($p->top());
 
 # ----------------------------------------------------------------------------------------------------
 {
 	package MyPrint;
-	use base qw(Class::STL::Utilities::UnaryFunction);
-	sub do
+	use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
+	sub function_operator
 	{
 		my $self = shift;
-		my $elem = shift;
-		print $self->arg(), $elem->data(), '[', $elem->priority(), ']', "\n";
+		my $element = shift;
+		print "Data:", $element->data(), '[', $element->priority(), ']', "\n";
 	}
 }
 # ----------------------------------------------------------------------------------------------------

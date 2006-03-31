@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+# vim:ts=4 sw=4
 # ----------------------------------------------------------------------------------------------------
 #  Name		: Class::STL::Alogorithms.pm
 #  Created	: 22 February 2006
@@ -38,65 +38,140 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Algorithms;
-	use base qw(Class::STL::Utilities);
 	use UNIVERSAL qw(isa can);
+	use vars qw( @EXPORT );
+	use Exporter;
+	@EXPORT = qw( remove_if find_if foreach transform count_if );
 
-	sub remove_if # (unary-function)
+	sub _usage_check
 	{
-		my $self = shift;
-		my $util = shift;
-		my $i = 0;
-		while (1)
+		my $function_name = shift;
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		my $function = shift;
+		use Carp qw(confess);
+		confess "@{[ __PACKAGE__]}::$function_name usage:\n$function_name( iterator, iterator, unary-function-object );\n"
+			unless (
+				defined($iter_start) && ref($iter_start) && $iter_start->isa('Class::STL::Iterators::Abstract')
+				&& defined($iter_finish) && ref($iter_finish) && $iter_finish->isa('Class::STL::Iterators::Abstract')
+				&& defined($function) && ref($function) && $function->isa('Class::STL::Utilities::FunctionObject')
+			);
+	}
+	sub transform # (iterator, iterator, unary-function-object) -- static function
+	{
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		my $function = shift; # unary-function or class-member-name
+		_usage_check('transform', $iter_start, $iter_finish, $function);
+		for (my $iter = $iter_start->new($iter_start); $iter <= $iter_finish; ++$iter)
 		{
-			last if ($i >= $self->size());
-			if (ref(${$self->data()}[$i]) && ${$self->data()}[$i]->isa('Class::STL::Containers::Abstract')
-					? ${$self->data()}[$i]->remove_if($util) # its a tree -- recurse
-					: $util->do(${$self->data()}[$i]))
+			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract')
+				? transform($iter->p_element()->begin(), $iter->p_element()->end(), $function) # its a tree -- recurse
+				: $function->function_operator($iter->p_element());
+		}
+		return;
+	}
+	sub foreach # (iterator, iterator, unary-function-object) -- static function
+	{
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		my $function = shift; # unary-function or class-member-name
+		_usage_check('foreach', $iter_start, $iter_finish, $function);
+		for (my $iter = $iter_start->new($iter_start); $iter <= $iter_finish; ++$iter)
+		{
+			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract')
+				? &foreach($iter->p_element()->begin(), $iter->p_element()->end(), $function) # its a tree -- recurse
+				: $function->function_operator($iter->p_element());
+		}
+		return;
+	}
+	sub find_if # (iterator, iterator, unary-function-object) -- static function
+	{
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		my $function = shift; # unary-function or class-member-name
+		_usage_check('find_if', $iter_start, $iter_finish, $function);
+		for (my $iter = $iter_start->new($iter_start); $iter <= $iter_finish; ++$iter)
+		{
+			if (my $elem = 
+				ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract')
+					? find_if($iter->p_element()->begin(), $iter->p_element()->end(), $function) # its a tree -- recurse
+					: $function->function_operator($iter->p_element()))
 			{
-				CORE::splice(@{$self->data()}, $i, 1);
+				return $elem;
+			}
+		}
+		return 0;
+	}
+	sub count_if # (iterator, iterator, unary-function-object) -- static function
+	{
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		my $function = shift; # unary-function or class-member-name
+		_usage_check('count_if', $iter_start, $iter_finish, $function);
+		my $count=0;
+		for (my $iter = $iter_start->new($iter_start); $iter <= $iter_finish; ++$iter)
+		{
+			$count +=
+				ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract')
+					? count_if($iter->p_element()->begin(), $iter->p_element()->end(), $function) # its a tree -- recurse
+					: ($function->function_operator($iter->p_element()) ? 1 : 0);
+		}
+		return $count;
+	}
+	sub remove_if # (iterator, iterator, unary-function-object) -- static function
+	{
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		my $function = shift; # unary-function or class-member-name
+		_usage_check('remove_if', $iter_start, $iter_finish, $function);
+		for (my $iter = $iter_start->new($iter_start); $iter <= $iter_finish; )
+		{
+			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
+			{
+				remove_if($iter->p_element()->begin(), $iter->p_element()->end(), $function); # its a tree -- recurse
+				++$iter;
 				next;
 			}
-			$i++;
+			$function->function_operator($iter->p_element())
+				? $iter->p_container()->erase($iter)
+				: ++$iter;
 		}
-		$self->end();
 		return;
 	}
-	sub find_if # (unary-function)
-	{
-		my $self = shift;
-		my $util = shift;
-		my $i = 0;
-		while (1)
-		{
-			last if ($i >= $self->size());
-			if (my $e = 
-				ref(${$self->data()}[$i]) && ${$self->data()}[$i]->isa('Class::STL::Containers::Abstract')
-					? ${$self->data()}[$i]->find_if($util) # its a tree -- recurse
-					: $util->do(${$self->data()}[$i]))
-			{
-				return $e;
-			}
-			$i++;
-		}
-		$self->end();
-		return;
-	}
-	sub foreach # (unary-function)
-	{
-		my $self = shift;
-		my $util = shift;
-		my $i = 0;
-		while (1)
-		{
-			last if ($i >= $self->size());
-			ref(${$self->data()}[$i]) && ${$self->data()}[$i]->isa('Class::STL::Containers::Abstract')
-				? ${$self->data()}[$i]->foreach($util) # its a tree -- recurse
-				: $util->do(${$self->data()}[$i]);
-			$i++;
-		}
-		$self->end();
-		return;
-	}
+#TODO:sub sort
+#TODO:{
+#TODO:}
+#TODO:sub reverse
+#TODO:{
+#TODO:}
+#TODO:sub partition # (predicate)
+#TODO:{
+#TODO:}
+#TODO:sub random_shuffle # ( [ random_number_generator ] )
+#TODO:{
+#TODO:}
+#TODO:sub fill # ( [ size, ] value )
+#TODO:{
+#TODO:}
+#TODO:sub generate # ( generator )
+#TODO:{
+#TODO:}
+#TODO:sub generate_n # ( size, generator )
+#TODO:{
+#TODO:}
+#TODO:sub min_element # ( [ binary_predicate ] ) -- use lt operator
+#TODO:{
+#TODO:}
+#TODO:sub max_element # ( [ binary_predicate ] ) -- default use lt operator
+#TODO:{
+#TODO:}
+#TODO:sub lower_bound
+#TODO:{
+#TODO:}
+#TODO:sub upper_bound
+#TODO:{
+#TODO:}
 }
 # ----------------------------------------------------------------------------------------------------
 1;

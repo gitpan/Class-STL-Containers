@@ -1,4 +1,23 @@
 Revision history for Perl extension Class::STL::Containers.
 
-0.01  Fri Feb 24 20:25:44 2006
- - First release -- alpha
+0.04  Tue Mar 28 21:24:22 2006
+	- Major recode/redesign of Algorithms, Iterators, Utilities classes -- pre-0.04 code not 
+		compatible (sorry!).
+	- Class::STL::Utilities::MakeFind;
+	- Class::STL::DataMembers;
+	- Class::STL::Members::Disable;
+	- New count_if, transform, remove_if algorithms.
+	- Changed argument requirements for algorithm functions.
+	- New utilities: bind1st, bind2nd, mem_fun, 
+	- changed to_array() functionality: now will return array of 
+		elements objects (not element.data() values).
+	- The container begin(), end(), rbegin() and rend() functions now return a newly constructed 
+		Iterator object.
+	- Overloaded increment (++) and decrement (--) operators for Iterator classes.
+	- Bug fixes.
+	- Additional example scripts.
+
+0.01  Fri Feb 24 13:25:44 2006
+	- original version; created by h2xs 1.23 with options
+		-X Class::STL::Containers
+
