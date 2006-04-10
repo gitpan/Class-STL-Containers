@@ -29,7 +29,7 @@ $tree->push_back($tree->factory($t1));
 $tree->push_back($tree->factory($t2));
 
 print "Tree Foreach:\n";
-::foreach($tree->begin(), $tree->end(), MyPrint->new());
+for_each($tree->begin(), $tree->end(), MyPrint->new());
 
 print "Tree Find_If 'yellow':",
 	find_if($tree->begin(), $tree->end(), MyFind->new(what => 'yellow'))
@@ -41,7 +41,7 @@ print "Tree Count_If(/e/i):",
 
 print "Tree Remove_If(/l/i):\n";
 remove_if($tree->begin(), $tree->end(), MyMatch->new(what => 'l'));
-::foreach($tree->begin(), $tree->end(), MyPrint->new());
+for_each($tree->begin(), $tree->end(), MyPrint->new());
 
 print "Tree Find_If 'yellow':",
 	find_if($tree->begin(), $tree->end(), MyFind->new(what => 'yellow'))

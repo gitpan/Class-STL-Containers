@@ -37,8 +37,8 @@ use Exporter;
 @EXPORT = qw( vector list deque queue priority_queue stack tree );
 use lib './lib';
 use Class::STL::DataMembers;
-$VERSION = 0.05;
-$BUILD = 'Friday March 31 21:08:34 GMT 2006';
+$VERSION = 0.11;
+$BUILD = 'Monday April 10 21:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Containers;
@@ -59,8 +59,8 @@ $BUILD = 'Friday March 31 21:08:34 GMT 2006';
 {
 	package Class::STL::Containers::Abstract;
 	use base qw(Class::STL::Element); # container is also an element
-	use overload '+' => 'append', '+=' => 'append', '=' => 'clone', 
-		'==' => 'eq', '!=' => 'ne', '>' => 'gt', '<' => 'lt', '>=' => 'ge', '<=' => 'le', '<=>' => 'cmp';
+	use overload '+' => 'append', '+=' => 'append', '=' => 'clone', '""' => 'str',
+		'==' => 'eq', '!=' => 'ne';
 	use Class::STL::Iterators;
 	use UNIVERSAL qw(isa can);
 	use Carp qw(confess);
@@ -76,6 +76,7 @@ $BUILD = 'Friday March 31 21:08:34 GMT 2006';
 	# new(element [, ...]); -- initialise new container with element(s).
 	# new(iterator-start); -- initialise new container with copy of elments from other container.
 	# new(iterator-start, iterator-finish); -- initialise new container with copy of elments from other container.
+	# new(raw-data, [...]); -- 
 	sub new
 	{
 		my $self = shift;
@@ -83,28 +84,34 @@ $BUILD = 'Friday March 31 21:08:34 GMT 2006';
 		my @copy_containers;
 		my @copy_elements;
 		my @copy_iterators;
+		my @raw_data;
 		my @params;
-		foreach (@_)
+		while (@_)
 		{
-			if (ref && $_->isa(__PACKAGE__)) # copy ctor
+			my $p = shift;
+			if (ref($p) && $p->isa(__PACKAGE__)) # copy ctor
 			{
-				CORE::push(@copy_containers, $_);
-				CORE::push(@params, 'data_type', $_->data_type());
+				CORE::push(@copy_containers, $p);
+				CORE::push(@params, 'data_type', $p->data_type());
 			}
-			elsif (ref && $_->isa('Class::STL::Iterators::Abstract')) 
+			elsif (ref($p) && $p->isa('Class::STL::Iterators::Abstract')) 
 			{
-				CORE::push(@copy_iterators, $_);
+				CORE::push(@copy_iterators, $p);
 			}
-			elsif (ref && $_->isa('Class::STL::Element'))
+			elsif (ref($p) && $p->isa('Class::STL::Element'))
 			{
-				CORE::push(@copy_elements, $_);
+				CORE::push(@copy_elements, $p);
+			}
+			elsif ($p eq 'data' || $p eq 'data_type')
+			{
+				CORE::push(@params, $p, shift);
 			}
 			else
 			{
-				CORE::push(@params, $_);
+				CORE::push(@raw_data, $p);
 			}
 		}
-		$self = $class->SUPER::new(@params, data_type => 'array');
+		$self = $class->SUPER::new(@params); #, data_type => 'array');
 		bless($self, $class);
 		$self->members_init(@params);
 		confess "data_type (@{[ $self->data_type() ]}) must be derived from Class::STL::Element!"
@@ -112,6 +119,7 @@ $BUILD = 'Friday March 31 21:08:34 GMT 2006';
 		$self->data([]); # Array of (base) type Class::STL::Element
 		foreach (@copy_containers) { $self->insert($self->begin(), $_->begin(), $_->end()); }
 		foreach (@copy_elements) { $self->push($_); }
+		foreach (@raw_data) { $self->push($self->factory(data => $_)); }
 		if (@copy_iterators) {
 			@copy_iterators >= 2 
 				? $self->insert($self->begin(), $copy_iterators[0], $copy_iterators[1])
@@ -119,17 +127,12 @@ $BUILD = 'Friday March 31 21:08:34 GMT 2006';
 		}
 		return $self;
 	}
-	sub append
+	sub append # (container-ref) -- append other to this container;
 	{
 		my $self = shift;
 		my $other = shift;
 		$self->push($other->to_array());
 		return $self;
-	}
-	sub clone
-	{
-		my $self = shift;
-		return $self->new($self);
 	}
 	sub factory # (@params) -- construct an element object and return it;
 	{
@@ -171,7 +174,7 @@ $BUILD = 'Friday March 31 21:08:34 GMT 2006';
 		unless (defined($position) && ref($position) && $position->isa('Class::STL::Iterators::Abstract'));
 		my $size = $self->size();
 
-		# insert(position, iterator-start, iterator-finish);
+		# insert(position, iterator-start, iterator-finish);# insert copies 
 		if (defined($_[0]) && ref($_[0]) && $_[0]->isa('Class::STL::Iterators::Abstract')
 			&& defined($_[1]) && ref($_[1]) && $_[1]->isa('Class::STL::Iterators::Abstract'))
 		{ 
@@ -183,78 +186,57 @@ $BUILD = 'Friday March 31 21:08:34 GMT 2006';
 					$i->p_element()->new($i->p_element())); # insert copies
 			}
 		}
-		# insert(position, iterator-start);
+		# insert(position, iterator-start);# insert copies 
 		elsif (defined($_[0]) && ref($_[0]) && $_[0]->isa('Class::STL::Iterators::Abstract'))
 		{ 
 			my $iter_start = shift;
 			for (my $i = $iter_start->new($iter_start); !$i->at_end(); ++$i) {
-				if ($size)
+				if (!$size || !$position->at_end())
 				{
-					CORE::splice(@{$self->data()}, $position->arr_idx(), 0, 
-						$i->p_element()->new($i->p_element())); # insert copies
-					$position++;
+					$self->push($i->p_element()->clone());
 				}
 				else
 				{
-					$self->push($i->p_element()->new($i->p_element()));
+					CORE::splice(@{$self->data()}, $position->arr_idx(), 0, $i->p_element()->clone()); # insert copies
+					$position++;
 				}
 			}
 		}
-		# insert(position, element [, ...]);
+		# insert(position, element [, ...]); # insert references (not copies)
 		elsif (defined($_[0]) && ref($_[0]) && $_[0]->isa('Class::STL::Element'))
 		{ 
-			!$size
+			!$size || $position->at_end()
 				? $self->push(@_)
 				: CORE::splice(@{$self->data()}, $position->arr_idx(), 0, 
 					grep(ref && $_->isa('Class::STL::Element'), @_));
 		}
-		# insert(position, size, element);
+		# insert(position, size, element);# insert copies 
 		elsif (defined($_[0]) && defined($_[1]) && ref($_[1]) && $_[1]->isa('Class::STL::Element'))
 		{ 
 			my $num_repeat = shift;
 			my $element = shift;
-			for (my $i=0; $i < $num_repeat ; ++$i) {
-				$size
-					? CORE::splice(@{$self->data()}, $position->arr_idx(), 0, $element->new($element)) # insert copies
-					: $self->push($element->new($element));
-			}
+			my @elems;
+			foreach (1..$num_repeat) { CORE::push(@elems, $element->clone()); } # insert copies 
+			$size
+				? CORE::splice(@{$self->data()}, $position->arr_idx(), 0, @elems) 
+				: $self->push(@elems);
 		}
 		else
 		{
 			confess $self->_insert_errmsg();
 		}
-		return; # void
-	}
-	sub swap # (container-ref) -- exchange self with container-ref
-	{
-		my $self = shift;
-		my $other = shift;
-		confess "@{[ __PACKAGE__ ]}::swap usage:\nswap( container-ref );"
-		unless (defined($other) && ref($other) && $other->isa('Class::STL::Containers::Abstract'));
-		my $tmp = $other->new($other);
-		$other->clear();
-		$other->push_back($self->to_array());
-		$self->clear();
-		$self->push_back($tmp->to_array());
-		return;
+		$position->set(1) unless ($size);
+		return $position;
 	}
 	sub erase # ( iterator | iterator-start, iterator-finish )
 	{
 		my $self = shift;
 		my $iter_start = shift;
-		my $iter_finish = shift || $iter_start->new($iter_start);
-		confess "@{[ __PACKAGE__ ]}::erase usage:\nerase( iterator [, iterator ] );"
-			unless (
-				defined($iter_start) && ref($iter_start) && $iter_start->isa('Class::STL::Iterators::Abstract')
-				&& defined($iter_finish) && ref($iter_finish) && $iter_finish->isa('Class::STL::Iterators::Abstract')
-			);
+		my $iter_finish = shift || $iter_start->clone();
 		my $count=0;
-		for (my $i = $iter_start->new($iter_start); $i <= $iter_finish; ++$i) {
-			$count++;
-		}
-		CORE::splice(@{$self->data()}, $iter_start->arr_idx(), $count);
+		CORE::splice(@{$self->data()}, $iter_start->arr_idx(), $count)
+			if (($count=$iter_start->distance($iter_finish)) != 0);
 		$iter_start->set($iter_start->arr_idx());
-#?		$iter_finish = $iter_start;
 		return $count; # number of elements deleted
 	}
 	sub _insert_errmsg
@@ -266,24 +248,24 @@ $BUILD = 'Friday March 31 21:08:34 GMT 2006';
 	sub begin # (void)
 	{
 		my $self = shift;
-		return iterator(data => $self->data(), p_container => $self)->first();
+		return iterator(p_container => $self)->first();
 	}
 	sub end # (void)
 	{
 		# WARNING: end() points to last element unlike C++/STL-end() which points to AFTER last element!!
 		# See examples/iterator.pl for correct iterator traversal example.
 		my $self = shift;
-		return iterator(data => $self->data(), p_container => $self)->last();
+		return iterator(p_container => $self)->last();
 	}
 	sub rbegin # (void)
 	{
 		my $self = shift;
-		return reverse_iterator(data => $self->data(), p_container => $self)->first();
+		return reverse_iterator(p_container => $self)->first();
 	}
 	sub rend # (void)
 	{
 		my $self = shift;
-		return reverse_iterator(data => $self->data(), p_container => $self)->last();
+		return reverse_iterator(p_container => $self)->last();
 	}
 	sub size # (void)
 	{
@@ -295,8 +277,7 @@ $BUILD = 'Friday March 31 21:08:34 GMT 2006';
 		my $self = shift;
 		return $self->size() ? 0 : 1; # 1==true; 0==false
 	}
-#TODO:sub to_array(iterator-start, iterator-finish);
-	sub to_array # (void) -- maybe replace with foreach()
+	sub to_array # (void) 
 	{
 		my $self = shift;
 		my $level = shift || undef;
@@ -312,7 +293,7 @@ $BUILD = 'Friday March 31 21:08:34 GMT 2006';
 		}
 		return @nodes;
 	}
-	sub eq # (vector)
+	sub eq # (container-ref)
 	{
 		my $self = shift;
 		my $other = shift;
@@ -328,51 +309,8 @@ $BUILD = 'Friday March 31 21:08:34 GMT 2006';
 		my $self = shift;
 		return $self->eq(shift) ? 0 : 1;
 	}
-	sub gt
+	sub str 
 	{
-		my $self = shift;
-		my $other = shift;
-		return 0 unless $self->size() == $other->size();
-		foreach my $i (0..$self->size()-1) {
-			return 0 unless (${$self->data()}[$i]->gt(${$other->data()}[$i]));
-		}
-		return 1; # this container gt other
-	}
-	sub lt
-	{
-		my $self = shift;
-		my $other = shift;
-		return 0 unless $self->size() == $other->size();
-		foreach my $i (0..$self->size()-1) {
-			return 0 unless (${$self->data()}[$i]->lt(${$other->data()}[$i]));
-		}
-		return 1; # this containers lt other
-	}
-	sub ge
-	{
-		my $self = shift;
-		my $other = shift;
-		return 0 unless $self->size() == $other->size();
-		foreach my $i (0..$self->size()-1) {
-			return 0 unless (${$self->data()}[$i]->ge(${$other->data()}[$i]));
-		}
-		return 1; # this containers ge other
-	}
-	sub le
-	{
-		my $self = shift;
-		my $other = shift;
-		return 0 unless $self->size() == $other->size();
-		foreach my $i (0..$self->size()-1) {
-			return 0 unless (${$self->data()}[$i]->le(${$other->data()}[$i]));
-		}
-		return 1; # this containers le other
-	}
-	sub cmp
-	{
-		my $self = shift;
-		my $other = shift;
-		return $self->eq($other) ? 0 : $self->lt($other) ? -1 : 1;
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -595,7 +533,6 @@ $BUILD = 'Friday March 31 21:08:34 GMT 2006';
 		my $class = ref($self) || $self;
 		$self = $class->SUPER::new(@_, data_type => 'Class::STL::Element::Priority');
 		bless($self, $class);
-		my %p = @_;
 		return $self;
 	}
 	sub push
@@ -682,7 +619,7 @@ $BUILD = 'Friday March 31 21:08:34 GMT 2006';
 			{
 				my \$self = shift;
 				my \$what = shift;
-				return Class::STL::Algorithms::_find_if
+				return Class::STL::Algorithms::find_if
 				(
 					\$self->begin(), \$self->end(),
 			   		$package\::Find@{[ uc($member_name) ]}->new(what => \$what)

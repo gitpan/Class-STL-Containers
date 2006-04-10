@@ -21,12 +21,12 @@ $v2->push_back($v2->factory(data => 'orange'));
 $v2->push_back($v2->factory(data => 'green'));
 $v2->push_back($v2->factory(data => 'black'));
 
-print "Original list v:\n"; ::foreach($v->begin(), $v->end(), MyPrint->new());
-print "Original list v2:\n"; ::foreach($v2->begin(), $v2->end(), MyPrint->new());
+print "Original list v:\n"; for_each($v->begin(), $v->end(), MyPrint->new());
+print "Original list v2:\n"; for_each($v2->begin(), $v2->end(), MyPrint->new());
 print '$v->swap($v->front(), $v->back());', "\n";
 $v->swap($v2);
-print "Swapped list v:\n"; ::foreach($v->begin(), $v->end(), MyPrint->new());
-print "Swapped list v2:\n"; ::foreach($v2->begin(), $v2->end(), MyPrint->new());
+print "Swapped list v:\n"; for_each($v->begin(), $v->end(), MyPrint->new());
+print "Swapped list v2:\n"; for_each($v2->begin(), $v2->end(), MyPrint->new());
 
 # ----------------------------------------------------------------------------------------------------
 {

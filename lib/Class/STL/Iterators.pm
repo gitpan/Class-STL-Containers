@@ -33,7 +33,7 @@ use strict;
 use warnings;
 use vars qw( $VERSION $BUILD @EXPORT );
 use Exporter;
-@EXPORT = qw( iterator reverse_iterator forward_iterator );
+@EXPORT = qw( iterator bidirectional_iterator reverse_iterator forward_iterator );
 use lib './lib';
 use Class::STL::DataMembers;
 $VERSION = '0.01';
@@ -46,6 +46,7 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 	{
 		(my $func = $AUTOLOAD) =~ s/.*:://;
 		return Class::STL::Iterators::BiDirectional->new(@_) if ($func eq 'iterator');
+		return Class::STL::Iterators::BiDirectional->new(@_) if ($func eq 'bidirectional_iterator');
 		return Class::STL::Iterators::Forward->new(@_) if ($func eq 'forward_iterator');
 		return Class::STL::Iterators::Reverse->new(@_) if ($func eq 'reverse_iterator');
 	}
@@ -54,6 +55,7 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 {
 	package Class::STL::Iterators::Abstract;
 	use base qw(Class::STL::Element); 
+	use Carp qw(confess);
 	use overload '++' => '_incr', '--' => '_decr', '=' => 'clone', 'bool' => '_bool',
 		'==' => 'eq', '!=' => 'ne', '>' => 'gt', '<' => 'lt', '>=' => 'ge', '<=' => 'le', '<=>' => 'cmp';
 	sub BEGIN 
@@ -61,34 +63,26 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		Class::STL::DataMembers->new(
 			qw( p_element p_container ),
 			Class::STL::DataMembers::Attributes->new(name => 'arr_idx', default => -1),
-			Class::STL::DataMembers::Attributes->new(name => 'data_type', default => 'array'),
 		);
 	}
-	sub new
+	sub new 
 	{
 		my $self = shift;
 		my $class = ref($self) || $self;
 		my @params;
-		foreach (@_)
+		while (@_)
 		{
-			if (ref eq 'ARRAY')
-			{
-				CORE::push(@params, $_);
-			}
-			elsif (ref && $_->isa(__PACKAGE__)) # copy ctor
-			{
-				CORE::push(@params, 'arr_idx', $_->arr_idx(), 'data', $_->data(),
-					'p_container' => $_->p_container());
-			}
-			else
-			{
-				CORE::push(@params, $_);
-			}
+			my $p = shift;
+			(ref($p) && ref($p) ne 'ARRAY' && $p->isa(__PACKAGE__)) # copy ctor
+			? CORE::push(@params,
+				'arr_idx', $p->arr_idx(),
+				'p_container', $p->p_container(),
+				'p_element', $p->p_element())
+			: ref($p) ? CORE::push(@params, $p) : CORE::push(@params, $p, shift);
 		}
-		$self = $class->SUPER::new(@params); #, data_type => 'array');
+		$self = $class->SUPER::new(ignore_local(@params));
 		bless($self, $class);
 		$self->members_init(@params);
-		$self->set($self->arr_idx()); # always set p_element via set();
 		return $self;
 	}
 	sub set
@@ -98,15 +92,28 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		$idx = $self->p_container()->size()-1 if ($idx >= $self->p_container()->size());
 		$self->arr_idx($idx);
 		return if ($idx == -1);
-		$self->p_element(${$self->data()}[$idx]);
+		$self->p_element(${$self->p_container()->data()}[$idx]);
+	}
+	sub distance
+	{
+		my $self = shift;
+		my $iter_finish = shift;
+		confess "@{[ __PACKAGE__ ]}::distance usage:\ndistance( iterator-start, iterator-finish );"
+			unless (
+				defined($iter_finish) && ref($iter_finish) && $iter_finish->isa('Class::STL::Iterators::Abstract')
+			);
+		return 0 if ($self->at_end() || $iter_finish->at_end());
+		my $count=0;
+		for (my $i = $self->clone(); $i <= $iter_finish; ++$i) { $count++; }
+		return $count;
 	}
 	sub jump # (element)
 	{
 		my $self = shift;
 		my $elem = shift;
-		foreach my $i (0..$#{$self->data()})
+		foreach my $i (0..$#{$self->p_container()->data()})
 		{
-			next unless ($elem == ${$self->data()}[$i]);
+			next unless ($elem == ${$self->p_container()->data()}[$i]);
 			$self->set($i);
 			return $self; # iterator
 		}
@@ -114,12 +121,12 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 	sub at_end # (void)
 	{
 		my $self = shift;
-		return $self->arr_idx == -1 ? 1 : 0;
+		return $self->arr_idx() == -1 ? 1 : 0;
 	}
 	sub at_start # (void)
 	{
 		my $self = shift;
-		return $self->arr_idx == -1 ? 1 : 0;
+		return $self->arr_idx() == -1 ? 1 : 0;
 	}
 	sub eq # (element)
 	{
@@ -178,11 +185,6 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		my $self = shift;
 		return $self->prev();
 	}
-	sub clone
-	{
-		my $self = shift;
-		return $self->new($self);
-	}
 	sub _bool
 	{
 		my $self = shift;
@@ -197,7 +199,7 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 	sub first # (void)
 	{
 		my $self = shift;
-		(!@{$self->data()})
+		(!@{$self->p_container()->data()})
 			? $self->arr_idx(-1)
 			: $self->set(0);
 		return $self; # iterator
@@ -205,15 +207,16 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 	sub last # (void)
 	{
 		my $self = shift;
-		(!@{$self->data()})
+		(!@{$self->p_container()->data()})
 			? $self->arr_idx(-1)
-			: $self->set($#{$self->data()});
+			: $self->set($#{$self->p_container()->data()});
 		return $self; # iterator
 	}
 	sub prev # (void)
 	{
 		my $self = shift;
-		(!@{$self->data()} || $self->arr_idx() == 0)
+		return $self if ($self->arr_idx() == -1);
+		(!@{$self->p_container()->data()} || $self->arr_idx() == 0)
 			? $self->arr_idx(-1)
 			: $self->set($self->arr_idx() -1);
 		return $self; # iterator
@@ -221,7 +224,8 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 	sub next # (void)
 	{
 		my $self = shift;
-		(!@{$self->data()} || $self->arr_idx()+1 >= @{$self->data()})
+		return $self if ($self->arr_idx() == -1);
+		(!@{$self->p_container()->data()} || $self->arr_idx()+1 >= @{$self->p_container()->data()})
 			? $self->arr_idx(-1)
 			: $self->set($self->arr_idx() +1);
 		return $self; # iterator

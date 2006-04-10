@@ -10,7 +10,7 @@
 
 use Test;
 use Class::STL::Element;
-BEGIN { plan tests => 13 }
+BEGIN { plan tests => 15 }
 
 #########################
 
@@ -37,3 +37,7 @@ ok ($e3->ge($e4), "", "ge()");
 ok ($e3->cmp($e4), "-1", "cmp()");
 ok ($e4->cmp($e3), "1", "cmp()");
 ok ($e4->cmp($e5), "0", "cmp()");
+
+$e3->swap($e4);
+ok ($e3->data(), "103", "swap()");
+ok ($e4->data(), "100", "swap()");

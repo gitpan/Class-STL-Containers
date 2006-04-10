@@ -33,7 +33,9 @@ use strict;
 use warnings;
 use vars qw( $VERSION $BUILD @EXPORT );
 use Exporter;
-@EXPORT = qw( equal_to not_equal_to greater greater_equal less less_equal compare bind1st bind2nd mem_fun );
+@EXPORT = qw( equal_to not_equal_to greater greater_equal less less_equal compare 
+	bind1st bind2nd mem_fun ptr_fun ptr_fun_binary matches matches_ic logical_and logical_or 
+	multiplies divides plus minus modulus );
 use lib './lib';
 use Class::STL::DataMembers;
 $VERSION = '0.01';
@@ -45,30 +47,40 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 	sub AUTOLOAD
 	{
 		(my $func = $AUTOLOAD) =~ s/.*:://;
-		return Class::STL::Utilities::EqualTo->new(@_) if ($func eq 'equal_to');
-		return Class::STL::Utilities::NotEqualTo->new(@_) if ($func eq 'not_equal_to');
-		return Class::STL::Utilities::Greater->new(@_) if ($func eq 'greater');
-		return Class::STL::Utilities::GreaterEqual->new(@_) if ($func eq 'greater_equal');
-		return Class::STL::Utilities::Less->new(@_) if ($func eq 'less');
-		return Class::STL::Utilities::LessEqual->new(@_) if ($func eq 'less_equal');
-		return Class::STL::Utilities::Compare->new(@_) if ($func eq 'compare');
-#?		return Class::STL::Utilities::Matches->new(@_) if ($func eq 'matches');
-		return Class::STL::Utilities::Binder1st->new(@_) if ($func eq 'bind1st');
-		return Class::STL::Utilities::Binder2nd->new(@_) if ($func eq 'bind2nd');
-		return Class::STL::Utilities::MemberFunction->new(@_) if ($func eq 'mem_fun');
+		return Class::STL::Utilities::EqualTo->new(@_) 			if ($func eq 'equal_to');
+		return Class::STL::Utilities::NotEqualTo->new(@_) 		if ($func eq 'not_equal_to');
+		return Class::STL::Utilities::Greater->new(@_) 			if ($func eq 'greater');
+		return Class::STL::Utilities::GreaterEqual->new(@_) 	if ($func eq 'greater_equal');
+		return Class::STL::Utilities::Less->new(@_) 			if ($func eq 'less');
+		return Class::STL::Utilities::LessEqual->new(@_) 		if ($func eq 'less_equal');
+		return Class::STL::Utilities::Compare->new(@_) 			if ($func eq 'compare');
+		return Class::STL::Utilities::Matches->new(@_) 			if ($func eq 'matches');
+		return Class::STL::Utilities::MatchesIC->new(@_) 		if ($func eq 'matches_ic');
+		return Class::STL::Utilities::LogicalAnd->new(@_) 		if ($func eq 'logical_and');
+		return Class::STL::Utilities::LogicalOr->new(@_) 		if ($func eq 'logical_or');
+		return Class::STL::Utilities::Multiplies->new(@_) 		if ($func eq 'multiplies');
+		return Class::STL::Utilities::Divides->new(@_) 			if ($func eq 'divides');
+		return Class::STL::Utilities::Plus->new(@_) 			if ($func eq 'plus');
+		return Class::STL::Utilities::Minus->new(@_) 			if ($func eq 'minus');
+		return Class::STL::Utilities::Modulus->new(@_) 			if ($func eq 'modulus');
+		return Class::STL::Utilities::Binder1st->new(@_) 		if ($func eq 'bind1st');
+		return Class::STL::Utilities::Binder2nd->new(@_) 		if ($func eq 'bind2nd');
+		return Class::STL::Utilities::MemberFunction->new(@_) 	if ($func eq 'mem_fun');
+		return Class::STL::Utilities::PointerToUnaryFunction->new(@_)if ($func eq 'ptr_fun');
+		return Class::STL::Utilities::PointerToBinaryFunction->new(@_)if ($func eq 'ptr_fun_binary');
 	}
 }
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Utilities::FunctionObject;
-	sub BEGIN { Class::STL::DataMembers->new(qw( result_type )); }
+	sub BEGIN { Class::STL::DataMembers->new(qw( result_type _caller )); }
 	sub new
 	{
 		my $proto = shift;
 		my $class = ref($proto) || $proto;
 		my $self = {};
 		bless($self, $class);
-		$self->members_init(@_);
+		$self->members_init(_caller => (caller())[0], @_);
 		return $self;
 	}
 	sub function_operator
@@ -184,6 +196,119 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 }
 # ----------------------------------------------------------------------------------------------------
 {
+	package Class::STL::Utilities::PointerToUnaryFunction;
+	use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
+	use Carp qw(confess);
+	sub BEGIN { Class::STL::DataMembers->new(qw( function_name )); }
+	sub new
+	{
+		my $self = shift;
+		my $class = ref($self) || $self;
+		$self = $class->SUPER::new();
+		bless($self, $class);
+		$self->members_init(function_name => shift);
+		return $self->factory();
+	}
+	sub factory
+	{
+		my $self = shift;
+		our $fcounter;
+		$fcounter++;
+		my $code = "
+		{
+			package Class::STL::Utilities::PointerToUnaryFunction::F$fcounter;
+			use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
+			sub new
+			{
+				my \$self = shift;
+				my \$class = ref(\$self) || \$self;
+				\$self = \$class->SUPER::new();
+				bless(\$self, \$class);
+				return \$self;
+			}
+			sub function_operator
+			{
+				my \$self = shift;
+				my \$arg = shift;
+				my \$tmp;
+				if (ref(\$arg) && \$arg->isa('Class::STL::Element'))
+				{
+					\$tmp = \$arg->clone();
+					\$tmp->data(@{[ $self->function_name() ]}(\$tmp->data()));
+				}
+				return \$tmp;
+			}
+		}
+		Class::STL::Utilities::PointerToUnaryFunction::F$fcounter->new();
+		";
+		return eval $code;
+		confess "**Error in eval for @{[ __PACKAGE__ ]} function_operator function creation:\n$@" if ($@);
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
+	package Class::STL::Utilities::PointerToBinaryFunction;
+	use base qw(Class::STL::Utilities::FunctionObject::BinaryFunction);
+	use Carp qw(confess);
+	sub BEGIN { Class::STL::DataMembers->new(qw( function_name )); }
+	sub new
+	{
+		my $self = shift;
+		my $class = ref($self) || $self;
+		$self = $class->SUPER::new();
+		bless($self, $class);
+		$self->members_init(function_name => shift);
+		return $self->factory();
+	}
+	sub factory
+	{
+		my $self = shift;
+		our $fcounter;
+		$fcounter++;
+		my $code = "
+		{
+			package Class::STL::Utilities::PointerToBinaryFunction::F$fcounter;
+			use base qw(Class::STL::Utilities::FunctionObject::BinaryFunction);
+			sub new
+			{
+				my \$self = shift;
+				my \$class = ref(\$self) || \$self;
+				\$self = \$class->SUPER::new();
+				bless(\$self, \$class);
+				return \$self;
+			}
+			sub function_operator
+			{
+				my \$self = shift;
+				my \$arg1 = shift;
+				my \$arg2 = shift; 
+				my \$tmp;
+				if (ref(\$arg1) && \$arg1->isa('Class::STL::Element') && ref(\$arg2) && \$arg2->isa('Class::STL::Element'))
+				{
+					\$tmp = \$arg1->clone();
+					\$tmp->data(@{[ $self->function_name() ]}(\$arg1->data(), \$arg2->data()));
+				}
+				elsif (ref(\$arg2) && \$arg2->isa('Class::STL::Element'))
+				{
+					\$tmp = \$arg2->clone();
+					\$tmp->data(@{[ $self->function_name() ]}(\$arg1, \$arg2->data()));
+				}
+				elsif (ref(\$arg1) && \$arg1->isa('Class::STL::Element'))
+				{
+					\$tmp = \$arg1->clone();
+					\$tmp->data(@{[ $self->function_name() ]}(\$arg1->data(), \$arg2));
+				}
+				return \$tmp;
+			}
+		}
+		Class::STL::Utilities::PointerToBinaryFunction::F$fcounter->new();
+		";
+		return eval $code;
+		confess "**Error in eval for @{[ __PACKAGE__ ]} function_operator function creation:\n$@" if ($@);
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
 	package Class::STL::Utilities::Binder1st;
 	use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
 	sub BEGIN { Class::STL::DataMembers->new(qw( operation first_argument )); }
@@ -231,9 +356,16 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 	sub function_operator
 	{
 		my $self = shift;
-		my $arg1 = shift; # element object
-		my $arg2 = shift; # element object
-		return $arg1->eq($arg2);
+		my $arg1 = shift; 
+		my $arg2 = shift; 
+		return
+		(ref($arg1) && $arg1->isa('Class::STL::Element') && ref($arg2) && $arg2->isa('Class::STL::Element'))
+			? $arg1->eq($arg2)
+			: (ref($arg2) && $arg2->isa('Class::STL::Element'))
+				? ($arg2->data_type() eq 'string') ? $arg1 eq $arg2->data() : $arg1 == $arg2->data()
+				: (ref($arg1) && $arg1->isa('Class::STL::Element'))
+					? ($arg1->data_type() eq 'string') ? $arg1->data() eq $arg2 : $arg1->data() == $arg2
+					: $arg1 == $arg2;
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -243,9 +375,16 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 	sub function_operator
 	{
 		my $self = shift;
-		my $arg1 = shift; # element object
-		my $arg2 = shift; # element object
-		return $arg1->ne($arg2);
+		my $arg1 = shift; 
+		my $arg2 = shift; 
+		return
+		(ref($arg1) && $arg1->isa('Class::STL::Element') && ref($arg2) && $arg2->isa('Class::STL::Element'))
+			? $arg1->ne($arg2)
+			: (ref($arg2) && $arg2->isa('Class::STL::Element'))
+				? ($arg2->data_type() eq 'string') ? $arg1 ne $arg2->data() : $arg1 != $arg2->data()
+				: (ref($arg1) && $arg1->isa('Class::STL::Element'))
+					? ($arg1->data_type() eq 'string') ? $arg1->data() ne $arg2 : $arg1->data() != $arg2
+					: $arg1 == $arg2;
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -255,9 +394,16 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 	sub function_operator
 	{
 		my $self = shift;
-		my $arg1 = shift; # element object
-		my $arg2 = shift; # element object
-		return $arg1->gt($arg2);
+		my $arg1 = shift; # element or scalar
+		my $arg2 = shift; # element or scalar
+		return
+		(ref($arg1) && $arg1->isa('Class::STL::Element') && ref($arg2) && $arg2->isa('Class::STL::Element'))
+			? $arg1->gt($arg2)
+			: (ref($arg2) && $arg2->isa('Class::STL::Element'))
+				? ($arg2->data_type() eq 'string') ? $arg1 gt $arg2->data() : $arg1 > $arg2->data()
+				: (ref($arg1) && $arg1->isa('Class::STL::Element'))
+					? ($arg1->data_type() eq 'string') ? $arg1->data() gt $arg2 : $arg1->data() > $arg2
+					: $arg1 > $arg2;
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -267,9 +413,16 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 	sub function_operator
 	{
 		my $self = shift;
-		my $arg1 = shift; # element object
-		my $arg2 = shift; # element object
-		return $arg1->ge($arg2);
+		my $arg1 = shift; 
+		my $arg2 = shift; 
+		return
+		(ref($arg1) && $arg1->isa('Class::STL::Element') && ref($arg2) && $arg2->isa('Class::STL::Element'))
+			? $arg1->ge($arg2)
+			: (ref($arg2) && $arg2->isa('Class::STL::Element'))
+				? ($arg2->data_type() eq 'string') ? $arg1 ge $arg2->data() : $arg1 >= $arg2->data()
+				: (ref($arg1) && $arg1->isa('Class::STL::Element'))
+					? ($arg1->data_type() eq 'string') ? $arg1->data() ge $arg2 : $arg1->data() >= $arg2
+					: $arg1 > $arg2;
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -279,9 +432,16 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 	sub function_operator
 	{
 		my $self = shift;
-		my $arg1 = shift; # element object
-		my $arg2 = shift; # element object
-		return $arg1->lt($arg2);
+		my $arg1 = shift; 
+		my $arg2 = shift; 
+		return
+		(ref($arg1) && $arg1->isa('Class::STL::Element') && ref($arg2) && $arg2->isa('Class::STL::Element'))
+			? $arg1->lt($arg2)
+			: (ref($arg2) && $arg2->isa('Class::STL::Element'))
+				? ($arg2->data_type() eq 'string') ? $arg1 lt $arg2->data() : $arg1 < $arg2->data()
+				: (ref($arg1) && $arg1->isa('Class::STL::Element'))
+					? ($arg1->data_type() eq 'string') ? $arg1->data() lt $arg2 : $arg1->data() < $arg2
+					: $arg1 > $arg2;
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -291,9 +451,16 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 	sub function_operator
 	{
 		my $self = shift;
-		my $arg1 = shift; # element object
-		my $arg2 = shift; # element object
-		return $arg1->le($arg2);
+		my $arg1 = shift; 
+		my $arg2 = shift; 
+		return
+		(ref($arg1) && $arg1->isa('Class::STL::Element') && ref($arg2) && $arg2->isa('Class::STL::Element'))
+			? $arg1->le($arg2)
+			: (ref($arg2) && $arg2->isa('Class::STL::Element'))
+				? ($arg2->data_type() eq 'string') ? $arg1 le $arg2->data() : $arg1 <= $arg2->data()
+				: (ref($arg1) && $arg1->isa('Class::STL::Element'))
+					? ($arg1->data_type() eq 'string') ? $arg1->data() le $arg2 : $arg1->data() <= $arg2
+					: $arg1 > $arg2;
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -303,9 +470,54 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 	sub function_operator
 	{
 		my $self = shift;
-		my $arg1 = shift; # element object
-		my $arg2 = shift; # element object
-		return $arg1->cmp($arg2);
+		my $arg1 = shift; 
+		my $arg2 = shift; 
+		return
+		(ref($arg1) && $arg1->isa('Class::STL::Element') && ref($arg2) && $arg2->isa('Class::STL::Element'))
+			? $arg1->cmp($arg2)
+			: (ref($arg2) && $arg2->isa('Class::STL::Element'))
+				? ($arg2->data_type() eq 'string') ? $arg1 cmp $arg2->data() : $arg1 <=> $arg2->data()
+				: (ref($arg1) && $arg1->isa('Class::STL::Element'))
+					? ($arg1->data_type() eq 'string') ? $arg1->data() cmp $arg2 : $arg1->data() <=> $arg2
+					: $arg1 > $arg2;
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
+	package Class::STL::Utilities::LogicalAnd;
+	use base qw(Class::STL::Utilities::FunctionObject::BinaryPredicate);
+	sub function_operator
+	{
+		my $self = shift;
+		my $arg1 = shift; 
+		my $arg2 = shift; 
+		return
+		(ref($arg1) && $arg1->isa('Class::STL::Element') && ref($arg2) && $arg2->isa('Class::STL::Element'))
+			? $arg1->and($arg2)
+			: (ref($arg2) && $arg2->isa('Class::STL::Element'))
+				? $arg1 && $arg2->data()
+				: (ref($arg1) && $arg1->isa('Class::STL::Element'))
+					? $arg1->data() && $arg2
+					: $arg1 && $arg2;
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
+	package Class::STL::Utilities::LogicalOr;
+	use base qw(Class::STL::Utilities::FunctionObject::BinaryPredicate);
+	sub function_operator
+	{
+		my $self = shift;
+		my $arg1 = shift; 
+		my $arg2 = shift; 
+		return
+		(ref($arg1) && $arg1->isa('Class::STL::Element') && ref($arg2) && $arg2->isa('Class::STL::Element'))
+			? $arg1->or($arg2)
+			: (ref($arg2) && $arg2->isa('Class::STL::Element'))
+				? $arg1 || $arg2->data()
+				: (ref($arg1) && $arg1->isa('Class::STL::Element'))
+					? $arg1->data() || $arg2
+					: $arg1 || $arg2;
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -315,9 +527,175 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 	sub function_operator
 	{
 		my $self = shift;
-		my $arg1 = shift; # element object
-		my $arg2 = shift; # regular expression string
-		return $arg1->match($arg2);
+		my $arg1 = shift;
+		my $arg2 = shift;
+		return
+		(ref($arg1) && $arg1->isa('Class::STL::Element') && ref($arg2) && $arg2->isa('Class::STL::Element'))
+			? $arg1->match($arg2)
+			: (ref($arg2) && $arg2->isa('Class::STL::Element'))
+				? $arg1 =~ /@{[ $arg2->data() ]}/
+				: (ref($arg1) && $arg1->isa('Class::STL::Element'))
+					? $arg1->data() =~ /@{[ $arg2 ]}/ 
+					: $arg1 =~ /$arg2/;
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
+	package Class::STL::Utilities::MatchesIC;
+	use base qw(Class::STL::Utilities::FunctionObject::BinaryPredicate);
+	sub function_operator
+	{
+		my $self = shift;
+		my $arg1 = shift; 
+		my $arg2 = shift;
+		return
+		(ref($arg1) && $arg1->isa('Class::STL::Element') && ref($arg2) && $arg2->isa('Class::STL::Element'))
+			? $arg1->match_ic($arg2)
+			: (ref($arg2) && $arg2->isa('Class::STL::Element'))
+				? $arg1 =~ /@{[ $arg2->data() ]}/i
+				: (ref($arg1) && $arg1->isa('Class::STL::Element'))
+					? $arg1->data() =~ /@{[ $arg2 ]}/i
+					: $arg1 =~ /$arg2/i;
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
+	package Class::STL::Utilities::Multiplies;
+	use base qw(Class::STL::Utilities::FunctionObject::BinaryFunction);
+	sub function_operator
+	{
+		my $self = shift;
+		my $arg1 = shift;
+		my $arg2 = shift; 
+		my $tmp;
+		if (ref($arg1) && $arg1->isa('Class::STL::Element') && ref($arg2) && $arg2->isa('Class::STL::Element'))
+		{
+			$tmp = $arg1->clone();
+			$tmp->mult($arg2);
+		}
+		elsif (ref($arg2) && $arg2->isa('Class::STL::Element'))
+		{
+			$tmp = $arg2->clone();
+			$tmp->data($tmp->data() * $arg1);
+		}
+	   	elsif (ref($arg1) && $arg1->isa('Class::STL::Element'))
+		{
+			$tmp = $arg1->clone();
+			$tmp->data($tmp->data() * $arg2);
+		}
+		return $tmp;
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
+	package Class::STL::Utilities::Plus;
+	use base qw(Class::STL::Utilities::FunctionObject::BinaryFunction);
+	sub function_operator
+	{
+		my $self = shift;
+		my $arg1 = shift;
+		my $arg2 = shift; 
+		my $tmp;
+		if (ref($arg1) && $arg1->isa('Class::STL::Element') && ref($arg2) && $arg2->isa('Class::STL::Element'))
+		{
+			$tmp = $arg1->clone();
+			$tmp->add($arg2);
+		}
+		elsif (ref($arg2) && $arg2->isa('Class::STL::Element'))
+		{
+			$tmp = $arg2->clone();
+			$tmp->data($tmp->data() + $arg1);
+		}
+	   	elsif (ref($arg1) && $arg1->isa('Class::STL::Element'))
+		{
+			$tmp = $arg1->clone();
+			$tmp->data($tmp->data() + $arg2);
+		}
+		return $tmp;
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
+	package Class::STL::Utilities::Minus;
+	use base qw(Class::STL::Utilities::FunctionObject::BinaryFunction);
+	sub function_operator
+	{
+		my $self = shift;
+		my $arg1 = shift;
+		my $arg2 = shift; 
+		my $tmp;
+		if (ref($arg1) && $arg1->isa('Class::STL::Element') && ref($arg2) && $arg2->isa('Class::STL::Element'))
+		{
+			$tmp = $arg1->clone();
+			$tmp->subtract($arg2);
+		}
+		elsif (ref($arg2) && $arg2->isa('Class::STL::Element'))
+		{
+			$tmp = $arg2->clone();
+			$tmp->data($arg1 - $arg2->data());
+		}
+	   	elsif (ref($arg1) && $arg1->isa('Class::STL::Element'))
+		{
+			$tmp = $arg1->clone();
+			$tmp->data($arg1->data() - $arg2);
+		}
+		return $tmp;
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
+	package Class::STL::Utilities::Modulus;
+	use base qw(Class::STL::Utilities::FunctionObject::BinaryFunction);
+	sub function_operator
+	{
+		my $self = shift;
+		my $arg1 = shift;
+		my $arg2 = shift; 
+		my $tmp;
+		if (ref($arg1) && $arg1->isa('Class::STL::Element') && ref($arg2) && $arg2->isa('Class::STL::Element'))
+		{
+			$tmp = $arg1->clone();
+			$tmp->mod($arg2);
+		}
+		elsif (ref($arg2) && $arg2->isa('Class::STL::Element'))
+		{
+			$tmp = $arg2->clone();
+			$tmp->data($arg1 % $arg2->data());
+		}
+	   	elsif (ref($arg1) && $arg1->isa('Class::STL::Element'))
+		{
+			$tmp = $arg1->clone();
+			$tmp->data($arg1->data() % $arg2);
+		}
+		return $tmp;
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
+	package Class::STL::Utilities::Divides;
+	use base qw(Class::STL::Utilities::FunctionObject::BinaryFunction);
+	sub function_operator
+	{
+		my $self = shift;
+		my $arg1 = shift;
+		my $arg2 = shift; 
+		my $tmp;
+		if (ref($arg1) && $arg1->isa('Class::STL::Element') && ref($arg2) && $arg2->isa('Class::STL::Element'))
+		{
+			$tmp = $arg1->clone();
+			$tmp->div($arg2);
+		}
+		elsif (ref($arg2) && $arg2->isa('Class::STL::Element'))
+		{
+			$tmp = $arg2->clone();
+			$tmp->data($arg1 / $arg2->data());
+		}
+	   	elsif (ref($arg1) && $arg1->isa('Class::STL::Element'))
+		{
+			$tmp = $arg1->clone();
+			$tmp->data($arg1->data() / $arg2);
+		}
+		return $tmp;
 	}
 }
 # ----------------------------------------------------------------------------------------------------

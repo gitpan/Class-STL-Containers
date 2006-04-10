@@ -13,41 +13,20 @@ $v->push_back($v->factory(data => 'second'));
 $v->push_back($v->factory(data => 'third'));
 $v->push_back($v->factory(data => 'fourth'));
 $v->push_back($v->factory(data => 'fifth'));
-::foreach($v->begin(), $v->end(), MyPrint->new());
-print 'Class::STL::Algorithms::foreach($v->begin(), $v->end(), MyUFunc->new());', "\n";
-::foreach($v->begin(), $v->end(), MyUFunc->new());
-::foreach($v->begin(), $v->end(), MyPrint->new());
+for_each($v->begin(), $v->end(), ptr_fun('::myprint'));
+print 'Class::STL::Algorithms::foreach($v->begin(), $v->end(), ptr_fun(\'uc\'));', "\n";
+for_each($v->begin(), $v->end(), ptr_fun('uc'));
+for_each($v->begin(), $v->end(), ptr_fun('::myprint'));
 print 'Class::STL::Algorithms::foreach($v->begin(), $v->end(), "something");', "\n";
-::foreach($v->begin(), $v->end(), mem_fun('something'));
+for_each($v->begin(), $v->end(), mem_fun('something'));
 
 print "Static Foreach with mem_fun():\n";
-::foreach($v->begin(), $v->end(), mem_fun('something'));
+for_each($v->begin(), $v->end(), mem_fun('something'));
 print "Static Foreach with unary-function-object:\n";
-::foreach($v->begin(), $v->end(), MyPrint->new());
+for_each($v->begin(), $v->end(), ptr_fun('::myprint'));
 
-# ----------------------------------------------------------------------------------------------------
-{
-	package MyPrint;
-	use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
-	sub function_operator
-	{
-		my $self = shift;
-		my $arg = shift;
-		print "Data:", $arg->data(), "\n";
-	}
-}
-# ----------------------------------------------------------------------------------------------------
-{
-	package MyUFunc;
-	use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
-	sub function_operator
-	{
-		my $self = shift;
-		my $arg = shift;
-		$arg->data(uc($arg->data()));
-	}
-}
-# ----------------------------------------------------------------------------------------------------
+sub myprint { print "Data:", @_, "\n"; }
+
 {
 	package MyElem;
 	use base qw(Class::STL::Element);
@@ -57,4 +36,3 @@ print "Static Foreach with unary-function-object:\n";
 		print "Something:", $self->data(), "\n";
 	}
 }
-# ----------------------------------------------------------------------------------------------------

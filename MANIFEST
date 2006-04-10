@@ -32,3 +32,4 @@ examples/sort.pl
 examples/swap.pl
 examples/tree.pl
 examples/vector.pl
+examples/transform.pl

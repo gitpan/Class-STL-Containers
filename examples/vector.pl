@@ -14,7 +14,7 @@ $v->push_back($v->factory(data => 'second'));
 $v->push_back($v->factory(data => 'third'));
 $v->push_back($v->factory(data => 'fourth'));
 $v->push_back($v->factory(data => 'fifth'));
-::foreach($v->begin(), $v->end(), MyPrint->new());
+for_each($v->begin(), $v->end(), MyPrint->new());
 
 my $e = $v->at(0);
 print 'Element-0:'; MyPrint->new()->function_operator($e);
@@ -30,7 +30,7 @@ print '$v->push_back($v->factory(data => \'sixth\'));', "\n";
 $v->pop_back();
 $v->push_back($v->factory(data => 'sixth'));
 
-::foreach($v->begin(), $v->end(), MyPrint->new());
+for_each($v->begin(), $v->end(), MyPrint->new());
 
 print "Erase:\n";
 $v->clear();
@@ -39,7 +39,7 @@ $v->push_back($v->factory(data => 'second'));
 $v->push_back($v->factory(data => 'third'));
 $v->push_back($v->factory(data => 'fourth'));
 $v->push_back($v->factory(data => 'fifth'));
-::foreach($v->begin(), $v->end(), MyPrint->new());
+for_each($v->begin(), $v->end(), MyPrint->new());
 
 print '$i1 = $v->begin(); $i2 = $v->end(); $i1++; $i2--;', "\n";
 my $i1 = $v->begin();
@@ -48,7 +48,7 @@ $i1++;
 $i2--;
 print '$v->erase($i1, $i2);', "\n";
 print $v->erase($i1, $i2), " Elements Deleted.\n";
-::foreach($v->begin(), $v->end(), MyPrint->new());
+for_each($v->begin(), $v->end(), MyPrint->new());
 
 # ----------------------------------------------------------------------------------------------------
 {

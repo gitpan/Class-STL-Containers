@@ -41,6 +41,7 @@ $BUILD = 'Monday March 27 21:08:34 GMT 2006';
 {
 	package Class::STL::Element;
 	use UNIVERSAL qw(isa can);
+	use Carp qw(confess);
 	sub BEGIN { Class::STL::DataMembers->new(qw( data data_type )); }
 	sub new
 	{
@@ -66,13 +67,12 @@ $BUILD = 'Monday March 27 21:08:34 GMT 2006';
 				$self->data($p->data());
 				$self->data_type($p->data_type());
 			}
+			else
+			{
+				$self->data($p);
+			}
 		}
 		return $self;
-	}
-	sub clone
-	{
-		my $self = shift;
-		return $self->new($self);
 	}
 	sub eq # (element)
 	{
@@ -135,18 +135,78 @@ $BUILD = 'Monday March 27 21:08:34 GMT 2006';
 		my $other = shift;
 		return $self->eq($other) ? 0 : $self->lt($other) ? -1 : 1;
 	}
-#<	sub match # (element)
-#<	{
-#<		my $self = shift;
-#<		my $regex = shift;
-#<		return $self->data() =~ /@{[ $regex ]}/ ? $self : 0;
-#<	}
-#<	sub print # (UnaryFunction)
-#<	{
-#<		my $self = shift;
-#<		my $util = shift;
-#<		$util->do($self);
-#<	}
+	sub mod # (element)
+	{
+		my $self = shift;
+		my $other = shift;
+		return ref($self->data()) && $self->data()->can('mod')
+			? $self->data()->mod($other)
+			: $self->data($self->data() % $other->data());
+	}
+	sub add # (element)
+	{
+		my $self = shift;
+		my $other = shift;
+		return ref($self->data()) && $self->data()->can('add')
+			? $self->data()->add($other)
+			: $self->data($self->data() + $other->data());
+	}
+	sub subtract # (element)
+	{
+		my $self = shift;
+		my $other = shift;
+		return ref($self->data()) && $self->data()->can('subtract')
+			? $self->data()->subtract($other)
+			: $self->data($self->data() - $other->data());
+	}
+	sub mult # (element)
+	{
+		my $self = shift;
+		my $other = shift;
+		return ref($self->data()) && $self->data()->can('mult')
+			? $self->data()->mult($other)
+			: $self->data($self->data() * $other->data());
+	}
+	sub div # (element)
+	{
+		my $self = shift;
+		my $other = shift;
+		return ref($self->data()) && $self->data()->can('div')
+			? $self->data()->div($other)
+			: $self->data($self->data() / $other->data());
+	}
+	sub and # (element)
+	{
+		my $self = shift;
+		my $other = shift;
+		return ref($self->data()) && $self->data()->can('and')
+			? $self->data()->and($other)
+			: $self->data() && $other->data();
+	}
+	sub or # (element)
+	{
+		my $self = shift;
+		my $other = shift;
+		return ref($self->data()) && $self->data()->can('or')
+			? $self->data()->or($other)
+			: $self->data() || $other->data();
+	}
+	sub match # (element)
+	{
+		my $self = shift;
+		my $other = shift;
+		return ref($self->data()) && $self->data()->can('match')
+			? $self->data()->match($other)
+			: $self->data() =~ /@{[ $other->data() ]}/;
+	}
+	sub match_ic # (element)
+	{
+		my $self = shift;
+		my $other = shift;
+		return ref($self->data()) && $self->data()->can('match_ic')
+			? $self->data()->match_ic($other)
+			: $self->data() =~ /@{[ $other->data() ]}/i;
+	}
 }
 # ----------------------------------------------------------------------------------------------------
 1;

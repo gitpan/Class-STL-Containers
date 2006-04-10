@@ -14,7 +14,7 @@ $v->push($v->factory(data => 'third'));
 $v->push($v->factory(data => 'fourth'));
 $v->push($v->factory(data => 'fifth'));
 
-::foreach($v->begin(), $v->end(), MyPrint->new());
+for_each($v->begin(), $v->end(), MyPrint->new());
 print "Back:"; MyPrint->new()->function_operator($v->back());
 print "Front:"; MyPrint->new()->function_operator($v->front());
 print '$v->pop();', "\n";

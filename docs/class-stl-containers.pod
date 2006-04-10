@@ -10,139 +10,77 @@ Class::STL::Containers - Perl extension for STL-like object management
   use Class::STL::Algorithms;
   use Class::STL::Utilities;
   use Class::STL::Iterators;
+  use Class::STL::DataMembers;
 
   # Deque container...
-  my $d = deque();
-  $d->push_back($d->factory(data => 'first'));
-  $d->push_back($d->factory(data => 'second'));
-  $d->push_back($d->factory(data => 'third'));
-  $d->push_back($d->factory(data => 'fourth'));
-  $d->push_back($d->factory(data => 'fifth'));
-  $d->push_front($d->factory(data => 'seventh'));
+  my $d = deque(qw(first second third fourth));
+  $d->push_back($d->factory('fifth'));
+  $d->push_front($d->factory('seventh'));
   $d->pop_front(); # remove element at front.
   $d->pop_back(); # remove element at back.
-  ::foreach($d->begin(), $d->end(), MyPrint->new());
+  for_each($d->begin(), $d->end(), ptr_fun('::myprint'));
+  
+  sub myprint { print "Data:", @_, "\n"; }
 
-  # MyPrint Unary Function -- used in ::foreach() above...
-  {
-    package MyPrint;
-    use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
-    sub function_operator
-    {
-      my $self = shift;
-      my $arg = shift;
-      print "Data:", $arg->data(), "\n";
-    }
-  }
+  # Copy constructor...
+  my $d_copy($d);
 
   # Algorithms -- find_if()
   print "Element 'second' was ", 
-    find_if($d->begin(), $d->end(), MyFind->new(what => 'second')) 
+    find_if($d->begin(), $d->end(), bind1st(equal_to(), 'second')) 
       ? 'found' : 'not found', "\n";
-
-  # MyFind Unary Function -- used in find_if() above...
-  {
-    package MyFind;
-    use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
-    sub BEGIN { Class::STL::DataMembers->new( qw( what ) ); }
-    sub new
-    {
-      my $self = shift;
-      my $class = ref($self) || $self;
-      $self = $class->SUPER::new(@_);
-      bless($self, $class);
-      $self->members_init(@_);
-      return $self;
-    }
-    sub function_operator
-    {
-      my $self = shift;
-      my $arg = shift;
-      return $arg->data() eq $self->what() ? $arg : 0;
-    }
-  }
 
   # Algorithms -- count_if()
   print "Number of elements matching /o/ = ",
-    count_if($d->begin(), $d->end(), MyMatch->new(what => 'o')),
+    count_if($d->begin(), $d->end(), bind2nd(matches(), 'o')),
 	"\n"; # prints '2' -- matches 'second' and 'fourth'
+
+  # Algorithms -- transform()
+  transform($d->begin(), $d->end(), $d2->begin(), ptr_fun('ucfirst'));
+  transform($d->begin(), $d->end(), $d2->begin(), $d3->begin(), ptr_fun_binary('::mybfun'));
+  sub mybfun { return $_[0] . '-' . $_[1]; }
 
   # Function Adaptors -- bind1st
   remove_if($v->begin(), $v->end(), bind1st(equal_to(), $v->back()));
     # remove element equal to back() -- ie remove last element.
-  remove_if($v->begin(), $v->end(), MyMatch->new(what => '^fi'));
+  remove_if($v->begin(), $v->end(), bind2nd(matches(), '^fi'));
     # remove all elements that match reg-ex '^fi'
 
   # Sort list according to elements cmp() function
   $v->sort();
 
-  # Swap two elements
-  $v->swap($v->front(), $v->back());
-
   # Queue containers -- FIFO
-  my $v = Class::STL::Containers::Queue->new();
-  $v->push($v->factory(data => 'first'));
-  $v->push($v->factory(data => 'second'));
-  $v->push($v->factory(data => 'third'));
-  $v->push($v->factory(data => 'fourth'));
-  $v->push($v->factory(data => 'fifth'));
-  print 'Back:'; MyPrint->new()->function_operator($v->back()); # Back:fifth
-  print 'Front:'; MyPrint->new()->function_operator($v->front()); # Front:first
+  my $v = queue(qw(first second third fourth fifth));
+  print 'Back:', $v->back()->data(), "\n" # Back:fifth
+  print 'Front:', $v->front()->data(), "\n" # Front:first
   $v->pop(); # pop element first in
-  $v->push($v->factory(data => 'sixth'));
-  print 'Back:'; MyPrint->new()->function_operator($v->back()); # Back:sixth
-  print 'Front:'; MyPrint->new()->function_operator($v->front()); # Front:second
+  $v->push($v->factory('sixth')), "\n"
+  print 'Back:', $v->back()->data(), "\n" # Back:sixth
+  print 'Front:', $v->front()->data(), "\n" # Front:second
 
   # Iterators
-  for (my $i = $v->begin(); !$v->at_end(); $i++)
+  for (my $i = $v->begin(); !$i->at_end(); ++$i)
   {
-	MyPrint->new()->function_operator($i->p_element());
+	print "Data:", $i->p_element()->data();
   }
 
   # Iterators -- reverse_iterator
   my $ri = reverse_iterator($v->iter())->first();
   while (!$ri->at_end())
   {
-	MyPrint->new()->function_operator($ri->p_element());
-	$ri->next();
-  }
-
-  # MyMatch unary function -- used above in count_if()...
-  {
-    package MyMatch;
-    use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
-    sub BEGIN { Class::STL::DataMembers->new( qw( what ) ); }
-    sub new
-    {
-      my $self = shift;
-      my $class = ref($self) || $self;
-      $self = $class->SUPER::new(@_);
-      bless($self, $class);
-      $self->members_init(@_);
-      return $self;
-    }
-    sub function_operator
-    {
-      my $self = shift;
-      my $arg = shift;
-      return ($arg->data() =~ /@{[ $self->what() ]}/i) ? $arg : 0;
-    }
+	print "Data:", $ri->p_element()->data();
+	++$ri;
   }
 
   # Vector container...
-  my $v = vector();
-  $v->push_back($v->factory(data => 'first'));
-  $v->push_back($v->factory(data => 'second'));
-  $v->push_back($v->factory(data => 'third'));
-  $v->push_back($v->factory(data => 'fourth'));
-  $v->push_back($v->factory(data => 'fifth'));
+  my $v = vector(qw(first second third fourth fifth));
   
   my $e = $v->at(0); # return pointer to first element.
-  print 'Element-0:'; MyPrint->new()->function_operator($e);# Element-0:first
+  print 'Element-0:', $e->data(), "\n";   # Element-0:first
   $e = $v->at($v->size()-1); # return pointer to last element.
-  print 'Element-last:'; MyPrint->new()->function_operator($e);# Element-last:fifth
+  print 'Element-last:', $e->data(), "\n";  # Element-last:fifth
   $e = $v->at(2); # return pointer to 3rd element (idx=2).
-  print 'Element-2:'; MyPrint->new()->function_operator($e);# Element-2:third
+  print 'Element-2:', $e->data(), "\n";   # Element-2:third
 
   # Priority Queue
   my $p = priority_queue();
@@ -156,23 +94,214 @@ Class::STL::Containers - Perl extension for STL-like object management
   $p->push($p->factory(priority => 12, data => 'twelve-2'));
   $p->push($p->factory(priority => 20, data => 'twenty'), $p->factory(priority => 0, data => 'zero'));
   print "\$p->size()=", $p->size(), "\n";
-  print "\$p->top():"; MyPrint->new()->function_operator($p->top());
+  print "\$p->top():", $p->top(), "\n";
   $p->top()->priority(7); # change priority for top element.
   $p->refresh(); # refresh required after priority change.
   $p->pop(); # remove element with highest priority.
-  print "\$p->top():"; MyPrint->new()->function_operator($p->top());
+  print "\$p->top():", $p->top(), "\n";
+
+  # Clone $d container into $d1...
+  my $d1 = $d->clone();
+
+  my $d2 = deque(qw(sixth seventh eight));
+
+  # Append $d container to end of $d2 container...
+  $d2 += $d;
+
+  # DataMembers -- Class builder helper...
+  {
+    package MyClass;
+    sub BEGIN 
+    { 
+      Class::STL::DataMembers->new(qw( attrib1 attrib2 ), # simple data members
+        Class::STL::DataMembers::Attributes->new(  # complex data members
+          name => 'attrib3', default => '100', validate => '^\d+$',
+          name => 'attrib4', default => 'med', validate => '^(high|med|low)$')
+      ); # our named arguments
+    } 
+    sub new
+    {
+        my $self = shift;
+        my $class = ref($self) || $self;
+        $self = $class->SUPER::new(@_);
+        bless($self, $class);
+        $self->members_init(@_); # initialise any named arguments.
+        return $self;
+    }
+  }
+  my $cl = MyClass->new(attrib1 => 'hello', attrib2 => 'world');
+  print $cl->attrib1(), " ", $cl->attrib2(), "\n"; # 'hello world'
+  $cl->attrib1(ucfirst($cl->attrib1));
+  $cl->attrib2(ucfirst($cl->attrib2));
+  print $cl->attrib1(), " ", $cl->attrib2(), "\n"; # 'Hello World'
+  $cl->attrib4('avg'); # Causes progam to die with '** Function attrib2 value failed validation...'
+
+  # MakeFind -- Class builder helper...
+  # MakeFind is only available to classes derived from Class::STL::Containers::Abstract.
+  {
+    package MyContainerClass;
+    use base qw(Class::STL::Containers::Vector);
+    sub begin
+    {
+      Class::STL::DataMembers->new(qw( name value ));
+      Class::STL::Containers::MakeFind(qw( name )); # Create find() function based on 'name' members.
+    }
+    sub new
+    {
+        my $self = shift;
+        my $class = ref($self) || $self;
+        $self = $class->SUPER::new(@_);
+        bless($self, $class);
+        $self->members_init(@_); # initialise any named arguments.
+        return $self;
+    }
+  }
+  my $cl = MyContainerClass->new();
+  $cl->push_back($cl->factory(name => 'red', value => 100));
+  $cl->push_back($cl->factory(name => 'blue', value => 102));
+  $cl->push_back($cl->factory(name => 'green', value => 104));
+  $cl->push_back($cl->factory(name => 'orange', value => 107));
+  print "Green value=", $cl->find('green')->value(), "\n"; # 'Green value=104';
+    # find element where name eq 'green';
 
 
 =head1 DESCRIPTION
 
-These modules provide object container management with a framework similar to STL 
-(Standard Template Library from C++).  The usual container types are provided (list, 
-vector, deque, queue, stack, priority_queue and also, tree) together with some basic 
-algorithms (find_if, remove_if, foreach), utilities, and a very basic iterator type. 
+This package provides a framework for rapid Object Oriented Perl application development. It consists of a number of base classes that are similar to the C++/STL framework, plus a number of I<helper> classes which provide the I<glue> to transparently generate common functions, and will enable you to put your Perl application together very quickly. 
 
 
-This package is usefull as a base framework for OO Perl applications development. It provides a number 
-of shortcuts for building Classes and It will help you to get up and going very quickly with Perl OO program development.
+The I<STL> functionality provided consists of F<containers>, F<algorithms>, F<utilities> and F<iterators> as follows:
+
+=item F<Containers>
+
+vector, list, deque, queue, priority_queue, stack, tree.
+
+
+=item F<Iterators>
+
+iterator, bidirectional_iterator, reverse_iterator, forward_iterator.
+
+
+=item F<Algorithms>
+
+find, find_if, for_each, transform, count, count_if, copy, copy_backward, remove, remove_if, remove_copy, remove_copy_if, replace, replace_if, replace_copy, replace_copy_if.
+
+
+=item F<Utilities>
+
+equal_to, not_equal_to, greater, greater_equal, less, less_equal, compare, bind1st, bind2nd, mem_fun, ptr_fun, ptr_fun_binary, matches, matches_ic, logical_and, logical_or, multiplies, divides, plus, minus, modulus.
+
+
+=head2 F<Differences From C++/STL>
+
+
+Most of the functions have the same arguments and return types as their STL equivalent. There are some differences though between the C++/STL and this implementation:
+
+
+=item The I<end()> Function
+
+This function will return a newly constructed iterator object which will point to the I<last> element within the container, unlike the C++/STL equivalent which points to I<after> the last element. 
+
+
+=item The I<tree> Container
+
+This container provides a hierarchical tree structure. Each element within a I<tree> container can be either a simple element or another container object. The I<algorithms> and overridden I<to_array> functions will traverse the tree and pocess all element I<nodes> within the tree.
+
+
+=item Utilities I<matches>, I<matches_ic> functions
+
+These utilities provide unary functions for regular expression matching. The first or second argument will be a regular expression string. The I<match_ic> provides case insensitive matching.
+
+
+=item Container I<append> function
+
+This function and the overridden C<+>, C<+=> operators will combine the two containers together.
+
+
+=item The I<clone> function
+
+This function returns a newly constructed object that is a copy of its caller object. 
+
+
+=item The Container I<to_array> function
+
+This function will return an array consisting of all element objects within the container.
+
+
+=item Container I<element> type
+
+All containers contain collections of objects which are of type F<Class::STL::Element>, or classes derived from this type. The container classes are themselves, ultimately, derived from this I<element> type.
+
+
+
+=cut --------------------------------------------------------------------------------
+
+=head1 F<CLASS Class::STL::DataMembers>
+
+This I<helper> class can be used to generate code for various basic class functions. An object of this class should be constructed (and destroyed) in the F<BEGIN> subroutine for the target class. Construction is done via its I<new> function. This function requires a list consisting of target data member names, or I<Class::STL::DataMembers::Attributes> objects. When using I<DataMembers> B<ALL> data members should be included in order for the generated I<clone> and I<swap> functions to function correctly. 
+
+
+A debug version of I<new>, I<new_debug> can be used to display the generated code. The following target member functions will be generated and made available to the class:
+
+
+=item Data Member Accessor Get/Put Function
+
+This function will have the same name as the data member and should be used to I<set> or I<get> the value for the data member. Pass the value as the argument when setting the value for a data member. For I<comlpex> data members with a F<validate> attribute, a validation check will be performed when attempting to set the member value by matching the value against the I<validate> regular expression string.
+
+
+=item Class I<members_init()> Function
+
+This function should be called in the target class's I<new> function after I<$self> has been blessed. It will perform the necessary data members initialisation.
+
+
+=item Class I<clone()> Function
+
+This function will construct and return an object containing a copy of the caller object.
+
+
+=item Class I<swap()> Function
+
+This function requires one argument consisting of an object of the same type as the caller. It will swap the caller object with this I<other> object.
+
+
+=item Class::STL::DataMembers::Attributes
+
+For more complex data members, this class may be used to provide additional information about the member. This information consist of: F<name>, F<default>, and F<validate>. The F<name> attribute contains the member name; the F<default> attribute contains a default value for the member when initialised; the F<validate> attribute consists of a regular expression string that will be used to validate the member value by matching it to this regex string.
+
+=head2 Example
+
+=begin
+
+  use Class::STL::DataMembers;
+  {
+    package MyClass;
+    sub BEGIN 
+    { 
+      Class::STL::DataMembers->new(qw( attrib1 attrib2 ), # simple data members
+        Class::STL::DataMembers::Attributes->new(  # complex data members
+          name => 'attrib3', default => '100', validate => '^\d+$',
+          name => 'attrib4', default => 'med', validate => '^(high|med|low)$')
+      ); # our named arguments
+    } 
+    sub new
+    {
+        my $self = shift;
+        my $class = ref($self) || $self;
+        $self = $class->SUPER::new(@_);
+        bless($self, $class);
+        $self->members_init(@_); # initialise any named arguments.
+        return $self;
+    }
+  }
+  my $cl = MyClass->new(attrib1 => 'hello', attrib2 => 'world');
+  print $cl->attrib1(), " ", $cl->attrib2(), "\n"; # 'hello world'
+  $cl->attrib1(ucfirst($cl->attrib1));
+  $cl->attrib2(ucfirst($cl->attrib2));
+  print $cl->attrib1(), " ", $cl->attrib2(), "\n"; # 'Hello World'
+  $cl->attrib4('avg'); # Causes progam to die with '** Function attrib2 value failed validation...'
+
+=end
+
 
 =cut --------------------------------------------------------------------------------
 
@@ -195,20 +324,35 @@ This is the I<abstract> base class for all other container classes. Objects shou
 
 =item F<new>
 
-I<container-ref new ( [ option-hash ] );>
+I<container-ref new ( [ named-argument-list ] );>
 
 I<container-ref new ( container-ref );>
 
 I<container-ref new ( element [, ...] );>
 
+I<container-ref new ( iterator-start [, iterator-finish ] );>
 
-The I<new> function constructs an object for this class and returns a blessed reference to this object. All forms accept an optional I<hash> containing any of the following key-value pairs: I<name>, I<element_type>.
-
-
-The second form is a I<copy constructor>. It requires another container reference as the argument and will return a copy of this container.
+I<container-ref new ( raw-data [, ... ] );>
 
 
-The third for requires one or more element refs as arguments. These elements will be copied into the newly constructed container.
+The I<new> function constructs an object for this class and returns a blessed reference to this object. All forms accept an optional I<hash> containing any of the following named arguments: I<data_type>. The I<data_type> defines the class type of element objects that the container will hold.
+
+
+The second form is a I<copy constructor>. It requires another container reference as the argument, and will return a copy of this container.
+
+
+The third form requires one or more element refs as arguments. These elements will be copied into the newly constructed container.
+
+
+The fourth form requires one I<start> iterator and an optional I<finish> iterator. All the element objects with, and including, the I<start> and I<finish> (or I<end> if not specified) positions will be copied into the newly constructed container.
+
+
+The fifth form accepts a list of raw data values. Each of these values will be stored inside a F<Class::STL::Element> object constructed by the container's I<factory> function, with the element's I<data> member containing the raw data value.
+
+
+=item F<clone>
+
+Returns a newly constructed object which is identical to the calling (this) object.
 
 
 =item F<factory>
@@ -218,18 +362,33 @@ I<element-ref factory ( %attributes );>
 The I<factory> function constructs a new element object and returns a reference to this. The type of object created is as specified by the I<element_type> container attribute. The I<attributes> argument consists of a hash and is passed on to the element class I<new> function. Override this function if you want to avoid the 'eval' call.
 
 
-=item F<swap>
-
-I<void swap ( element-1, element-2 );>
-
-This function will swap the positions within the container of the two elements specified in the aruments.
-
-
 =item F<erase>
 
 I<int erase ( iterator-start [, iterator-finish ] );>
 
 The I<erase> function requires one starting iterator and an optional finish iterator as arguments. It will delete all the elements within the container within, and including, these two iterator positions. The I<erase> funtion returns the number of elements deleted.
+
+
+=item F<insert>
+
+I<void insert ( position, iterator-start, iterator-finish );>
+
+I<void insert ( position, iterator-start );>
+
+I<void insert ( position, element [, ...] );>
+
+I<void insert ( position, size, element );>
+
+The first form will insert copies of elements within the I<iterator-start> and I<iterator-finish> positions before I<position>.
+
+
+The second form will insert copies of elements within the I<iterator-start> and I<end> positions before I<position>
+
+
+The third form will insert the element, or elements (I<not copies>) before I<position>.
+
+
+The fourth form will insert I<size> copies of I<element> before I<position>.
 
 
 =item F<pop>
@@ -257,14 +416,14 @@ This function will delete all the elements from the container.
 
 I<iterator-ref begin ( );>
 
-The I<begin> function constructs and returns a new iterator object which points to the first element within the container. 
+The I<begin> function constructs and returns a new iterator object which points to the I<front> element within the container. 
 
 
 =item F<end>
 
 I<iterator-ref end ( );>
 
-The I<end> function constructs and returns a new iterator object which points to the last element within the container. **Note that, unlike C++/STL, this object points to the last element and not I<after the last element>.
+The I<end> function constructs and returns a new iterator object which points to the F<back> element within the container. **Note that, unlike C++/STL, this object points to the last element and not I<after the last element>.
 
 
 =item F<rbegin>
@@ -316,32 +475,19 @@ I<bool ne ( container-ref );>
 Inverse of I<eq> function.
 
 
-=item F<gt>
+=item F<operator +>, F<operator +=>
 
-I<bool gt ( container-ref );>
-
-Similar to I<eq> function except comparison done for I<greater-than> using elements I<gt> function.
+Append containers.
 
 
-=item F<ge>
+=item F<operator == >
 
-I<bool ge ( container-ref );>
-
-Similar to I<eq> function except comparison done for I<greater-than-or-equal> using elements I<ge> function.
+Containers equality comparison.
 
 
-=item F<lt>
+=item F<operator != >
 
-I<bool lt ( container-ref );>
-
-Similar to I<eq> function except comparison done for I<less-than> using elements I<lt> function.
-
-
-=item F<le>
-
-I<bool le ( container-ref );>
-
-Similar to I<eq> function except comparison done for I<less-than-or-equal> using elements I<le> function.
+Containers non-equality comparison.
 
 
 =back
@@ -380,15 +526,7 @@ The I<sort> function will alter the order of the elements in list by sorting the
   use Class::STL::Containers;
 
   # Construct the list object:
-  my $list = list();
-
-  # Append elements to the list; 
-  # Elements are constructed with the factory function:
-  $list->push_back($list->factory(data => 'first')); 
-  $list->push_back($list->factory(data => 'second')); 
-  $list->push_back($list->factory(data => 'third'));
-  $list->push_back($list->factory(data => 'fourth'));
-  $list->push_back($list->factory(data => 'fifth'));
+  my $list = list(qw( first second third fourth fifth));
 
   # Display the number of elements in the list:
   print "Size:", $list->size(), "\n"; # Size:5
@@ -397,13 +535,13 @@ The I<sort> function will alter the order of the elements in list by sorting the
   $list->reverse(); 
 
   # Display the contents of the element at the front of the list:
-  print 'Front:'; MyPrint->new()->function_operator($list->back()); 
+  print 'Front:', $list->front(), "\n";
 
   # Display the contents of the element at the back of the list:
-  print 'Back:'; MyPrint->new()->function_operator($list->back()); 
+  print 'Back:', $list->back(), "\n";
 
   # Display the contents of all the elements in the list:
-  ::foreach($list->begin(), $list->end(), MyPrint->new());
+  for_each($list->begin(), $list->end(), MyPrint->new());
 
   # Return an array of all elements-refs:
   my @arr = $l1->to_array(); 
@@ -415,7 +553,7 @@ The I<sort> function will alter the order of the elements in list by sorting the
   print '$list container is ', 
     $list->empty() ? 'empty' : 'not empty', "\n"; 
 
-  # MyPrint Unary Function -- used in ::foreach() above...
+  # MyPrint Unary Function -- used in for_each() above...
   {
     package MyPrint;
     use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
@@ -620,7 +758,7 @@ The overridden I<to_array> function will traverse the tree and return an array c
   $tree->push_back($tree->factory($t2));
 
   # Search for element ('pink') in tree:
-  if (my $f = find_if($tree->begin(), $tree->end(), MyFind->new(what => 'pink'))
+  if (my $f = find_if($tree->begin(), $tree->end(), bind1st(equal_to(), 'pink'))
     print "FOUND:", $f->data(), "\n";
   } else {
     print "'pink' NOT FOUND", "\n";
@@ -685,7 +823,7 @@ This module contains various algorithm functions.
 
 =head2 Exports
 
-F<remove_if>, F<find_if>, F<foreach>, F<transform>, F<count_if>.
+F<remove_if>, F<find_if>, F<for_each>, F<transform>, F<count_if>, F<find>, F<count>, F<copy>, F<copy_backward>, F<remove>, F<remove_copy>, F<remove_copy_if>, F<replace>, F<replace_if>, F<replace_copy>, F<replace_copy_if>, 
 
 
 The F<Algorithms> package consists of various I<static> algorithm functions.
@@ -694,6 +832,77 @@ The I<unary-function-object> argument must be derived from I<Class::STL::Utiliti
 
 
 =over
+
+=item F<for_each>
+
+
+I<void for_each ( iterator-start, iterator-finish, unary-function-object );>
+
+
+The I<for_each> function will traverse the container starting from I<iterator-start> and ending at I<iterator-finish> and execute the I<unary-function-object> with the element passed in as the argument.  
+
+
+=item F<transform>
+
+
+I<void transform ( iterator-start, iterator-finish, iterator-result, unary-function );>
+
+I<void transform ( iterator-start, iterator-finish, iterator-start2, iterator-result, binary-function );>
+
+
+The I<transform> functions has two forms. The first form will traverse the container starting from I<iterator-start> and ending at I<iterator-finish> and execute the I<unary-function> with the element passed in as the argument, producing I<iterator-result>. 
+
+
+The second form will traverse two containers with the second one starting from I<iterator-start2>. The I<binary-function> will be called for each pair of elements. The resulting elements will be placed in I<iterator-result>.
+
+
+=item F<count>
+
+
+I<int count ( iterator-start, iterator-finish, element-ref );>
+
+
+=item F<count_if>
+
+
+I<int count_if ( iterator-start, iterator-finish, unary-function-object );>
+
+
+The I<count_if> function will traverse the container starting from I<iterator-start> and ending at I<iterator-finish> and return a count of the elements that evaluate to true by the I<unary-function-object>. 
+
+
+=item F<find>
+
+
+I<iterator-ref find ( iterator-start, iterator-finish, element-ref );>
+
+
+=item F<find_if>
+
+
+I<iterator-ref find_if ( iterator-start, iterator-finish, unary-function-object );>
+
+
+The I<find_if> function will traverse the container starting from I<iterator-start> and ending at I<iterator-finish> and return an I<iterator> pointing to the first element that evaluate to true by the I<unary-function-object>. If no elements evaluates to true then 'o' is returned.
+
+
+=item F<copy>
+
+
+I<void copy ( iterator-start, iterator-finish, iterator-result );>
+
+
+=item F<copy_backward>
+
+
+I<void copy_backward ( iterator-start, iterator-finish, iterator-result );>
+
+
+=item F<remove>
+
+
+I<void remove ( iterator-start, iterator-finish, element-ref );>
+
 
 =item F<remove_if>
 
@@ -704,40 +913,40 @@ I<void remove_if ( iterator-start, iterator-finish, unary-function-object );>
 The I<remove_if> function will traverse the container starting from I<iterator-start> and ending at I<iterator-finish> and remove the elements that evaluate to true by the I<unary-function-object>.  
 
 
-=item F<find_if>
+=item F<remove_copy>
 
 
-I<element-ref find_if ( iterator-start, iterator-finish, unary-function-object );>
+I<void remove_copy ( iterator-start, iterator-finish, iterator-result, element-ref );>
 
 
-The I<find_if> function will traverse the container starting from I<iterator-start> and ending at I<iterator-finish> and return the first element that evaluate to true by the I<unary-function-object>. If no elements evaluates to true then 'o' is returned.
+=item F<remove_copy_if>
 
 
-=item F<foreach>
+I<void remove_copy_if ( iterator-start, iterator-finish, iterator-result, unary-function-object );>
 
 
-I<void foreach ( iterator-start, iterator-finish, unary-function-object );>
+=item F<replace>
 
 
-The I<foreach> function will traverse the container starting from I<iterator-start> and ending at I<iterator-finish> and execute the I<unary-function-object> with the element passed in as the argument.  
+I<void replace ( iterator-start, iterator-finish, old-element-ref, new-element-ref );>
 
 
-=item F<transform>
+=item F<replace_if>
 
 
-I<void transform ( iterator-start, iterator-finish, unary-function-object );>
+I<void replace_if ( iterator-start, iterator-finish, unary-function-object, new-element-ref );>
 
 
-The I<transform> function will traverse the container starting from I<iterator-start> and ending at I<iterator-finish> and execute the I<unary-function-object> with the element passed in as the argument.  
+=item F<replace_copy>
 
 
-=item F<count_if>
+I<void replace_copy ( iterator-start, iterator-finish, iterator-result, old-element-ref, new-element-ref );>
 
 
-I<int count_if ( iterator-start, iterator-finish, unary-function-object );>
+=item F<replace_copy_if>
 
 
-The I<count_if> function will traverse the container starting from I<iterator-start> and ending at I<iterator-finish> and return a count of the elements that evaluate to true by the I<unary-function-object>. 
+I<void replace_copy_if ( iterator-start, iterator-finish, iterator-result, unary-function-object, new-element-ref );>
 
 
 =back
@@ -751,75 +960,24 @@ The I<count_if> function will traverse the container starting from I<iterator-st
   use Class::STL::Utilities;
 
   # Display all elements in list container '$list' 
-  # using unary-function-object 'MyPrint' and algorithm 'foreach':
-  ::foreach($list->begin(), $list->end(), MyPrint->new());
+  # using unary-function 'myprint' and algorithm 'for_each':
+  for_each($list->begin(), $list->end(), ptr_fun('::myprint'));
+  sub myprint { print "Data:", @_, "\n"; }
 
   # Algorithms -- remove_if()
   # Remove element equal to back() -- ie remove last element:
   remove_if($list->begin(), $list->end(), bind1st(equal_to(), $list->back()));
 
   # Remove all elements that match regular expression '^fi':
-  remove_if($v->begin(), $v->end(), MyMatch->new(what => '^fi'));
+  remove_if($v->begin(), $v->end(), bind2nd(matches(), '^fi'));
 
   # Search for element ('pink') in tree:
-  if (my $f = $tree->find_if(MyFind->new("pink"))) {
-    print "FOUND:", $f->data(), "\n";
+  if (my $f = $tree->find_if($tree->begin(), $tree->end(), bind1st(equal_to(), "pink"))) {
+    print "FOUND:", $f->p_element()->data(), "\n";
   } else {
     print "'pink' NOT FOUND", "\n";
   }
 
-  # MyPrint unary function object:
-  {
-    package MyPrint;
-    use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
-    sub function_operator
-    {
-      my $self = shift;
-      my $arg = shift;
-      print "Data:", $arg->data(), "\n";
-    }
-  }
-  # MyFind Unary function object:
-  {
-    package MyFind;
-    use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
-    sub BEGIN { Class::STL::DataMembers->new( qw( what ) ); }
-    sub new
-    {
-      my $self = shift;
-      my $class = ref($self) || $self;
-      $self = $class->SUPER::new(@_);
-      bless($self, $class);
-      $self->members_init(@_);
-      return $self;
-    }
-    sub function_operator
-    {
-      my $self = shift;
-      my $arg = shift;
-      return $arg->data() eq $self->what() ? $arg : 0;
-    }
-  }
-  {
-    package MyMatch;
-    use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
-    sub BEGIN { Class::STL::DataMembers->new( qw( what ) ); }
-    sub new
-    {
-      my $self = shift;
-      my $class = ref($self) || $self;
-      $self = $class->SUPER::new(@_);
-      bless($self, $class);
-      $self->members_init(@_);
-      return $self;
-    }
-    sub function_operator
-    {
-      my $self = shift;
-      my $arg = shift;
-      return ($arg->data() =~ /@{[ $self->what() ]}/i) ? $arg : 0;
-    }
-  }
 =end
 
 =cut --------------------------------------------------------------------------------
@@ -828,60 +986,116 @@ The I<count_if> function will traverse the container starting from I<iterator-st
 
 =head2 Exports
 
-F<equal_to>, F<not_equal_to>, F<greater>, F<greater_equal>, F<less>, F<less_equal>, F<compare>, F<bind1st>, F<bind2nd>, F<mem_fun>.
+F<equal_to>, F<not_equal_to>, F<greater>, F<greater_equal>, F<less>, F<less_equal>, F<compare>, F<bind1st>, F<bind2nd>, F<mem_fun>, F<ptr_fun>, F<ptr_fun_binary>, F<matches>, F<matches_ic>, F<logical_and>, F<logical_or>, F<multiplies>, F<divides>, F<plus>, F<minus>, F<modulus>.
 
 
+This module contains various utility function objects. Each object will be constructed automatically when the function name (eg. 'equal_to') is used. Each of the function objects are derived from either I<Class::STL::Utilities::FunctionObject::UnaryFunction> or I<Class::STL::Utilities::FunctionObject::BinaryFunction>. 
 
-This module contains various utility function objects. Each object will be constructed automatically when the function name (eg. 'equal_to') is used. Each of the function objects are derived from either I<Class::STL::Utilities::UnaryFunction> or I<Class::STL::Utilities::BinaryFunction>. These classes contain the function I<do> which requires one argument consisting of an element reference. Any value (including I<void>) can be returned. The I<unary> objects contain the attribute I<arg>, and the I<binary> objects contain the attributes I<arg1> and I<arg2>. These attributes are initialised when the function object is constructed and are available to the function object.
 
 =over
 
 =item F<equal_to>
 
-This function-object will return the result of I<equality> between its argument and the object I<arg> attribute's value. The element's I<eq> function is used for the comparison.
+F<Binary predicate>. This function-object will return the result of I<equality> between its argument and the object I<arg> attribute's value. The element's I<eq> function is used for the comparison.
 
 
 =item F<not_equal_to>
 
-This function is the inverse of I<equal_to>.
+F<Binary predicate>. This function is the inverse of I<equal_to>.
 
 =item F<greater>
 
-This function-object will return the result of I<greater-than> comparison between its argument and the object I<arg> attribute's value. The element's I<gt> function is used for the comparison.
+F<Binary predicate>. This function-object will return the result of I<greater-than> comparison between its argument and the object I<arg> attribute's value. The element's I<gt> function is used for the comparison.
 
 
 =item F<greater_equal>
 
-This function-object will return the result of I<greater-than-or-equal> comparison between its argument and the object I<arg> attribute's value. The element's I<ge> function is used for the comparison.
+F<Binary predicate>. This function-object will return the result of I<greater-than-or-equal> comparison between its argument and the object I<arg> attribute's value. The element's I<ge> function is used for the comparison.
 
 
 =item F<less>
 
-This function-object will return the result of I<less-than> comparison between its argument and the object I<arg> attribute's value. The element's I<lt> function is used for the comparison.
+F<Binary predicate>. This function-object will return the result of I<less-than> comparison between its argument and the object I<arg> attribute's value. The element's I<lt> function is used for the comparison.
 
 
 =item F<less_equal>
 
-This function-object will return the result of I<less-than-or-equal> comparison between its argument and the object I<arg> attribute's value. The element's I<le> function is used for the comparison.
+F<Binary predicate>. This function-object will return the result of I<less-than-or-equal> comparison between its argument and the object I<arg> attribute's value. The element's I<le> function is used for the comparison.
 
 
 =item F<compare>
 
-This function-object will return the result of I<compare> comparison between its argument and the object I<arg> attribute's value. The element's I<cmp> function is used for the comparison.
+F<Binary predicate>. This function-object will return the result of I<compare> comparison between its argument and the object I<arg> attribute's value. The element's I<cmp> function is used for the comparison.
 
 
 =item F<matches>
 
-This function-object will return the result of regular expression comparison between its argument and the object I<arg> attribute's (regular expression) value. The element's I<match> function is used for the comparison.
+F<Binary predicate>. This function-object will return the result (true or false) of the regular expression comparison between its first argument and its second argument which contains a regular expression string. 
+
+
+=item F<matches_ic>
+
+F<Binary predicate>. Case-insensitive version of the I<matches> function.
 
 
 =item F<bind1st>
 
+F<Unary function>. This function requires two arguments consisting of a I<binary-function-object> and a element or value argument. It will produce a I<unary-function> object whose I<function_operator> member will call the I<binary-function> with I<argument> as the first argument.
+
 
 =item F<bind2nd>
 
+F<Unary function>. This function requires two arguments consisting of a I<binary-function-object> and a element or value argument. It will produce a I<unary-function> object whose I<function_operator> member will call the I<binary-function> with I<argument> as the second argument.
+
 
 =item F<mem_fun>
+
+This function requires one argument consisting of the class member function name (string). It will construct an object whose I<function_operator> member will require an element object to be passed as the first argument. It will call the elements's member function as specified by the I<mem_fun> argument.
+
+
+=item F<ptr_fun>
+
+F<Unary function>. This function requires one argument consisting of a global function name (string).
+
+
+=item F<ptr_fun_binary>
+
+F<Binary function>. This function requires one argument consisting of global function name (string).
+
+
+=item F<logical_and>
+
+F<Binary predicate>. 
+
+
+=item F<logical_or>
+
+F<Binary predicate>. 
+
+
+=item F<multiplies>
+
+F<Binary function>. This function-object will return the result of I<multiply> between its two element arguments. The element's I<mult> function is used for the calculation. It will return a newly construced element object containing the result.
+
+
+=item F<divides>
+
+F<Binary function>. This function-object will return the result of I<division> between its two element arguments. The element's I<div> function is used for the calculation. It will return a newly construced element object containing the result.
+
+
+=item F<plus>
+
+F<Binary function>. This function-object will return the result of I<plus> between its two element arguments. The element's I<add> function is used for the calculation. It will return a newly construced element object containing the result.
+
+
+=item F<minus>
+
+F<Binary function>. This function-object will return the result of I<subtract> between its two element arguments. The element's I<subtract> function is used for the calculation. It will return a newly construced element object containing the result.
+
+
+=item F<modulus>.
+
+F<Binary function>. This function-object will return the result of I<modulus> between its two element arguments. The element's I<mod> function is used for the calculation. It will return a newly construced element object containing the result.
 
 
 =back
@@ -896,7 +1110,7 @@ This module contains the iterator classes.
 
 =head2 Exports
 
-F<iteratror>, F<reverse_iteratror>, F<forward_iteratror>.
+F<iteratror>, F<bidirectional_iteratror>, F<reverse_iteratror>, F<forward_iteratror>, F<++>, F<-->, F<==>, F<!=>, E<gt>F<=>, E<lt>F<=>.
 
 =over
 
@@ -977,7 +1191,8 @@ F<iteratror>, F<reverse_iteratror>, F<forward_iteratror>.
 
 =head1 SEE ALSO
 
-This framwork mimicks the C++/STL Container-Iterators-Algorithms library.
+Sourceforge Project Page: C<http://sourceforge.net/projects/pstl>
+
 
 =cut --------------------------------------------------------------------------------
 

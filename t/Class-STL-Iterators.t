@@ -21,12 +21,7 @@ BEGIN { plan tests => 20 }
 # Insert your test code below, the Test::More module is use()ed here so read
 # its man page ( perldoc Test::More ) for help writing this test script.
 
-my $l = list();
-$l->push_back($l->factory(data => 'red'));
-$l->push_back($l->factory(data => 'blue'));
-$l->push_back($l->factory(data => 'green'));
-$l->push_back($l->factory(data => 'white'));
-$l->push_back($l->factory(data => 'yellow'));
+my $l = list(qw(red blue green white yellow));
 
 my $iter2 = $l->end();
 $iter2--;

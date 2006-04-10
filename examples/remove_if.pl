@@ -13,15 +13,15 @@ $v->push_back($v->factory(data => 'second'));
 $v->push_back($v->factory(data => 'third'));
 $v->push_back($v->factory(data => 'fourth'));
 $v->push_back($v->factory(data => 'fifth'));
-::foreach($v->begin(), $v->end(), MyPrint->new());
+for_each($v->begin(), $v->end(), MyPrint->new());
 
 print 'remove_if($v->begin(), $v->end(), bind1st(equal_to(), $v->back()));', "\n";
 remove_if($v->begin(), $v->end(), bind1st(equal_to(), $v->back()));
-::foreach($v->begin(), $v->end(), MyPrint->new());
+for_each($v->begin(), $v->end(), MyPrint->new());
 
 print 'remove_if($v->begin(), $v->end(), MyMatch->new(what => "^fi"));', "\n";
 remove_if($v->begin(), $v->end(), MyMatch->new(what => '^fi'));
-::foreach($v->begin(), $v->end(), MyPrint->new());
+for_each($v->begin(), $v->end(), MyPrint->new());
 
 # ----------------------------------------------------------------------------------------------------
 {

@@ -14,10 +14,10 @@ $v->push_back($v->factory(data => 'third'));
 $v->push_back($v->factory(data => 'fourth'));
 $v->push_back($v->factory(data => 'fifth'));
 
-print "Original:\n"; ::foreach($v->begin(), $v->end(), MyPrint->new());
+print "Original:\n"; for_each($v->begin(), $v->end(), MyPrint->new());
 print '$v->sort();', "\n";
 $v->sort();
-print "Sorted:\n"; ::foreach($v->begin(), $v->end(), MyPrint->new());
+print "Sorted:\n"; for_each($v->begin(), $v->end(), MyPrint->new());
 
 # ----------------------------------------------------------------------------------------------------
 {

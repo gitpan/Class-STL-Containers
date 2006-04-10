@@ -14,27 +14,15 @@ $d1->push_back($d1->factory(data => 'second'));
 $d1->push_back($d1->factory(data => 'third'));
 $d1->push_back($d1->factory(data => 'fourth'));
 $d1->push_back($d1->factory(data => 'fifth'));
-::foreach($d1->begin(), $d1->end(), MyPrint->new());
+for_each($d1->begin(), $d1->end(), ptr_fun('::myprint'));
 
 my $d2 = deque($d1);
 print "Deque-2:\n";
-::foreach($d1->begin(), $d1->end(), MyPrint->new());
+for_each($d2->begin(), $d2->end(), ptr_fun('::myprint'));
 
 print "Deques d1 and d2 are ", ($d1->eq($d2) ? " equal" : " not equal"). "\n";
 $d2->push($d2->factory(data => 'sixth'));
 print '$d2->push($d2->factory(data => "sixth"));', "\n";
 print "Deques d1 and d2 are ", ($d1->eq($d2) ? " equal" : " not equal"). "\n";
 
-
-# ----------------------------------------------------------------------------------------------------
-{
-	package MyPrint;
-	use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
-	sub function_operator
-	{
-		my $self = shift;
-		my $arg = shift;
-		print "Data:", $arg->data(), "\n";
-	}
-}
-# ----------------------------------------------------------------------------------------------------
+sub myprint { print "Data:", @_, "\n"; }
