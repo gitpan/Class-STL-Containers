@@ -37,7 +37,7 @@ use Exporter;
 @EXPORT = qw( vector list deque queue priority_queue stack tree );
 use lib './lib';
 use Class::STL::DataMembers;
-$VERSION = 0.11;
+$VERSION = 0.12;
 $BUILD = 'Monday April 10 21:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {

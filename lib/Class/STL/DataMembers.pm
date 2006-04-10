@@ -264,7 +264,7 @@ $BUILD = 'Thursday March 23 15:08:34 GMT 2006';
 		$code .= "${tab}my \$class = ref(\$self) || \$self;\n";
 		$code .= "${tab}my \@params;\n";
 		$code .= "${tab}while (\@_)\n";
-		$code .= "${tab}{\n";
+		$code .= "${tab}\{\n";
 		$code .= "${tab}${tab}my \$p = shift;\n";
 		$code .= "${tab}${tab}(ref(\$p) && ref(\$p) ne 'ARRAY' && \$p->isa(__PACKAGE__)) # copy ctor\n";
 		$code .= "${tab}${tab}? CORE::push(\@params,\n";

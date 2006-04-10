@@ -1,5 +1,8 @@
 Revision history for Perl extension Class::STL::Containers.
 
+0.12 Mon Apr 10 22:13:24 2006
+	- Fixed bug caused by Perl 5.8 interpolating apparent hash!
+
 0.11 Mon Apr 10 20:13:24 2006
 	- Major changes and additions -- please view Programmer's Reference for details
 
