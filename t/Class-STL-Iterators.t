@@ -14,7 +14,7 @@ use Test;
 use Class::STL::Containers;
 use Class::STL::Utilities;
 use Class::STL::Iterators;
-BEGIN { plan tests => 20 }
+BEGIN { plan tests => 26 }
 
 #########################
 
@@ -24,8 +24,9 @@ BEGIN { plan tests => 20 }
 my $l = list(qw(red blue green white yellow));
 
 my $iter2 = $l->end();
-$iter2--;
-$iter2--;
+$iter2 -= 2;
+ok ($iter2->p_element()->data(), 'green', 'iterator->operator -=');
+
 my $iter1;
 for ($iter1 = $l->begin(); $iter1 != $iter2; ++$iter1) {}
 ok ($iter1->p_element()->data(), 'green', 'iterator->operator !=');
@@ -58,25 +59,25 @@ my @data;
 for (my $oi = $l->begin(); !$oi->at_end(); $oi++) {
 	push(@data, $oi->p_element()->data());
 }
-ok (join('', @data), "redbluegreenwhiteyellow", "overloaded++");
+ok (join(' ', @data), "red blue green white yellow", "iterator->operator ++");
 
 @data = ();
-for (my $oi = $l->end(); !$oi->at_start(); --$oi) {
+for (my $oi = $l->end(); !$oi->at_end(); --$oi) {
 	push(@data, $oi->p_element()->data());
 }
-ok (join('', @data), "yellowwhitegreenbluered", "overloaded--");
+ok (join(' ', @data), "yellow white green blue red", "iterator->operator --");
 
 @data = ();
 for (my $oi = $l->rbegin(); !$oi->at_end(); ++$oi) {
 	push(@data, $oi->p_element()->data());
 }
-ok (join('', @data), "yellowwhitegreenbluered", "reverse overloaded++");
+ok (join(' ', @data), "yellow white green blue red", "reverse_iterator->operator ++");
 
 @data = ();
 for (my $oi = $l->rend(); !$oi->at_end(); $oi--) {
 	push(@data, $oi->p_element()->data());
 }
-ok (join('', @data), "redbluegreenwhiteyellow", "reverse overloaded--");
+ok (join(' ', @data), "red blue green white yellow", "reverse_iterator->operator --");
 
 my $ri = reverse_iterator($l->rbegin());
 ok ($ri->p_element()->data(), 'yellow', 'reverse_iterator->first()');
@@ -88,7 +89,16 @@ $ri->last();
 ok ($ri->p_element()->data(), 'red', 'reverse_iterator->last()');
 
 $ri = $l->begin();
-$ri->next();
-$ri->next();
+$ri += 2;
+ok ($ri->p_element()->data(), 'green', 'iterator->operator +=');
+
 my $ri2 = forward_iterator($ri);
-ok ($ri2->p_element()->data(), 'green', 'iterator->next()');
+ok ($ri2->p_element()->data(), 'green', 'forward_iterator');
+
+ok (distance($l->begin(), $ri2), '2', 'distance');
+ok (distance($l->begin(), $l->end()), $l->size()-1, 'distance');
+
+ok (advance($ri, 2)->p_element()->data(), 'yellow', 'advance(+)');
+
+ok (advance($ri, -2)->p_element()->data(), 'green', 'advance(-)');
+

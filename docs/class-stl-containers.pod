@@ -198,9 +198,12 @@ equal_to, not_equal_to, greater, greater_equal, less, less_equal, compare, bind1
 Most of the functions have the same arguments and return types as their STL equivalent. There are some differences though between the C++/STL and this implementation:
 
 
-=item The I<end()> Function
+=item Iterators and the I<end()> function
 
-This function will return a newly constructed iterator object which will point to the I<last> element within the container, unlike the C++/STL equivalent which points to I<after> the last element. 
+An I<iterator> object points to a numeric position within the container, and not to an I<element>. If new elements are inserted to, or removed from, a postion preceding the iterator, then the iterator will point to the same I<position> but to a different element.
+
+
+The I<end> function will return a newly constructed iterator object which will point to the I<last> element within the container, unlike the C++/STL equivalent which points to I<after> the last element. 
 
 
 =item The I<tree> Container
@@ -364,9 +367,9 @@ The I<factory> function constructs a new element object and returns a reference 
 
 =item F<erase>
 
-I<int erase ( iterator-start [, iterator-finish ] );>
+I<iterator erase ( iterator-start [, iterator-finish ] );>
 
-The I<erase> function requires one starting iterator and an optional finish iterator as arguments. It will delete all the elements within the container within, and including, these two iterator positions. The I<erase> funtion returns the number of elements deleted.
+The I<erase> function requires one starting iterator and an optional finish iterator as arguments. It will delete all the elements in the container within, and including, these two iterator positions. The I<erase> funtion returns and iterator pointing to the element following the last  deleted element.
 
 
 =item F<insert>
@@ -823,12 +826,12 @@ This module contains various algorithm functions.
 
 =head2 Exports
 
-F<remove_if>, F<find_if>, F<for_each>, F<transform>, F<count_if>, F<find>, F<count>, F<copy>, F<copy_backward>, F<remove>, F<remove_copy>, F<remove_copy_if>, F<replace>, F<replace_if>, F<replace_copy>, F<replace_copy_if>, 
+F<remove_if>, F<find_if>, F<for_each>, F<transform>, F<count_if>, F<find>, F<count>, F<copy>, F<copy_backward>, F<remove>, F<remove_copy>, F<remove_copy_if>, F<replace>, F<replace_if>, F<replace_copy>, F<replace_copy_if>, F<generate>, F<generate_n>, F<fill>, F<fill_n>, F<equal>, F<reverse>, F<reverse_copy>, F<rotate>, F<rotate_copy>, F<partition>, F<stable_partition>, F<min_element>, F<max_element>, F<unique>, F<unique_copy>, F<adjacent_find>
 
 
 The F<Algorithms> package consists of various I<static> algorithm functions.
 
-The I<unary-function-object> argument must be derived from I<Class::STL::Utilities::FunctionObject::UnaryFunction>. Standard utility functions are provided in the I<Class::STL::Utilities> module. A I<unary-function-object> contains the function I<function_operator>. This I<function_operator> function will, in turn, be called by the algorithm for each element traversed. The algorithm will pass the element reference as the argument to the I<function_operator> function. 
+The I<unary-function> argument must be derived from I<Class::STL::Utilities::FunctionObject::UnaryFunction>. Standard utility functions are provided in the I<Class::STL::Utilities> module. A I<unary-function> contains the function I<function_operator>. This I<function_operator> function will, in turn, be called by the algorithm for each element traversed. The algorithm will pass the element reference as the argument to the I<function_operator> function. 
 
 
 =over
@@ -836,10 +839,10 @@ The I<unary-function-object> argument must be derived from I<Class::STL::Utiliti
 =item F<for_each>
 
 
-I<void for_each ( iterator-start, iterator-finish, unary-function-object );>
+I<void for_each ( iterator-start, iterator-finish, unary-function );>
 
 
-The I<for_each> function will traverse the container starting from I<iterator-start> and ending at I<iterator-finish> and execute the I<unary-function-object> with the element passed in as the argument.  
+The I<for_each> function will traverse the container starting from I<iterator-start> and ending at I<iterator-finish> and execute the I<unary-function> with the element passed in as the argument.  
 
 
 =item F<transform>
@@ -865,10 +868,10 @@ I<int count ( iterator-start, iterator-finish, element-ref );>
 =item F<count_if>
 
 
-I<int count_if ( iterator-start, iterator-finish, unary-function-object );>
+I<int count_if ( iterator-start, iterator-finish, unary-function );>
 
 
-The I<count_if> function will traverse the container starting from I<iterator-start> and ending at I<iterator-finish> and return a count of the elements that evaluate to true by the I<unary-function-object>. 
+The I<count_if> function will traverse the container starting from I<iterator-start> and ending at I<iterator-finish> and return a count of the elements that evaluate to true by the I<unary-function>. 
 
 
 =item F<find>
@@ -880,10 +883,10 @@ I<iterator-ref find ( iterator-start, iterator-finish, element-ref );>
 =item F<find_if>
 
 
-I<iterator-ref find_if ( iterator-start, iterator-finish, unary-function-object );>
+I<iterator-ref find_if ( iterator-start, iterator-finish, unary-function );>
 
 
-The I<find_if> function will traverse the container starting from I<iterator-start> and ending at I<iterator-finish> and return an I<iterator> pointing to the first element that evaluate to true by the I<unary-function-object>. If no elements evaluates to true then 'o' is returned.
+The I<find_if> function will traverse the container starting from I<iterator-start> and ending at I<iterator-finish> and return an I<iterator> pointing to the first element that evaluate to true by the I<unary-function>. If no elements evaluates to true then 'o' is returned.
 
 
 =item F<copy>
@@ -907,10 +910,10 @@ I<void remove ( iterator-start, iterator-finish, element-ref );>
 =item F<remove_if>
 
 
-I<void remove_if ( iterator-start, iterator-finish, unary-function-object );>
+I<void remove_if ( iterator-start, iterator-finish, unary-function );>
 
 
-The I<remove_if> function will traverse the container starting from I<iterator-start> and ending at I<iterator-finish> and remove the elements that evaluate to true by the I<unary-function-object>.  
+The I<remove_if> function will traverse the container starting from I<iterator-start> and ending at I<iterator-finish> and remove the elements that evaluate to true by the I<unary-function>.  
 
 
 =item F<remove_copy>
@@ -922,7 +925,7 @@ I<void remove_copy ( iterator-start, iterator-finish, iterator-result, element-r
 =item F<remove_copy_if>
 
 
-I<void remove_copy_if ( iterator-start, iterator-finish, iterator-result, unary-function-object );>
+I<void remove_copy_if ( iterator-start, iterator-finish, iterator-result, unary-function );>
 
 
 =item F<replace>
@@ -934,7 +937,7 @@ I<void replace ( iterator-start, iterator-finish, old-element-ref, new-element-r
 =item F<replace_if>
 
 
-I<void replace_if ( iterator-start, iterator-finish, unary-function-object, new-element-ref );>
+I<void replace_if ( iterator-start, iterator-finish, unary-function, new-element-ref );>
 
 
 =item F<replace_copy>
@@ -946,7 +949,103 @@ I<void replace_copy ( iterator-start, iterator-finish, iterator-result, old-elem
 =item F<replace_copy_if>
 
 
-I<void replace_copy_if ( iterator-start, iterator-finish, iterator-result, unary-function-object, new-element-ref );>
+I<void replace_copy_if ( iterator-start, iterator-finish, iterator-result, unary-function, new-element-ref );>
+
+
+=item F<generate>
+
+
+I<void generate ( iterator-start, iterator-finish, generator-function );>
+
+
+=item F<generate_n>
+
+
+I<void generate_n ( iterator-start, size, generator-function );>
+
+
+=item F<fill>
+
+
+I<void fill ( iterator-start, iterator-finish, element-ref );>
+
+
+=item F<fill_n>
+
+
+I<void fill_n ( iterator-start, size, element-ref );>
+
+
+=item F<equal>
+
+
+I<bool equal ( iterator-start, iterator-finish, iterator-result [, binary-function ] );>
+
+
+=item F<reverse>
+
+
+I<void reverse ( iterator-start, iterator-finish );>
+
+
+=item F<reverse_copy>
+
+
+I<void reverse_copy ( iterator-start, iterator-finish, iterator-result );>
+
+
+=item F<rotate>
+
+
+I<void rotate ( iterator-start, iterator-mid, iterator-finish );>
+
+
+=item F<rotate_copy>
+
+
+I<void rotate_copy ( iterator-start, iterator-mid, iterator-finish, iterator-result );>
+
+
+=item F<partition>
+
+
+I<void partition ( iterator-start, iterator-finish, [, unary-predicate ] );>
+
+
+=item F<stable_partition>
+
+
+I<void stable_partition ( iterator-start, iterator-finish, [, unary-predicate ] );>
+
+
+=item F<min_element>
+
+
+I<iterator min_element ( iterator-start, iterator-mid [, binary-function ] );>
+
+
+=item F<max_element>
+
+
+I<iterator max_element ( iterator-start, iterator-mid [, binary-function ] );>
+
+
+=item F<unique>
+
+
+I<iterator unique ( iterator-start, iterator-finish, [, binary-function ] );>
+
+
+=item F<unique_copy>
+
+
+I<iterator unique_copy ( iterator-start, iterator-finish, iterator-result [, binary-function ] );>
+
+
+=item F<adjacent_find>
+
+
+I<iterator ajacent_find ( iterator-start, iterator-finish, [, binary-predicate ] );>
 
 
 =back
@@ -1110,11 +1209,36 @@ This module contains the iterator classes.
 
 =head2 Exports
 
-F<iteratror>, F<bidirectional_iteratror>, F<reverse_iteratror>, F<forward_iteratror>, F<++>, F<-->, F<==>, F<!=>, E<gt>F<=>, E<lt>F<=>.
+F<iteratror>, F<bidirectional_iteratror>, F<reverse_iteratror>, F<forward_iteratror>, F<++>, F<-->, F<==>, F<!=>, E<gt>F<=>, E<lt>F<=>, F<+>, F<+=>, F<->, F<-=>, F<distance>, F<advance>.
 
 =over
 
 =item F<new>
+
+
+=item F<p_container>
+
+Returns a reference to the container that is bound to the iterator.
+
+
+=item F<p_element>
+
+This function will return a reference to the element pointed to by the iterator.
+
+
+=item F<distance>
+
+B<Static function>. This function will return the I<distance> between two iterators. Both iterators must be from the same container. I<Iterator-finish> must be positioned after I<iterator-first>.
+
+I<int distance ( iterator-start, iterator-finish ] );>
+
+
+=item F<advance>
+
+B<Static function>. Moves the iterator forward, or backwards if size is negative.
+
+
+I<iterator advance ( iterator, size ] );>
 
 
 =item F<first>
@@ -1127,12 +1251,6 @@ F<iteratror>, F<bidirectional_iteratror>, F<reverse_iteratror>, F<forward_iterat
 
 
 =item F<prev>
-
-
-=item F<set>
-
-
-=item F<jump>
 
 
 =item F<at_end>

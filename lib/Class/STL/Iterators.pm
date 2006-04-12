@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+# vim:ts=4 sw=4
 # ----------------------------------------------------------------------------------------------------
 #  Name		: Class::STL::Iterators.pm
 #  Created	: 22 February 2006
@@ -33,7 +33,7 @@ use strict;
 use warnings;
 use vars qw( $VERSION $BUILD @EXPORT );
 use Exporter;
-@EXPORT = qw( iterator bidirectional_iterator reverse_iterator forward_iterator );
+@EXPORT = qw( iterator bidirectional_iterator reverse_iterator forward_iterator distance advance );
 use lib './lib';
 use Class::STL::DataMembers;
 $VERSION = '0.01';
@@ -49,6 +49,8 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		return Class::STL::Iterators::BiDirectional->new(@_) if ($func eq 'bidirectional_iterator');
 		return Class::STL::Iterators::Forward->new(@_) if ($func eq 'forward_iterator');
 		return Class::STL::Iterators::Reverse->new(@_) if ($func eq 'reverse_iterator');
+		return Class::STL::Iterators::Abstract::distance(@_) if ($func eq 'distance');
+		return Class::STL::Iterators::Abstract::advance(@_) if ($func eq 'advance');
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -56,12 +58,13 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 	package Class::STL::Iterators::Abstract;
 	use base qw(Class::STL::Element); 
 	use Carp qw(confess);
-	use overload '++' => '_incr', '--' => '_decr', '=' => 'clone', 'bool' => '_bool',
+	use overload '++' => 'next', '--' => 'prev', '=' => 'clone', 'bool' => '_bool',
+		'+' => 'advance', '+=' => 'advance', '-' => 'retreat', '-=' => 'retreat',
 		'==' => 'eq', '!=' => 'ne', '>' => 'gt', '<' => 'lt', '>=' => 'ge', '<=' => 'le', '<=>' => 'cmp';
 	sub BEGIN 
 	{ 
 		Class::STL::DataMembers->new(
-			qw( p_element p_container ),
+			qw( p_container ),
 			Class::STL::DataMembers::Attributes->new(name => 'arr_idx', default => -1),
 		);
 	}
@@ -76,8 +79,7 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 			(ref($p) && ref($p) ne 'ARRAY' && $p->isa(__PACKAGE__)) # copy ctor
 			? CORE::push(@params,
 				'arr_idx', $p->arr_idx(),
-				'p_container', $p->p_container(),
-				'p_element', $p->p_element())
+				'p_container', $p->p_container())
 			: ref($p) ? CORE::push(@params, $p) : CORE::push(@params, $p, shift);
 		}
 		$self = $class->SUPER::new(ignore_local(@params));
@@ -85,56 +87,106 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		$self->members_init(@params);
 		return $self;
 	}
-	sub set
+	sub p_element
 	{
 		my $self = shift;
-		my $idx = shift;
-		$idx = $self->p_container()->size()-1 if ($idx >= $self->p_container()->size());
-		$self->arr_idx($idx);
-		return if ($idx == -1);
-		$self->p_element(${$self->p_container()->data()}[$idx]);
+		return $self->arr_idx() < 0 || $self->arr_idx() >= $self->p_container()->size()
+			? 0
+			: ${$self->p_container()->data()}[$self->arr_idx()]
 	}
-	sub distance
+	sub idx_check # (void)
 	{
 		my $self = shift;
-		my $iter_finish = shift;
-		confess "@{[ __PACKAGE__ ]}::distance usage:\ndistance( iterator-start, iterator-finish );"
-			unless (
-				defined($iter_finish) && ref($iter_finish) && $iter_finish->isa('Class::STL::Iterators::Abstract')
-			);
-		return 0 if ($self->at_end() || $iter_finish->at_end());
-		my $count=0;
-		for (my $i = $self->clone(); $i <= $iter_finish; ++$i) { $count++; }
-		return $count;
-	}
-	sub jump # (element)
-	{
-		my $self = shift;
-		my $elem = shift;
-		foreach my $i (0..$#{$self->p_container()->data()})
-		{
-			next unless ($elem == ${$self->p_container()->data()}[$i]);
-			$self->set($i);
-			return $self; # iterator
-		}
+		$self->arr_idx($self->p_container()->size()-1) if ($self->arr_idx() >= $self->p_container()->size());
+		$self->arr_idx(-1) if ($self->arr_idx() < 0);
+		return;
 	}
 	sub at_end # (void)
 	{
 		my $self = shift;
+		$self->idx_check();
 		return $self->arr_idx() == -1 ? 1 : 0;
 	}
-	sub at_start # (void)
+	sub prev # (void)
 	{
 		my $self = shift;
-		return $self->arr_idx() == -1 ? 1 : 0;
+		$self->idx_check();
+		return $self if ($self->arr_idx() == -1);
+		(!$self->p_container()->size() || $self->arr_idx() == 0)
+			? $self->arr_idx(-1)
+			: $self->arr_idx($self->arr_idx() -1);
+		return $self; # iterator
+	}
+	sub next # (void)
+	{
+		my $self = shift;
+		$self->idx_check();
+		return $self if ($self->arr_idx() == -1);
+		(!$self->p_container()->size() || $self->arr_idx()+1 >= $self->p_container()->size())
+			? $self->arr_idx(-1)
+			: $self->arr_idx($self->arr_idx() +1);
+		return $self; # iterator
+	}
+	sub first # (void)
+	{
+		my $self = shift;
+		$self->idx_check();
+		(!$self->p_container()->size())
+			? $self->arr_idx(-1)
+			: $self->arr_idx(0);
+		return $self; # iterator
+	}
+	sub last # (void)
+	{
+		my $self = shift;
+		$self->idx_check();
+		(!$self->p_container()->size())
+			? $self->arr_idx(-1)
+			: $self->arr_idx($self->p_container()->size()-1);
+		return $self; # iterator
+	}
+	sub distance # (iterator, iterator) -- static function
+	{
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		confess "@{[ __PACKAGE__ ]}::distance usage:\ndistance( iterator-start, iterator-finish );"
+			unless (
+				defined($iter_start) && ref($iter_start) && $iter_start->isa('Class::STL::Iterators::Abstract')
+				&& defined($iter_finish) && ref($iter_finish) && $iter_finish->isa('Class::STL::Iterators::Abstract')
+				&& $iter_start->p_container() == $iter_finish->p_container()
+			);
+		return -1 if ($iter_start->at_end() && $iter_finish->at_end());
+		return -1 if ($iter_start->at_end() || $iter_start->gt($iter_finish));
+		return $iter_finish->p_container()->size()-1 - $iter_start->arr_idx() if ($iter_finish->at_end());
+		return $iter_finish->arr_idx() - $iter_start->arr_idx();
+	}
+	sub advance # (size) -- static function
+	{
+		my $iter = shift;
+		my $size = shift;
+		if ($size >= 0)
+		{
+			for (my $i=0; $i<$size; ++$i) { $iter->next(); }
+		}
+		else
+		{
+			for (my $i=$size; $i!=0; ++$i) { $iter->prev(); }
+		}
+		return $iter;
+	}
+	sub retreat # (size) -- static function
+	{
+		my $iter = shift;
+		my $size = shift;
+		return $iter->advance(-$size);
+		return $iter;
 	}
 	sub eq # (element)
 	{
 		my $self = shift;
 		my $other = shift;
-		return !$self->at_end() && !$other->at_end()
-			&& $self->arr_idx() == $other->arr_idx()
-			&& $self->p_element() == $other->p_element();
+		return $self->p_container() == $other->p_container()
+			&& $self->arr_idx() == $other->arr_idx();
 	}
 	sub ne # (element)
 	{
@@ -146,6 +198,7 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		my $self = shift;
 		my $other = shift;
 		return !$self->at_end() && !$other->at_end()
+			&& $self->p_container() == $other->p_container()
 			&& $self->arr_idx() > $other->arr_idx();
 	}
 	sub ge # (element)
@@ -153,6 +206,7 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		my $self = shift;
 		my $other = shift;
 		return !$self->at_end() && !$other->at_end()
+			&& $self->p_container() == $other->p_container()
 			&& $self->arr_idx() >= $other->arr_idx();
 	}
 	sub lt # (element)
@@ -160,6 +214,7 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		my $self = shift;
 		my $other = shift;
 		return !$self->at_end() && !$other->at_end()
+			&& $self->p_container() == $other->p_container()
 			&& $self->arr_idx() < $other->arr_idx();
 	}
 	sub le # (element)
@@ -167,6 +222,7 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		my $self = shift;
 		my $other = shift;
 		return !$self->at_end() && !$other->at_end()
+			&& $self->p_container() == $other->p_container()
 			&& $self->arr_idx() <= $other->arr_idx();
 	}
 	sub cmp # (element)
@@ -175,66 +231,16 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		my $other = shift;
 		return $self->eq($other) ? 0 : $self->lt($other) ? -1 : 1;
 	}
-	sub _incr
-	{
-		my $self = shift;
-		return $self->next();
-	}
-	sub _decr
-	{
-		my $self = shift;
-		return $self->prev();
-	}
 	sub _bool
 	{
 		my $self = shift;
 		return $self;
-#>		return $self->at_end();
 	}
 }
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Iterators::BiDirectional;
 	use base qw(Class::STL::Iterators::Abstract); 
-	sub first # (void)
-	{
-		my $self = shift;
-		(!@{$self->p_container()->data()})
-			? $self->arr_idx(-1)
-			: $self->set(0);
-		return $self; # iterator
-	}
-	sub last # (void)
-	{
-		my $self = shift;
-		(!@{$self->p_container()->data()})
-			? $self->arr_idx(-1)
-			: $self->set($#{$self->p_container()->data()});
-		return $self; # iterator
-	}
-	sub prev # (void)
-	{
-		my $self = shift;
-		return $self if ($self->arr_idx() == -1);
-		(!@{$self->p_container()->data()} || $self->arr_idx() == 0)
-			? $self->arr_idx(-1)
-			: $self->set($self->arr_idx() -1);
-		return $self; # iterator
-	}
-	sub next # (void)
-	{
-		my $self = shift;
-		return $self if ($self->arr_idx() == -1);
-		(!@{$self->p_container()->data()} || $self->arr_idx()+1 >= @{$self->p_container()->data()})
-			? $self->arr_idx(-1)
-			: $self->set($self->arr_idx() +1);
-		return $self; # iterator
-	}
-}
-# ----------------------------------------------------------------------------------------------------
-{
-	package Class::STL::Iterator;
-	use base qw(Class::STL::Iterators::BiDirectional); 
 }
 # ----------------------------------------------------------------------------------------------------
 {

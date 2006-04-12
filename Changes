@@ -1,5 +1,11 @@
 Revision history for Perl extension Class::STL::Containers.
 
+0.15 Tues Apr 12 20:19:22 2006
+	- Added algorithms: generate generate_n fill fill_n equal reverse reverse_copy
+		rotate rotate_copy partition stable_partition min_element max_element
+		unique unique_copy adjacent_find
+	- Iterators: advance, distance, operator+, operator+=, operator-, operator-=
+
 0.12 Mon Apr 10 22:13:24 2006
 	- Fixed bug caused by Perl 5.8 interpolating apparent hash!
 
@@ -31,4 +37,3 @@ Revision history for Perl extension Class::STL::Containers.
 0.01  Fri Feb 24 13:25:44 2006
 	- original version; created by h2xs 1.23 with options
 		-X Class::STL::Containers
-

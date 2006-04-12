@@ -12,7 +12,8 @@ use Test;
 use Class::STL::Containers;
 use Class::STL::Algorithms;
 use Class::STL::Utilities;
-BEGIN { plan tests => 28 }
+use Class::STL::DataMembers;
+BEGIN { plan tests => 57 }
 
 #########################
 
@@ -30,6 +31,8 @@ my $erx = $l->factory('^FI');
 ok (count_if($l->begin(), $l->end(), bind2nd(matches_ic(), $erx)), "2", 'regex()');
 
 $l2 = list();
+transform($l->begin(), $l->end(), $l2->begin(), ptr_fun('lc'));
+transform($l->begin(), $l->end(), $l2->begin(), ptr_fun('uc'));
 transform($l->begin(), $l->end(), $l2->begin(), ptr_fun('lc'));
 $l2 = list();
 transform($l->begin(), $l->end(), $l2->begin(), ptr_fun('uc')); # test repeated calls to ptr_fun()
@@ -103,7 +106,140 @@ ok (join(' ', map($_->data(), $l->to_array())), "sixth sixth first second third 
 remove_if($l2->begin(), $l2->end(), bind2nd(matches(), '^fi'));
 ok (join(' ', map($_->data(), $l2->to_array())), "sixth sixth second third fourth sixth sixth", 'remove_if()');
 
-sub mybfun
+sub mybfun { return $_[0] . '-' . $_[1]; }
+
+$l2 = list(qw( 1 2 3 4 ));
+ok (join(' ', map($_->data(), $l2->to_array())), "1 2 3 4", 'generator()');
+
+generate($l2->begin(), $l2->end(), MyGenerator->new());
+ok (join(' ', map($_->data(), $l2->to_array())), "2 4 8 16", 'generator()');
+
+generate_n($l2->begin(), 3, MyGenerator->new(counter => 4));
+ok (join(' ', map($_->data(), $l2->to_array())), "8 16 32 16", 'generator_n()');
+
+fill($l2->begin(), $l2->end(), 99);
+ok (join(' ', map($_->data(), $l2->to_array())), "99 99 99 99", 'fill()');
+
+fill_n($l2->begin(), 1, 9);
+ok (join(' ', map($_->data(), $l2->to_array())), "9 99 99 99", 'fill_n()');
+
+my $l4 = list($l2);
+ok (equal($l2->begin(), $l2->end(), $l4->begin()), "1", 'equal()');
+ok (join(' ', map($_->data(), $l4->to_array())), "9 99 99 99", 'copy');
+ok (equal($l2->begin(), $l2->end(), $l4->begin(), MyBinFun->new()), "1", 'equal(...binary_op)');
+
+fill($l4->begin(), $l4->begin(), 0);
+ok (equal($l2->begin(), $l2->end(), $l4->begin()), "0", '!equal()');
+ok (equal($l2->begin(), $l2->end(), $l4->begin(), MyBinFun->new()), "0", '!equal(...binary_op)');
+
+fill_n($l2->begin(), 1, 0);
+ok (equal($l2->begin(), $l2->end(), $l4->begin()), "1", 'equal()');
+
+$l4 = list(qw(1 2 3 4 5 6 7));
+$i = $l4->begin();
+$i++;
+$i++;
+reverse($i, $l4->end());
+ok (join(' ', map($_->data(), $l4->to_array())), "1 2 7 6 5 4 3", 'reverse()');
+
+reverse($l4->begin(), $i);
+ok (join(' ', map($_->data(), $l4->to_array())), "7 2 1 6 5 4 3", 'reverse()');
+
+$l2->clear();
+reverse_copy($l4->begin(), $l4->end(), $l2->begin());
+ok (join(' ', map($_->data(), $l2->to_array())), "3 4 5 6 1 2 7", 'reverse_copy()');
+
+$l2->clear();
+$i = $l4->end();
+--$i;
+--$i;
+reverse_copy($l4->begin(), $i, $l2->begin());
+ok (join(' ', map($_->data(), $l2->to_array())), "5 6 1 2 7", 'reverse_copy()');
+
+$i = $l2->begin();
+++$i;
+++$i;
+rotate($l2->begin(), $i, $l2->end());
+ok (join(' ', map($_->data(), $l2->to_array())), "1 2 7 5 6", 'rotate()');
+
+$l2->clear();
+$l4 = list(qw(1 2 3 4 5 6 7));
+$i = $l4->begin();
+$i++;
+$i++;
+rotate_copy($l4->begin(), $i, $l4->end(), $l2->begin());
+ok (join(' ', map($_->data(), $l2->to_array())), "3 4 5 6 7 1 2", 'rotate_copy()');
+
+stable_partition($l2->begin(), $l2->end(), is_even->new());
+ok (join(' ', map($_->data(), $l2->to_array())), "4 6 2 3 5 7 1", 'stable_partition()');
+
+ok (min_element($l2->begin(), $l2->end())->p_element()->data(), "1", 'min_element() -- 1');
+ok (min_element($l2->begin(), $l2->end(), less())->p_element()->data(), "1", 'min_element() -- 2');
+
+ok (max_element($l2->begin(), $l2->end())->p_element()->data(), "7", 'max_element() -- 1');
+ok (max_element($l2->begin(), $l2->end(), less())->p_element()->data(), "7", 'max_element() -- 2');
+
+$l2 = list(qw(4 5 5 9 -1 -1 -1 3 7 5 5 5 6 7 7 7 4 2 1 1));
+unique($l2->begin(), $l2->end());
+ok (join(' ', map($_->data(), $l2->to_array())), "4 5 9 -1 3 7 5 6 7 4 2 1", 'unique() -- 1');
+
+$l2 = list(qw(4 5 5 9 -1 -1 -1 3 7 5 5 5 6 7 7 7 4 2 1 1));
+unique($l2->begin(), $l2->end(), equal_to());
+ok (join(' ', map($_->data(), $l2->to_array())), "4 5 9 -1 3 7 5 6 7 4 2 1", 'unique() -- 2');
+unique($l2->begin(), $l2->end(), equal_to());
+ok (join(' ', map($_->data(), $l2->to_array())), "4 5 9 -1 3 7 5 6 7 4 2 1", 'unique() -- 2');
+
+$l2 = list(qw(4 5 5 9 -1 -1 -1 3 7 5 5 5 6 7 7 7 4 2 1 1));
+$l3->clear();
+unique_copy($l2->begin(), $l2->end(), $l3->begin());
+ok (join(' ', map($_->data(), $l3->to_array())), "4 5 9 -1 3 7 5 6 7 4 2 1", 'unique_copy() -- 1');
+
+$l3->clear();
+unique_copy($l2->begin(), $l2->end(), $l3->begin(), equal_to());
+ok (join(' ', map($_->data(), $l3->to_array())), "4 5 9 -1 3 7 5 6 7 4 2 1", 'unique_copy() -- 2');
+
+ok (adjacent_find($l2->begin(), $l2->end())->arr_idx(), "1", 'adjacent_find() -- 1');
+ok (adjacent_find($l2->begin(), $l2->end(), equal_to())->arr_idx(), "1", 'adjacent_find() -- 2');
+
 {
-	return $_[0] . '-' . $_[1];
+  package is_even;
+  use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
+  sub function_operator
+  {
+    my $self = shift;
+    my $arg1 = shift;
+    return $arg1->data() % 2 == 0;
+  }
+}
+{
+  package MyBinFun;
+  use base qw(Class::STL::Utilities::FunctionObject::BinaryFunction);
+  sub function_operator
+  {
+    my $self = shift;
+    my $arg1 = shift;
+    my $arg2 = shift;
+    return $arg1->eq($arg2);
+  }
+}
+  
+{
+  package MyGenerator;
+  use base qw(Class::STL::Utilities::FunctionObject::Generator);
+  sub BEGIN { Class::STL::DataMembers->new(qw( counter )); }
+  sub new
+  {
+    my $self = shift;
+    my $class = ref($self) || $self;
+    $self = $class->SUPER::new(@_);
+    bless($self, $class);
+    $self->members_init(counter => 1, @_);
+    return $self;
+  }
+  sub function_operator
+  {
+    my $self = shift;
+    $self->counter($self->counter() *2);
+    return Class::STL::Element->new($self->counter());
+  }
 }

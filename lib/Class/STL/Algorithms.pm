@@ -42,10 +42,38 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 	use vars qw( @EXPORT );
 	use Exporter;
 	@EXPORT = qw( 
-		find find_if for_each transform count count_if 
-		copy copy_backward
-		remove remove_if remove_copy remove_copy_if
-		replace replace_if replace_copy replace_copy_if 
+		find 
+		find_if 
+		for_each 
+		transform 
+		count 
+		count_if 
+		copy 
+		copy_backward
+		remove 
+		remove_if 
+		remove_copy 
+		remove_copy_if
+		replace 
+		replace_if 
+		replace_copy 
+		replace_copy_if 
+		generate 
+		generate_n 
+		fill 
+		fill_n 
+		equal 
+		reverse 
+		reverse_copy
+		rotate 
+		rotate_copy
+		partition 
+		stable_partition 
+		min_element 
+		max_element 
+		unique 
+		unique_copy
+		adjacent_find
 	);
 	sub transform 
 	{
@@ -53,7 +81,7 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 	}
 	sub transform_1 # (iterator-start, iterator-finish, iterator-result, unary-function-object)
 	{
-		_usage_check('transform', 'IIIU', @_);
+		_usage_check('transform(1)', 'IIIU', @_);
 		my $iter_start = shift;
 		my $iter_finish = shift;
 		my $iter_result = shift;
@@ -81,7 +109,7 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 	}
 	sub transform_2 # (iterator-start, iterator-finish, iterator-start2, iterator-result, binary-function-object)
 	{
-		_usage_check('transform', 'IIIIB', @_);
+		_usage_check('transform(2)', 'IIIIB', @_);
 		my $iter_start = shift;
 		my $iter_finish = shift;
 		my $iter_start2 = shift;
@@ -115,6 +143,212 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 		}
 		return;
 	}
+	sub unique # (iterator, iterator [, binary-predicate ] ) -- static function
+	{
+		int(@_) == 2 ? _usage_check('unique(1)', 'II', @_) : _usage_check('unique(2)', 'IIB', @_);
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		my $binary_op = shift || undef;
+		my $iter_prev = $iter_start->clone();
+		for (my $iter = $iter_start->clone()+1; $iter != $iter_prev && $iter <= $iter_finish; )
+		{
+			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
+			{
+				unique($iter->p_element()->begin(), $iter->p_element()->end(), $binary_op); # its a tree -- recurse
+				++$iter;
+				++$iter_prev;
+			}
+			elsif 
+			(
+				(defined($binary_op) && $binary_op->function_operator($iter_prev->p_element(), $iter->p_element()))
+				|| (!defined($binary_op) && $iter_prev->p_element()->eq($iter->p_element()))
+			)
+			{
+				$iter = $iter->p_container()->erase($iter)
+			}
+			else
+			{
+				++$iter;
+				++$iter_prev;
+			}
+		}
+		return $iter_finish; # iterator
+	}
+	sub unique_copy # (iterator, iterator, iterator [, binary-predicate ] ) -- static function
+	{
+		int(@_) == 3 ? _usage_check('unique_copy(1)', 'III', @_) : _usage_check('unique_copy(2)', 'IIIB', @_);
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		my $iter_result = shift;
+		my $binary_op = shift || undef;
+		my $iter_next = $iter_finish->clone();
+		my $end = $iter_result->p_container()->insert($iter_result, 1, $iter_next->p_element());
+		for (my $iter = $iter_finish->clone()-1; $iter >= $iter_start; --$iter, --$iter_next)
+		{
+			if 
+			(
+				(defined($binary_op) && !$binary_op->function_operator($iter_next->p_element(), $iter->p_element()))
+				|| (!defined($binary_op) && !$iter_next->p_element()->eq($iter->p_element()))
+			)
+			{
+				$iter_result->p_container()->insert($iter_result, 1, $iter->p_element());
+				$end++;
+			}
+		}
+		return $end; # iterator
+	}
+	sub adjacent_find # (iterator, iterator [, binary-predicate ] ) -- static function
+	{
+		int(@_) == 2 ? _usage_check('adjacent_find(1)', 'II', @_) : _usage_check('adjacent_find(2)', 'IIB', @_);
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		my $binary_op = shift || undef;
+		my $iter_next = $iter_start->clone()+1;
+		for (my $iter = $iter_start->clone(); $iter_next <= $iter_finish; ++$iter, ++$iter_next)
+		{
+			return $iter
+			if 
+			(
+				(defined($binary_op) && $binary_op->function_operator($iter->p_element(), $iter_next->p_element()))
+				|| (!defined($binary_op) && $iter_next->p_element()->eq($iter->p_element()))
+			);
+		}
+		return $iter_finish; # iterator
+	}
+	sub partition # (iterator, iterator, unary-predicate) -- static function
+	{
+		stable_partition(@_);
+	}
+	sub stable_partition # (iterator, iterator, unary-predicate) -- static function
+	{
+		_usage_check('stable_partition', 'IIU', @_);
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		my $function = shift;
+		my $position = $iter_start;
+		for (my $iter = $iter_finish->clone(); $iter >= $iter_start;)
+		{
+			if ($function->function_operator($iter->p_element()))
+			{
+				$position = $iter->p_container()->insert($position, 1, $iter->p_element());
+				$iter_start++;
+				$iter->p_container()->erase($iter+1);
+			}
+			else
+			{
+				--$iter;
+			}
+		}
+		return;
+	}
+	sub min_element # (iterator, iterator, [, binary-function] ) -- static function
+	{
+		int(@_) == 3 ? _usage_check('min_element(1)', 'IIB', @_) : _usage_check('min_element(2)', 'II', @_);
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		my $binary_op = shift || undef;
+		my $iter_min = $iter_start;
+		for (my $iter=$iter_start->clone(); $iter <= $iter_finish; ++$iter)
+		{ 
+			$iter_min = $iter 
+			if 
+			(
+				(defined($binary_op) && $binary_op->function_operator($iter->p_element(), $iter_min->p_element()))
+				|| (!defined($binary_op) && $iter->p_element()->lt($iter_min->p_element()))
+			);
+		}
+		return $iter_min; 
+	}
+	sub max_element # (iterator, iterator, [, binary-function] ) -- static function
+	{
+		int(@_) == 3 ? _usage_check('max_element(1)', 'IIB', @_) : _usage_check('max_element(2)', 'II', @_);
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		my $binary_op = shift || undef;
+		my $iter_min = $iter_start;
+		for (my $iter=$iter_start->clone(); $iter <= $iter_finish; ++$iter)
+		{ 
+			$iter_min = $iter 
+			if 
+			(
+				(defined($binary_op) && !$binary_op->function_operator($iter->p_element(), $iter_min->p_element()))
+				|| (!defined($binary_op) && !$iter->p_element()->lt($iter_min->p_element()))
+			);
+		}
+		return $iter_min; 
+	}
+	sub equal # (iterator, iterator, iterator [, binary-function] ) -- static function
+	{
+		int(@_) == 3 ? _usage_check('equal(1)', 'III', @_) : _usage_check('equal(2)', 'IIIB', @_);
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		my $iter_start2 = shift;
+		my $binary_op = shift || undef;
+		for 
+		(
+			my $iter=$iter_start->clone(), my $iter2=$iter_start2->clone(); 
+			$iter <= $iter_finish; 
+			++$iter, ++$iter2
+		)
+		{ 
+		 	return 0 if # bool false
+			(
+				$iter2->at_end() 
+				|| (defined($binary_op) && $binary_op->function_operator($iter->p_element(), $iter2->p_element()) == 0) 
+				|| (!defined($binary_op) && $iter->p_element()->eq($iter2->p_element()) == 0)
+			); 
+		}
+		return 1; # bool true
+	}
+	sub rotate_copy # (iterator, iterator, iterator, iterator) -- static function
+	{
+		_usage_check('rotate_copy', 'IIII', @_);
+		my $iter_start = shift;
+		my $iter_mid = shift;
+		my $iter_finish = shift;
+		my $iter_result = shift;
+		my $iter_end = $iter_mid; --$iter_end;
+		copy($iter_start, $iter_end, $iter_result);
+		copy($iter_mid, $iter_finish, $iter_result);
+		return;
+	}
+	sub rotate # (iterator, iterator, iterator) -- static function
+	{
+		_usage_check('rotate', 'III', @_);
+		my $iter_start = shift;
+		my $iter_mid = shift;
+		my $iter_finish = shift;
+		my $iter_end = $iter_finish; ++$iter_end;
+		for (my $iter = $iter_start->clone(); $iter < $iter_mid; ++$iter)
+		{
+			$iter->p_container()->insert($iter_end, 1, $iter->p_element());
+		}
+		$iter_start->p_container()->erase($iter_start, --$iter_mid);
+		return;
+	}
+	sub reverse # (iterator, iterator) -- static function
+	{
+		_usage_check('reverse', 'II', @_);
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		for (my $i1=$iter_start->clone(), my $i2=$iter_finish->clone(); $i1 < $i2; ++$i1, --$i2)
+		{
+			$i1->p_element()->swap($i2->p_element());
+		}
+		return;
+	}
+	sub reverse_copy # (iterator, iterator, iterator) -- static function
+	{
+		_usage_check('reverse_copy', 'III', @_);
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		my $iter_result = shift;
+		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
+		{
+			$iter_result->p_container()->insert($iter_result, 1, $iter->p_element());
+		}
+		return;
+	}
 	sub for_each # (iterator, iterator, unary-function-object) -- static function
 	{
 		_usage_check('for_each', 'IIF', @_);
@@ -126,6 +360,70 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract')
 				? for_each($iter->p_element()->begin(), $iter->p_element()->end(), $function) # its a tree -- recurse
 				: $function->function_operator($iter->p_element());
+		}
+		return;
+	}
+	sub generate # (iterator, iterator, generator-function-object) -- static function
+	{
+		_usage_check('generate', 'IIG', @_);
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		my $function = shift; # generator-function
+		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
+		{
+			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract')
+				? generate($iter->p_element()->begin(), $iter->p_element()->end(), $function) # its a tree -- recurse
+				: $iter->p_element()->swap($function->function_operator());
+		}
+		return;
+	}
+	sub generate_n # (iterator, size, generator-function-object) -- static function
+	{
+		_usage_check('generate_n', 'ISG', @_);
+		my $iter_start = shift;
+		my $size = shift;
+		my $function = shift; # generator-function
+		my $iter = $iter_start->clone(); 
+		my $start_idx = $iter->arr_idx();
+		for (; $iter->arr_idx() - $start_idx < $size; ++$iter)
+		{
+			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract')
+				? generate_n($iter->p_element()->begin(), $size, $function) # its a tree -- recurse
+				: $iter->p_element()->swap($function->function_operator());
+		}
+		return;
+	}
+	sub fill # (iterator, iterator, element-ref) -- static function
+	{
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		my $element = shift;
+		$element = Class::STL::Element->new($element)
+			unless (ref($element) && $element->isa('Class::STL::Element'));
+		_usage_check('fill', 'IIE', $iter_start, $iter_finish, $element);
+		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
+		{
+			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract')
+				? fill($iter->p_element()->begin(), $iter->p_element()->end(), $element) # its a tree -- recurse
+				: $iter->p_element()->swap($element->clone());
+		}
+		return;
+	}
+	sub fill_n # (iterator, size, element-ref) -- static function
+	{
+		my $iter_start = shift;
+		my $size = shift;
+		my $element = shift;
+		$element = Class::STL::Element->new($element)
+			unless (ref($element) && $element->isa('Class::STL::Element'));
+		_usage_check('fill_n', 'ISE', $iter_start, $size, $element);
+		my $iter = $iter_start->clone(); 
+		my $start_idx = $iter->arr_idx();
+		for (; $iter->arr_idx() - $start_idx < $size; ++$iter)
+		{
+			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract')
+				? fill_n($iter->p_element()->begin(), $size, $element) # its a tree -- recurse
+				: $iter->p_element()->swap($element->clone());
 		}
 		return;
 	}
@@ -410,28 +708,7 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 #TODO:sub sort
 #TODO:{
 #TODO:}
-#TODO:sub reverse
-#TODO:{
-#TODO:}
-#TODO:sub partition # (predicate)
-#TODO:{
-#TODO:}
 #TODO:sub random_shuffle # ( [ random_number_generator ] )
-#TODO:{
-#TODO:}
-#TODO:sub fill # ( [ size, ] value )
-#TODO:{
-#TODO:}
-#TODO:sub generate # ( generator )
-#TODO:{
-#TODO:}
-#TODO:sub generate_n # ( size, generator )
-#TODO:{
-#TODO:}
-#TODO:sub min_element # ( [ binary_predicate ] ) -- use lt operator
-#TODO:{
-#TODO:}
-#TODO:sub max_element # ( [ binary_predicate ] ) -- default use lt operator
 #TODO:{
 #TODO:}
 #TODO:sub lower_bound
@@ -453,21 +730,26 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 					|| ($format[$arg] eq 'F' && $_[$arg]->isa('Class::STL::Utilities::FunctionObject'))
 					|| ($format[$arg] eq 'B' && $_[$arg]->isa('Class::STL::Utilities::FunctionObject::BinaryFunction'))
 					|| ($format[$arg] eq 'U' && $_[$arg]->isa('Class::STL::Utilities::FunctionObject::UnaryFunction'))
+					|| ($format[$arg] eq 'G' && $_[$arg]->isa('Class::STL::Utilities::FunctionObject::Generator'))
 					|| ($format[$arg] eq 'E' && $_[$arg]->isa('Class::STL::Element'))
+					|| ($format[$arg] eq 'S' && !ref($_[$arg])) # Scalar
 				)
 		}
 		if ($check != int(@_)) {
 			use Carp qw(confess);
 			my @anames;
 			foreach (@format) { 
+				push(@anames, 'scalar') if (/S/);
 				push(@anames, 'iterator') if (/I/);
 				push(@anames, 'function-object') if (/F/);
 				push(@anames, 'unary-function-object') if (/U/);
-				push(@anames, 'binnary-function-object') if (/B/);
+				push(@anames, 'generator-function-object') if (/G/);
+				push(@anames, 'binary-function-object') if (/B/);
 				push(@anames, 'element-ref') if (/E/);
 			}
 			confess "@{[ __PACKAGE__]}::$function_name usage:\n$function_name( @{[ join(', ', @anames) ]});\n"
 		}
+		return 1;
 	}
 }
 # ----------------------------------------------------------------------------------------------------

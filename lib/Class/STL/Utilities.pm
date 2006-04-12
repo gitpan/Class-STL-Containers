@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+# vim:ts=4 sw=4
 # ----------------------------------------------------------------------------------------------------
 #  Name		: Class::STL::Utilities.pm
 #  Created	: 22 February 2006
@@ -81,6 +81,25 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 		my $self = {};
 		bless($self, $class);
 		$self->members_init(_caller => (caller())[0], @_);
+		return $self;
+	}
+	sub function_operator
+	{
+		my $self = shift;
+		use Carp qw(confess);
+		confess "@{[ __PACKAGE__ ]} abstract class must be derived!\n";
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
+	package Class::STL::Utilities::FunctionObject::Generator;
+	use base qw(Class::STL::Utilities::FunctionObject);
+	sub new
+	{
+		my $self = shift;
+		my $class = ref($self) || $self;
+		$self = $class->SUPER::new(@_);
+		bless($self, $class);
 		return $self;
 	}
 	sub function_operator
@@ -212,37 +231,39 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 	sub factory
 	{
 		my $self = shift;
-		our $fcounter;
-		$fcounter++;
-		my $code = "
+		our %__dynfun;
+		if (!exists($__dynfun{$self->function_name()}))
 		{
-			package Class::STL::Utilities::PointerToUnaryFunction::F$fcounter;
-			use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
-			sub new
+			$__dynfun{$self->function_name()} = eval("
 			{
-				my \$self = shift;
-				my \$class = ref(\$self) || \$self;
-				\$self = \$class->SUPER::new();
-				bless(\$self, \$class);
-				return \$self;
-			}
-			sub function_operator
-			{
-				my \$self = shift;
-				my \$arg = shift;
-				my \$tmp;
-				if (ref(\$arg) && \$arg->isa('Class::STL::Element'))
+				package Class::STL::Utilities::PointerToUnaryFunction::__@{[ $self->function_name() ]};
+				use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
+				sub new
 				{
-					\$tmp = \$arg->clone();
-					\$tmp->data(@{[ $self->function_name() ]}(\$tmp->data()));
+					my \$self = shift;
+					my \$class = ref(\$self) || \$self;
+					\$self = \$class->SUPER::new();
+					bless(\$self, \$class);
+					return \$self;
 				}
-				return \$tmp;
+				sub function_operator
+				{
+					my \$self = shift;
+					my \$arg = shift;
+					my \$tmp;
+					if (ref(\$arg) && \$arg->isa('Class::STL::Element'))
+					{
+						\$tmp = \$arg->clone();
+						\$tmp->data(@{[ $self->function_name() ]}(\$tmp->data()));
+					}
+					return \$tmp;
+				}
 			}
+			Class::STL::Utilities::PointerToUnaryFunction::__@{[ $self->function_name() ]}->new();
+			");
+			confess "**Error in eval for @{[ __PACKAGE__ ]} ptr_fun dynamic class creation:\n$@" if ($@);
 		}
-		Class::STL::Utilities::PointerToUnaryFunction::F$fcounter->new();
-		";
-		return eval $code;
-		confess "**Error in eval for @{[ __PACKAGE__ ]} function_operator function creation:\n$@" if ($@);
+		return $__dynfun{$self->function_name()};
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -263,48 +284,50 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 	sub factory
 	{
 		my $self = shift;
-		our $fcounter;
-		$fcounter++;
-		my $code = "
+		our %__dynfun;
+		if (!exists($__dynfun{$self->function_name()}))
 		{
-			package Class::STL::Utilities::PointerToBinaryFunction::F$fcounter;
-			use base qw(Class::STL::Utilities::FunctionObject::BinaryFunction);
-			sub new
+			$__dynfun{$self->function_name()} = eval("
 			{
-				my \$self = shift;
-				my \$class = ref(\$self) || \$self;
-				\$self = \$class->SUPER::new();
-				bless(\$self, \$class);
-				return \$self;
+				package Class::STL::Utilities::PointerToBinaryFunction::__@{[ $self->function_name() ]};
+				use base qw(Class::STL::Utilities::FunctionObject::BinaryFunction);
+				sub new
+				{
+					my \$self = shift;
+					my \$class = ref(\$self) || \$self;
+					\$self = \$class->SUPER::new();
+					bless(\$self, \$class);
+					return \$self;
+				}
+				sub function_operator
+				{
+					my \$self = shift;
+					my \$arg1 = shift;
+					my \$arg2 = shift; 
+					my \$tmp;
+					if (ref(\$arg1) && \$arg1->isa('Class::STL::Element') && ref(\$arg2) && \$arg2->isa('Class::STL::Element'))
+					{
+						\$tmp = \$arg1->clone();
+						\$tmp->data(@{[ $self->function_name() ]}(\$arg1->data(), \$arg2->data()));
+					}
+					elsif (ref(\$arg2) && \$arg2->isa('Class::STL::Element'))
+					{
+						\$tmp = \$arg2->clone();
+						\$tmp->data(@{[ $self->function_name() ]}(\$arg1, \$arg2->data()));
+					}
+					elsif (ref(\$arg1) && \$arg1->isa('Class::STL::Element'))
+					{
+						\$tmp = \$arg1->clone();
+						\$tmp->data(@{[ $self->function_name() ]}(\$arg1->data(), \$arg2));
+					}
+					return \$tmp;
+				}
 			}
-			sub function_operator
-			{
-				my \$self = shift;
-				my \$arg1 = shift;
-				my \$arg2 = shift; 
-				my \$tmp;
-				if (ref(\$arg1) && \$arg1->isa('Class::STL::Element') && ref(\$arg2) && \$arg2->isa('Class::STL::Element'))
-				{
-					\$tmp = \$arg1->clone();
-					\$tmp->data(@{[ $self->function_name() ]}(\$arg1->data(), \$arg2->data()));
-				}
-				elsif (ref(\$arg2) && \$arg2->isa('Class::STL::Element'))
-				{
-					\$tmp = \$arg2->clone();
-					\$tmp->data(@{[ $self->function_name() ]}(\$arg1, \$arg2->data()));
-				}
-				elsif (ref(\$arg1) && \$arg1->isa('Class::STL::Element'))
-				{
-					\$tmp = \$arg1->clone();
-					\$tmp->data(@{[ $self->function_name() ]}(\$arg1->data(), \$arg2));
-				}
-				return \$tmp;
-			}
+			Class::STL::Utilities::PointerToBinaryFunction::__@{[ $self->function_name() ]}->new();
+			");
+			confess "**Error in eval for @{[ __PACKAGE__ ]} ptr_fun_binary dynamic class creation:\n$@" if ($@);
 		}
-		Class::STL::Utilities::PointerToBinaryFunction::F$fcounter->new();
-		";
-		return eval $code;
-		confess "**Error in eval for @{[ __PACKAGE__ ]} function_operator function creation:\n$@" if ($@);
+		return $__dynfun{$self->function_name()};
 	}
 }
 # ----------------------------------------------------------------------------------------------------

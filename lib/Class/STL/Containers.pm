@@ -1,4 +1,3 @@
-#!/usr/bin/perl
 # vim:ts=4 sw=4
 # ----------------------------------------------------------------------------------------------------
 #  Name		: Class::STL::Containers.pm
@@ -37,7 +36,7 @@ use Exporter;
 @EXPORT = qw( vector list deque queue priority_queue stack tree );
 use lib './lib';
 use Class::STL::DataMembers;
-$VERSION = 0.12;
+$VERSION = 0.14;
 $BUILD = 'Monday April 10 21:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
@@ -217,15 +216,15 @@ $BUILD = 'Monday April 10 21:08:34 GMT 2006';
 			my $element = shift;
 			my @elems;
 			foreach (1..$num_repeat) { CORE::push(@elems, $element->clone()); } # insert copies 
-			$size
-				? CORE::splice(@{$self->data()}, $position->arr_idx(), 0, @elems) 
-				: $self->push(@elems);
+			!$size || $position->at_end()
+				? $self->push(@elems)
+				: CORE::splice(@{$self->data()}, $position->arr_idx(), 0, @elems);
 		}
 		else
 		{
 			confess $self->_insert_errmsg();
 		}
-		$position->set(1) unless ($size);
+		$position->first() if (!$size);
 		return $position;
 	}
 	sub erase # ( iterator | iterator-start, iterator-finish )
@@ -235,9 +234,9 @@ $BUILD = 'Monday April 10 21:08:34 GMT 2006';
 		my $iter_finish = shift || $iter_start->clone();
 		my $count=0;
 		CORE::splice(@{$self->data()}, $iter_start->arr_idx(), $count)
-			if (($count=$iter_start->distance($iter_finish)) != 0);
-		$iter_start->set($iter_start->arr_idx());
-		return $count; # number of elements deleted
+			if (($count=distance($iter_start, $iter_finish)+1) > 0);
+		$iter_start->last() if ($iter_start->at_end());
+		return $iter_start; # iterator
 	}
 	sub _insert_errmsg
 	{
