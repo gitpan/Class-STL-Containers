@@ -72,6 +72,17 @@ Class::STL::Containers - Perl extension for STL-like object management
 	++$ri;
   }
 
+  # Inserters
+  my $three2one = list(qw(3 2 1));
+  my $four2six = list(qw(4 5 6));
+  my $seven2nine = list(qw(7 8 9));
+  my $result = list();
+  copy($three2one->begin(), $three2one->end(), front_inserter($result));
+  copy($seven2nine->begin(), $seven2nine->end(), back_inserter($result));
+  my $iseven = find($result->begin(), $result->end(), 7);
+  copy($four2six->begin(), $four2six->end(), inserter($result, $iseven));
+  # $result now contains (1, 2, 3, 4, 5, 6, 7, 8, 9);
+
   # Vector container...
   my $v = vector(qw(first second third fourth fifth));
   
@@ -144,7 +155,7 @@ Class::STL::Containers - Perl extension for STL-like object management
     sub begin
     {
       Class::STL::DataMembers->new(qw( name value ));
-      Class::STL::Containers::MakeFind(qw( name )); # Create find() function based on 'name' members.
+      Class::STL::Containers::MakeFind->new(qw( name )); # Create find() function based on 'name' members.
     }
     sub new
     {
@@ -831,7 +842,7 @@ F<remove_if>, F<find_if>, F<for_each>, F<transform>, F<count_if>, F<find>, F<cou
 
 The F<Algorithms> package consists of various I<static> algorithm functions.
 
-The I<unary-function> argument must be derived from I<Class::STL::Utilities::FunctionObject::UnaryFunction>. Standard utility functions are provided in the I<Class::STL::Utilities> module. A I<unary-function> contains the function I<function_operator>. This I<function_operator> function will, in turn, be called by the algorithm for each element traversed. The algorithm will pass the element reference as the argument to the I<function_operator> function. 
+The I<unary-function> / I<binary-function> argument must be derived from I<Class::STL::Utilities::FunctionObject::UnaryFunction> and I<Class::STL::Utilities::FunctionObject::BinaryFunction> respectively. Standard utility functions are provided in the I<Class::STL::Utilities> module. A function object contains the function I<function_operator>. This I<function_operator> function will, in turn, be called by the algorithm for each element traversed. The algorithm will pass the element reference as the argument to the I<function_operator> function. 
 
 
 =over
@@ -1209,7 +1220,7 @@ This module contains the iterator classes.
 
 =head2 Exports
 
-F<iteratror>, F<bidirectional_iteratror>, F<reverse_iteratror>, F<forward_iteratror>, F<++>, F<-->, F<==>, F<!=>, E<gt>F<=>, E<lt>F<=>, F<+>, F<+=>, F<->, F<-=>, F<distance>, F<advance>.
+F<iterator>, F<bidirectional_iterator>, F<reverse_iterator>, F<forward_iterator>, F<++>, F<-->, F<==>, F<!=>, E<gt>F<=>, E<lt>F<=>, F<+>, F<+=>, F<->, F<-=>, F<distance>, F<advance>, F<front_inserter>, F<back_inserter>, F<inserter>.
 
 =over
 
@@ -1218,7 +1229,7 @@ F<iteratror>, F<bidirectional_iteratror>, F<reverse_iteratror>, F<forward_iterat
 
 =item F<p_container>
 
-Returns a reference to the container that is bound to the iterator.
+Returns a reference to the container that is associated with the iterator.
 
 
 =item F<p_element>
@@ -1238,7 +1249,31 @@ I<int distance ( iterator-start, iterator-finish ] );>
 B<Static function>. Moves the iterator forward, or backwards if size is negative.
 
 
-I<iterator advance ( iterator, size ] );>
+I<iterator advance ( iterator, size );>
+
+
+=item F<inserter>
+
+B<Static function>. 
+
+
+I<iterator inserter ( container, iterator );>
+
+
+=item F<front_inserter>
+
+B<Static function>. 
+
+
+I<iterator front_inserter ( container );>
+
+
+=item F<back_inserter>
+
+B<Static function>. 
+
+
+I<iterator back_inserter ( container );>
 
 
 =item F<first>

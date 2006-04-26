@@ -32,8 +32,8 @@ use strict;
 use warnings;
 use vars qw($VERSION $BUILD);
 use lib './lib';
-$VERSION = '0.01';
-$BUILD = 'Thursday March 23 15:08:34 GMT 2006';
+$VERSION = '0.02';
+$BUILD = 'Wed April 26 20:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::DataMembers;
@@ -48,6 +48,7 @@ $BUILD = 'Thursday March 23 15:08:34 GMT 2006';
 		$self->_caller((caller())[0]);
 		$self->_debug(0);
 		$self->_members(@_);
+		$self->_code([]);
 		return $self;
 	}
 	sub new_debug
@@ -59,6 +60,26 @@ $BUILD = 'Thursday March 23 15:08:34 GMT 2006';
 		$self->_caller((caller())[0]);
 		$self->_debug(1);
 		$self->_members(@_);
+		$self->_code([]);
+		return $self;
+	}
+	sub make_new
+	{
+		my $self = shift;
+		my $tab = ' ' x 4;
+		my $code = "package @{[ $self->_caller() ]};\n";
+		$code .= "sub new\n";
+		$code .= "{\n";
+		$code .= "${tab}my \$self = shift;\n";
+		$code .= "${tab}my \$class = ref(\$self) || \$self;\n";
+		$code .= "${tab}\$self = \$class->SUPER::new(\@_);\n";
+		$code .= "${tab}bless(\$self, \$class);\n";
+		$code .= "${tab}\$self->members_init(\@_);\n";
+#?		$code .= "${tab}return \$self->new_extra(\@_) if (\$self->can('new_extra'));\n";
+		$code .= "${tab}\$self->new_extra(\@_) if (\$self->can('new_extra'));\n";
+		$code .= "${tab}return \$self;\n";
+		$code .= "}\n";
+		push(@{$self->_code()}, $code);
 		return $self;
 	}
 	# ----------------------------------------------------------------------------------------------------
@@ -69,19 +90,31 @@ $BUILD = 'Thursday March 23 15:08:34 GMT 2006';
 		my $self = shift;
 		confess __PACKAGE__ . " usage:\nnew(<data member name list>);\n***Error empty data member names list!\n"
 			unless (keys(%{$self->_members()}));
-		my @code;
-		push(@code, map($self->_public_member_func($_), values(%{$self->_members()})));
-		push(@code, $self->_init_func());
-		push(@code, $self->_print_func());
-		push(@code, $self->_members_func());
-		push(@code, $self->_swap_func());
-		push(@code, $self->_clone_func());
-		push(@code, $self->_ignore_local_func());
-		print STDERR "# @{[ $self->_caller() ]} Data Members:", join('|', keys( %{$self->_members()} )), "\n"
-			if ($self->_debug());
-		print STDERR join("", @code), "\n" if ($self->_debug());
-		eval(join("", @code));
+		map($self->_public_member_func($_), values(%{$self->_members()}));
+		$self->_init_func();
+		$self->_print_func();
+		$self->_members_func();
+		$self->_swap_func();
+		$self->_clone_func();
+		$self->_ignore_local_func();
+		if ($self->_debug())
+		{
+#			print STDERR "# @{[ $self->_caller() ]} Data Members:", join('|', keys( %{$self->_members()} )), "\n";
+#			print STDERR join("", @{$self->_code()}), "\n";
+			open(DEBUG, ">>datemembers$$.out");
+			print DEBUG "# @{[ $self->_caller() ]} Data Members:", 
+				join('|', keys( %{$self->_members()} )), "\n";
+			print DEBUG join("", @{$self->_code()}), "\n";
+			close(DEBUG);
+		}
+		eval(join("", @{$self->_code()}));
 		confess "**Error in eval for @{[ $self->_caller() ]} DataMembers functions creation:\n$@" if ($@);
+	}
+	sub _code
+	{
+		my $self = shift;
+		$self->{__PACKAGE__}->{CODE} = shift if (@_);
+		return $self->{__PACKAGE__}->{CODE};
 	}
 	sub _debug
 	{
@@ -123,7 +156,8 @@ $BUILD = 'Thursday March 23 15:08:34 GMT 2006';
 		my $tab = ' ' x 4;
 		my $member_name = ref($member) && $member->isa('Class::STL::DataMembers::Attributes') 
 			? $member->name() : $member;
-		my $code = "sub @{[ $self->_caller() ]}\::$member_name {\n${tab}my \$self = shift;\n";
+		my $code = "package @{[ $self->_caller() ]};\n";	# !! need this for SUPER to function correctly.
+		$code .= "sub @{[ $self->_caller() ]}\::$member_name {\n${tab}my \$self = shift;\n";
 
 		if (ref($member) && $member->isa('Class::STL::DataMembers::Attributes') && defined($member->validate()))
 		{
@@ -135,20 +169,38 @@ $BUILD = 'Thursday March 23 15:08:34 GMT 2006';
 		}
 		$code .= "${tab}return \$self->{@{[ $self->_caller_str() ]}}->{@{[ uc($member_name) ]}};\n";
 		$code .= "}\n";
-		return $code;
+		push(@{$self->_code()}, $code);
+		return;
 	}
 	sub _init_func
 	{
 		my $self = shift;
 		my $tab = ' ' x 4;
-		my $code = "sub @{[ $self->_caller() ]}\::members_init {\n";
+		my $code = "package @{[ $self->_caller() ]};\n";	# !! need this for SUPER to function correctly.
+		$code .= "sub @{[ $self->_caller() ]}\::members_init {\n";
 		$code .= "${tab}my \$self = shift;\n";
+#		$code .= "print STDERR __PACKAGE__, '::members_init -- caller=', caller(), \"\n\";" if ($self->_debug());
+		$code .= "${tab}use vars qw(\@ISA);\n";
+		$code .= "${tab}if (int(\@ISA) && (caller())[0] ne __PACKAGE__) {\n";
+		$code .= "${tab}${tab}\$self->SUPER::members_init(\@_);\n";
+		$code .= "${tab}}\n";
 		$code .= "${tab}my \@p;\n";
 		$code .= "${tab}while (\@_) { my \$p=shift; push(\@p, \$p, shift) if (!ref(\$p)); }\n";
 		$code .= "${tab}my \%p = \@p;\n";
 		$code .= "${tab}@{[ join(\"\n    \", map($self->_member_init_func($_), values( %{$self->_members()} ))) ]}\n";
 		$code .= "}\n";
-		return $code;
+		push(@{$self->_code()}, $code);
+		return;
+	}
+	sub _member_init_func
+	{
+		my $self = shift;
+		my $member = shift;
+		my $member_name = ref($member) && $member->isa('Class::STL::DataMembers::Attributes') 
+			? $member->name() : $member;
+		return ref($member) && $member->isa('Class::STL::DataMembers::Attributes')
+			? $member->init_func_code()
+			: "\$self->$member_name(\$p{'$member_name'});";
 	}
 	sub _print_func
 	{
@@ -168,17 +220,8 @@ $BUILD = 'Thursday March 23 15:08:34 GMT 2006';
 			);
 		$code .= "\n${tab});\n";
 		$code .= "}\n";
-		return $code;
-	}
-	sub _member_init_func
-	{
-		my $self = shift;
-		my $member = shift;
-		my $member_name = ref($member) && $member->isa('Class::STL::DataMembers::Attributes') 
-			? $member->name() : $member;
-		return ref($member) && $member->isa('Class::STL::DataMembers::Attributes')
-			? $member->init_func_code()
-			: "\$self->$member_name(\$p{'$member_name'});";
+		push(@{$self->_code()}, $code);
+		return;
 	}
 	sub _members_func
 	{
@@ -201,7 +244,8 @@ $BUILD = 'Thursday March 23 15:08:34 GMT 2006';
 		);
 		$code .= "\n${tab}}\n";
 		$code .= "}\n";
-		return $code;
+		push(@{$self->_code()}, $code);
+		return;
 	}
 	sub _swap_func
 	{
@@ -223,7 +267,8 @@ $BUILD = 'Thursday March 23 15:08:34 GMT 2006';
 			map(qq#\$other->$_(\$tmp->$_());#, keys( %{$self->_members()} ) )) ]}\n";
 		$code .= "${tab}return \$tmp;\n";
 		$code .= "}\n";
-		return $code;
+		push(@{$self->_code()}, $code);
+		return;
 	}
 	sub _clone_func
 	{
@@ -236,7 +281,8 @@ $BUILD = 'Thursday March 23 15:08:34 GMT 2006';
 			map(qq#\$clone->$_(\$self->$_());#, keys( %{$self->_members()} ) )) ]}\n";
 		$code .= "${tab}return \$clone;\n";
 		$code .= "}\n";
-		return $code;
+		push(@{$self->_code()}, $code);
+		return;
 	}
 	sub _ignore_local_func
 	{
@@ -247,42 +293,43 @@ $BUILD = 'Thursday March 23 15:08:34 GMT 2006';
 		$code .= "${tab}foreach (\@_) { !ref(\$_) && exists(\${members()}{\$_}) ? shift : push(\@ign, \$_); }\n";
 		$code .= "${tab}return \@ign;\n";
 		$code .= "}\n";
-		return $code;
+		push(@{$self->_code()}, $code);
+		return;
 	}
-	sub make_new_function # experimental -- needs debugging!
-	{
-		my $self = shift;
-		my %overrides = @_;
-		my @overrides = ();
-		foreach (keys(%overrides)) { push(@overrides, "$_ => '" . $overrides{$_} . "'"); }
-		my $tab = ' ' x 4;
-		my $code;
-		$code .= "package @{[ $self->_caller() ]};\n";	# !! need this for SUPER to function correctly.
-		$code .= "sub @{[ $self->_caller() ]}\::new {\n";
-    	$code .= "${tab}my \$self = shift;\n";
-		$code .= "${tab}my \$class = ref(\$self) || \$self;\n";
-		$code .= "${tab}my \@params;\n";
-		$code .= "${tab}while (\@_)\n";
-		$code .= "${tab}\{\n";
-		$code .= "${tab}${tab}my \$p = shift;\n";
-		$code .= "${tab}${tab}(ref(\$p) && ref(\$p) ne 'ARRAY' && \$p->isa(__PACKAGE__)) # copy ctor\n";
-		$code .= "${tab}${tab}? CORE::push(\@params,\n";
-		$code .= "${tab}${tab}${tab}@{[ join(qq#,\n${tab}${tab}${tab}#, map(qq#'$_', \$p->$_()#, keys( %{$self->_members()} ) )) ]}\n";
-		$code .= "${tab}${tab})\n";
-		$code .= "${tab}${tab}: ref(\$p) ? CORE::push(\@params, \$p) : CORE::push(\@params, \$p, shift);\n";
-		$code .= "${tab}}\n";
-		$code .= "${tab}\$self = \$class->SUPER::new(ignore_local(\@params)";
-		$code .= ", @{[ join(',', @overrides) ]}" if (@overrides);
-		$code .= ");\n";
-		$code .= "${tab}bless(\$self, \$class);\n";
-		$code .= "${tab}\$self->members_init(\@params);\n";
-		$code .= "${tab}return \$self;\n";
-		$code .= "}\n";
-		print STDERR $code, "\n" if ($self->_debug());
-		eval($code);
-		confess "**Error in eval for @{[ $self->_caller() ]} Members::NewFunction functions creation:\n$@" if ($@);
-		return $self;
-	}
+#?	sub make_new_function # experimental -- needs debugging!
+#?	{
+#?		my $self = shift;
+#?		my %overrides = @_;
+#?		my @overrides = ();
+#?		foreach (keys(%overrides)) { push(@overrides, "$_ => '" . $overrides{$_} . "'"); }
+#?		my $tab = ' ' x 4;
+#?		my $code;
+#?		$code .= "package @{[ $self->_caller() ]};\n";	# !! need this for SUPER to function correctly.
+#?		$code .= "sub @{[ $self->_caller() ]}\::new {\n";
+#?		$code .= "${tab}my \$self = shift;\n";
+#?		$code .= "${tab}my \$class = ref(\$self) || \$self;\n";
+#?		$code .= "${tab}my \@params;\n";
+#?		$code .= "${tab}while (\@_)\n";
+#?		$code .= "${tab}\{\n";
+#?		$code .= "${tab}${tab}my \$p = shift;\n";
+#?		$code .= "${tab}${tab}(ref(\$p) && ref(\$p) ne 'ARRAY' && \$p->isa(__PACKAGE__)) # copy ctor\n";
+#?		$code .= "${tab}${tab}? CORE::push(\@params,\n";
+#?		$code .= "${tab}${tab}${tab}@{[ join(qq#,\n${tab}${tab}${tab}#, map(qq#'$_', \$p->$_()#, keys( %{$self->_members()} ) )) ]}\n";
+#?		$code .= "${tab}${tab})\n";
+#?		$code .= "${tab}${tab}: ref(\$p) ? CORE::push(\@params, \$p) : CORE::push(\@params, \$p, shift);\n";
+#?		$code .= "${tab}}\n";
+#?		$code .= "${tab}\$self = \$class->SUPER::new(ignore_local(\@params)";
+#?		$code .= ", @{[ join(',', @overrides) ]}" if (@overrides);
+#?		$code .= ");\n";
+#?		$code .= "${tab}bless(\$self, \$class);\n";
+#?		$code .= "${tab}\$self->members_init(\@params);\n";
+#?		$code .= "${tab}return \$self;\n";
+#?		$code .= "}\n";
+#?		print STDERR $code, "\n" if ($self->_debug());
+#?		eval($code);
+#?		confess "**Error in eval for @{[ $self->_caller() ]} Members::NewFunction functions creation:\n$@" if ($@);
+#?		return $self;
+#?	}
 }
 # ----------------------------------------------------------------------------------------------------
 {

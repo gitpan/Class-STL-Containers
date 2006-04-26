@@ -36,8 +36,8 @@ use Exporter;
 @EXPORT = qw( vector list deque queue priority_queue stack tree );
 use lib './lib';
 use Class::STL::DataMembers;
-$VERSION = 0.14;
-$BUILD = 'Monday April 10 21:08:34 GMT 2006';
+$VERSION = 0.16;
+$BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Containers;
@@ -144,7 +144,6 @@ $BUILD = 'Monday April 10 21:08:34 GMT 2006';
 	{
 		my $self = shift;
 		my $curr_sz = $self->size();
-#?		CORE::push(@{$self->data()}, map($_->new($_), grep(ref && $_->isa('Class::STL::Element'), @_)));
 		CORE::push(@{$self->data()}, grep(ref && $_->isa('Class::STL::Element'), @_));
 		return $self->size() - $curr_sz; # number of new elements inserted.
 	}
@@ -170,7 +169,8 @@ $BUILD = 'Monday April 10 21:08:34 GMT 2006';
 		my $self = shift;
 		my $position = shift;
 		confess $self->_insert_errmsg()
-		unless (defined($position) && ref($position) && $position->isa('Class::STL::Iterators::Abstract'));
+		unless (defined($position) && ref($position) 
+			&& $position->isa('Class::STL::Iterators::Abstract'));
 		my $size = $self->size();
 
 		# insert(position, iterator-start, iterator-finish);# insert copies 
@@ -180,23 +180,31 @@ $BUILD = 'Monday April 10 21:08:34 GMT 2006';
 			my $iter_start = shift;
 			my $iter_finish = shift;
 			my $pos = $self->size() ? $position->arr_idx() : 0;
-			for (my $i = $iter_finish->new($iter_finish); $i >= $iter_start; --$i) {
-				CORE::splice(@{$self->data()}, $pos, 0, 
-					$i->p_element()->new($i->p_element())); # insert copies
+			for (my $i = $iter_finish->new($iter_finish); $i >= $iter_start; --$i) 
+			{# insert copies
+				$position->can('assign')
+					? $position->assign($i->p_element()->clone())
+					: CORE::splice(@{$self->data()}, $pos, 0, $i->p_element()->clone()); 
 			}
 		}
 		# insert(position, iterator-start);# insert copies 
 		elsif (defined($_[0]) && ref($_[0]) && $_[0]->isa('Class::STL::Iterators::Abstract'))
 		{ 
 			my $iter_start = shift;
-			for (my $i = $iter_start->new($iter_start); !$i->at_end(); ++$i) {
-				if (!$size || !$position->at_end())
+			for (my $i = $iter_start->new($iter_start); !$i->at_end(); ++$i) 
+			{# insert copies
+				if ($position->can('assign'))
+				{
+					$position->assign($i->p_element()->clone());
+				}
+#?				elsif (!$size || !$position->at_end())
+				elsif (!$size || $position->at_end())
 				{
 					$self->push($i->p_element()->clone());
 				}
 				else
 				{
-					CORE::splice(@{$self->data()}, $position->arr_idx(), 0, $i->p_element()->clone()); # insert copies
+					CORE::splice(@{$self->data()}, $position->arr_idx(), 0, $i->p_element()->clone());
 					$position++;
 				}
 			}
@@ -204,10 +212,14 @@ $BUILD = 'Monday April 10 21:08:34 GMT 2006';
 		# insert(position, element [, ...]); # insert references (not copies)
 		elsif (defined($_[0]) && ref($_[0]) && $_[0]->isa('Class::STL::Element'))
 		{ 
+			return $position->assign(@_) if ($position->can('assign'));
 			!$size || $position->at_end()
 				? $self->push(@_)
 				: CORE::splice(@{$self->data()}, $position->arr_idx(), 0, 
 					grep(ref && $_->isa('Class::STL::Element'), @_));
+			$position->first() if (!$size);
+			$position->next();
+			return $position->clone()-1; # iterator points to inserted element
 		}
 		# insert(position, size, element);# insert copies 
 		elsif (defined($_[0]) && defined($_[1]) && ref($_[1]) && $_[1]->isa('Class::STL::Element'))
@@ -216,6 +228,7 @@ $BUILD = 'Monday April 10 21:08:34 GMT 2006';
 			my $element = shift;
 			my @elems;
 			foreach (1..$num_repeat) { CORE::push(@elems, $element->clone()); } # insert copies 
+			return $position->assign(@elems) if ($position->can('assign'));
 			!$size || $position->at_end()
 				? $self->push(@elems)
 				: CORE::splice(@{$self->data()}, $position->arr_idx(), 0, @elems);
@@ -225,7 +238,8 @@ $BUILD = 'Monday April 10 21:08:34 GMT 2006';
 			confess $self->_insert_errmsg();
 		}
 		$position->first() if (!$size);
-		return $position;
+		$position->next();
+		return; # void
 	}
 	sub erase # ( iterator | iterator-start, iterator-finish )
 	{
@@ -291,6 +305,12 @@ $BUILD = 'Monday April 10 21:08:34 GMT 2006';
 				: CORE::push(@nodes, $_);
 		}
 		return @nodes;
+	}
+	sub join # (delimiter)
+	{
+		my $self = shift;
+		my $delim = shift || '';
+		return CORE::join($delim, map($_->print(), $self->to_array())); # string
 	}
 	sub eq # (container-ref)
 	{

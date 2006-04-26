@@ -33,7 +33,20 @@ use strict;
 use warnings;
 use vars qw( $VERSION $BUILD @EXPORT );
 use Exporter;
-@EXPORT = qw( iterator bidirectional_iterator reverse_iterator forward_iterator distance advance );
+@EXPORT = qw( 
+	iterator 
+	bidirectional_iterator 
+	reverse_iterator 
+	forward_iterator 
+	distance 
+	advance 
+	back_insert_iterator 
+	front_insert_iterator 
+	back_inserter 
+	front_inserter 
+	insert_iterator 
+	inserter 
+);
 use lib './lib';
 use Class::STL::DataMembers;
 $VERSION = '0.01';
@@ -51,6 +64,12 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		return Class::STL::Iterators::Reverse->new(@_) if ($func eq 'reverse_iterator');
 		return Class::STL::Iterators::Abstract::distance(@_) if ($func eq 'distance');
 		return Class::STL::Iterators::Abstract::advance(@_) if ($func eq 'advance');
+		return Class::STL::Iterators::BackInsertIterator->new(@_) if ($func eq 'back_insert_iterator');
+		return Class::STL::Iterators::FrontInsertIterator->new(@_) if ($func eq 'front_insert_iterator');
+		return Class::STL::Iterators::Abstract::back_inserter(@_) if ($func eq 'back_inserter');
+		return Class::STL::Iterators::Abstract::front_inserter(@_) if ($func eq 'front_inserter');
+		return Class::STL::Iterators::InsertIterator->new(@_) if ($func eq 'insert_iterator');
+		return Class::STL::Iterators::Abstract::inserter(@_) if ($func eq 'inserter');
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -77,9 +96,7 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		{
 			my $p = shift;
 			(ref($p) && ref($p) ne 'ARRAY' && $p->isa(__PACKAGE__)) # copy ctor
-			? CORE::push(@params,
-				'arr_idx', $p->arr_idx(),
-				'p_container', $p->p_container())
+			? CORE::push(@params, 'arr_idx', $p->arr_idx(), 'p_container', $p->p_container())
 			: ref($p) ? CORE::push(@params, $p) : CORE::push(@params, $p, shift);
 		}
 		$self = $class->SUPER::new(ignore_local(@params));
@@ -111,7 +128,7 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 	{
 		my $self = shift;
 		$self->idx_check();
-		return $self if ($self->arr_idx() == -1);
+		return $self->last() if ($self->arr_idx() == -1);
 		(!$self->p_container()->size() || $self->arr_idx() == 0)
 			? $self->arr_idx(-1)
 			: $self->arr_idx($self->arr_idx() -1);
@@ -144,6 +161,29 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 			? $self->arr_idx(-1)
 			: $self->arr_idx($self->p_container()->size()-1);
 		return $self; # iterator
+	}
+	sub front_inserter # (container) -- static function
+	{
+		my $c = shift;
+		confess "A front_insert_iterator can only be used with a container that defines the push_front() member function\n"
+			unless (ref($c) && $c->isa('Class::STL::Containers::Abstract') && $c->can('push_front'));
+		return Class::STL::Iterators::FrontInsertIterator->new(p_container => $c);
+	}
+	sub back_inserter # (container) -- static function
+	{
+		my $c = shift;
+		confess "A back_insert_iterator can only be used with a container that defines the push_back() member function\n"
+			unless (ref($c) && $c->isa('Class::STL::Containers::Abstract') && $c->can('push_back'));
+		return Class::STL::Iterators::BackInsertIterator->new(p_container => $c);
+	}
+	sub inserter # (container, iterator) -- static function
+	{
+		my $c = shift;
+		my $i = shift;
+		confess "Usage:inserter(container, iterator)"
+			unless (ref($c) && $c->isa('Class::STL::Containers::Abstract')
+				&& ref($i) && $i->isa('Class::STL::Iterators::Abstract'));
+		return Class::STL::Iterators::InsertIterator->new(p_container => $c, arr_idx => $i->arr_idx());
 	}
 	sub distance # (iterator, iterator) -- static function
 	{
@@ -185,8 +225,9 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 	{
 		my $self = shift;
 		my $other = shift;
-		return $self->p_container() == $other->p_container()
-			&& $self->arr_idx() == $other->arr_idx();
+		return 
+#?			$self->p_container() == $other->p_container()
+			$self->arr_idx() == $other->arr_idx();
 	}
 	sub ne # (element)
 	{
@@ -198,7 +239,7 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		my $self = shift;
 		my $other = shift;
 		return !$self->at_end() && !$other->at_end()
-			&& $self->p_container() == $other->p_container()
+#?			&& $self->p_container() == $other->p_container()
 			&& $self->arr_idx() > $other->arr_idx();
 	}
 	sub ge # (element)
@@ -206,7 +247,7 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		my $self = shift;
 		my $other = shift;
 		return !$self->at_end() && !$other->at_end()
-			&& $self->p_container() == $other->p_container()
+#?			&& $self->p_container() == $other->p_container()
 			&& $self->arr_idx() >= $other->arr_idx();
 	}
 	sub lt # (element)
@@ -214,7 +255,7 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		my $self = shift;
 		my $other = shift;
 		return !$self->at_end() && !$other->at_end()
-			&& $self->p_container() == $other->p_container()
+#?			&& $self->p_container() == $other->p_container()
 			&& $self->arr_idx() < $other->arr_idx();
 	}
 	sub le # (element)
@@ -222,7 +263,7 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 		my $self = shift;
 		my $other = shift;
 		return !$self->at_end() && !$other->at_end()
-			&& $self->p_container() == $other->p_container()
+#?			&& $self->p_container() == $other->p_container() # -- don't want overloaded == !!
 			&& $self->arr_idx() <= $other->arr_idx();
 	}
 	sub cmp # (element)
@@ -271,6 +312,45 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 	{
 		my $self = shift;
 		return $self->SUPER::next(); # iterator
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
+	package Class::STL::Iterators::BackInsertIterator;
+	use base qw(Class::STL::Iterators::Abstract); 
+	sub assign # (element)
+	{
+		my $self = shift;
+		$self->p_container()->push_back(@_);
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
+	package Class::STL::Iterators::FrontInsertIterator;
+	use base qw(Class::STL::Iterators::Abstract); 
+	sub assign # (element)
+	{
+		my $self = shift;
+		$self->p_container()->push_front(@_);
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
+	package Class::STL::Iterators::InsertIterator;
+	use base qw(Class::STL::Iterators::Abstract); 
+	sub assign # (element)
+	{
+		my $self = shift;
+		if (!$self->p_container()->size() || $self->at_end())
+		{
+			$self->p_container()->push(@_);
+		}
+		else
+		{
+			CORE::splice(@{$self->p_container()->data()}, $self->arr_idx(), 0, 
+				grep(ref && $_->isa('Class::STL::Element'), @_));
+		}
+		return $self->next();
 	}
 }
 # ----------------------------------------------------------------------------------------------------

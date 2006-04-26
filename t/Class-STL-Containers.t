@@ -14,7 +14,7 @@ use Test;
 use Class::STL::Containers;
 use Class::STL::Algorithms;
 use Class::STL::Utilities;
-BEGIN { plan tests => 46 }
+BEGIN { plan tests => 48 }
 
 #########################
 
@@ -60,16 +60,16 @@ ok (join(' ', map($_->data(), $l->to_array())), "tenth first second third fourth
 $i++;
 $i++;
 $l->insert($i, $l->factory('eleventh'));
-ok (join(' ', map($_->data(), $l->to_array())), "tenth first eleventh second third fourth fifth", 'list->insert()');
+ok (join(' ', map($_->data(), $l->to_array())), "tenth first second eleventh third fourth fifth", 'list->insert()');
 $i = $l->end();
 $l->insert($i, $l->factory('twelfth'));
 #test 20
-ok (join(' ', map($_->data(), $l->to_array())), "tenth first eleventh second third fourth twelfth fifth", 'list->insert()');
+ok (join(' ', map($_->data(), $l->to_array())), "tenth first second eleventh third fourth twelfth fifth", 'list->insert()');
 
 $l->erase($l->begin());
-ok (join(' ', map($_->data(), $l->to_array())), "first eleventh second third fourth twelfth fifth", 'list->erase()');
+ok (join(' ', map($_->data(), $l->to_array())), "first second eleventh third fourth twelfth fifth", 'list->erase()');
 $l->erase($l->end());
-ok (join(' ', map($_->data(), $l->to_array())), "first eleventh second third fourth twelfth", 'list->erase()');
+ok (join(' ', map($_->data(), $l->to_array())), "first second eleventh third fourth twelfth", 'list->erase()');
 
 my $istart = $l->begin();
 my $ifinish = $l->end();
@@ -151,6 +151,7 @@ $l10->push_back($l10->factory(name => 'one', data => '_one'));
 $l10->push_back($l10->factory(name => 'two', data => '_two'));
 $l10->push_back($l10->factory(name => 'three', data => '_three'));
 ok (join(' ', map($_->name(), $l10->to_array())), "one two three", 'derived element');
+ok (join(' ', map($_->data(), $l10->to_array())), "_one _two _three", 'derived element');
 
 $start = $l10->begin();
 $ifinish = $l10->end();
@@ -160,6 +161,8 @@ ok (join(' ', map($_->data(), $l10->to_array())), "_three _two _one", 'swap(elem
 
 $l10->begin()->p_element()->data('BLUE');
 ok (join(' ', map($_->data(), $l10->to_array())), "BLUE _two _one", 'set element');
+
+ok ($l10->join(' '), "BLUE _two _one", 'join()');
 
 {
 	package MyElem;

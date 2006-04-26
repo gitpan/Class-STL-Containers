@@ -13,7 +13,7 @@ use Class::STL::Containers;
 use Class::STL::Algorithms;
 use Class::STL::Utilities;
 use Class::STL::DataMembers;
-BEGIN { plan tests => 57 }
+BEGIN { plan tests => 64 }
 
 #########################
 
@@ -200,6 +200,28 @@ ok (join(' ', map($_->data(), $l3->to_array())), "4 5 9 -1 3 7 5 6 7 4 2 1", 'un
 
 ok (adjacent_find($l2->begin(), $l2->end())->arr_idx(), "1", 'adjacent_find() -- 1');
 ok (adjacent_find($l2->begin(), $l2->end(), equal_to())->arr_idx(), "1", 'adjacent_find() -- 2');
+
+$l3 = list(qw(4 5 5 9 -1 -1 -1 3 7 5 5 5 6 7 7 7 4 2 1 1));
+::sort($l3->begin(), $l3->end());
+ok ($l3->join(' '), "-1 -1 -1 1 1 2 3 4 4 5 5 5 5 5 6 7 7 7 7 9", 'sort() -- 1');
+
+$l3 = list(qw(4 5 5 9 -1 -1 -1 3 7 5 5 5 6 7 7 7 4 2 1 1));
+stable_sort($l3->begin(), $l3->end(), compare());
+ok ($l3->join(' '), "-1 -1 -1 1 1 2 3 4 4 5 5 5 5 5 6 7 7 7 7 9", 'stable_sort() -- 2');
+
+$l3 = list(qw(1 2 3 4 5 6 7 8 9 10));
+ok (accumulate($l3->begin(), $l3->end(), 0)->data(), "55", 'accumulate() -- 1');
+ok (accumulate($l3->begin(), $l3->end(), 1, multiplies())->data(), "3628800", 'accumulate() -- 2');
+ok (accumulate($l3->begin()+1, $l3->end()-1, 0)->data(), "44", 'accumulate() -- 1');
+
+$l3 = list(qw(4 5 5 9 -1 -1 -1 3 7 5 5 5 6 7 7 7 4 2 1 1));
+qsort($l3->begin(), $l3->end());
+ok ($l3->join(' '), "-1 -1 -1 1 1 2 3 4 4 5 5 5 5 5 6 7 7 7 7 9", 'qsort() -- 1');
+
+$l3 = list(qw(4 5 5 9 -1 -1 -1 3 7 5 5 5 6 7 7 7 4 2 1 1));
+stable_qsort($l3->begin(), $l3->end(), compare());
+ok ($l3->join(' '), "-1 -1 -1 1 1 2 3 4 4 5 5 5 5 5 6 7 7 7 7 9", 'stable_qsort() -- 2');
+
 
 {
   package is_even;

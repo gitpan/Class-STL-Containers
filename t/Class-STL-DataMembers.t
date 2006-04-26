@@ -5,7 +5,7 @@
 
 use Test;
 use Class::STL::DataMembers;
-BEGIN { plan tests => 4 }
+BEGIN { plan tests => 5 }
 
 #########################
 
@@ -48,3 +48,17 @@ ok ($att->member_print(), "comment=hello|count=25|display_target=STDERR|msg_text
 ok ($att->comment(), "hello", 'get()');
 
 ok ($att->comment($att->comment() . 'world'), "helloworld", 'put() + get()');
+
+my $n = MyElem2->new(name => 'hello', name2 => 'world', data => '123');
+ok (join(' ', $n->name(), $n->name2(), $n->data()), 'hello world 123', 'members_init()');
+
+{
+	package MyElem;
+	use base qw(Class::STL::Element);
+	sub BEGIN { Class::STL::DataMembers->new( qw( name ) )->make_new(); }
+}
+{
+	package MyElem2;
+	use base qw(MyElem);
+	sub BEGIN { Class::STL::DataMembers->new( qw( name2 ) )->make_new(); }
+}

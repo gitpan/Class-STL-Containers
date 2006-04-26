@@ -14,7 +14,8 @@ use Test;
 use Class::STL::Containers;
 use Class::STL::Utilities;
 use Class::STL::Iterators;
-BEGIN { plan tests => 26 }
+use Class::STL::Algorithms;
+BEGIN { plan tests => 34 }
 
 #########################
 
@@ -102,3 +103,38 @@ ok (advance($ri, 2)->p_element()->data(), 'yellow', 'advance(+)');
 
 ok (advance($ri, -2)->p_element()->data(), 'green', 'advance(-)');
 
+my $l2 = list(qw(1 2 3 4 5 6 7 8 9));
+my $l3 = list();
+copy($l2->begin()+3, $l2->end(), back_inserter($l3));
+ok (join(' ', map($_->data(), $l3->to_array())), "4 5 6 7 8 9", 'back_inserter()');
+
+$l3->clear();
+copy_backward($l2->begin()+3, $l2->end(), back_inserter($l3));
+ok (join(' ', map($_->data(), $l3->to_array())), "9 8 7 6 5 4", 'back_inserter()');
+
+$l3->clear();
+copy($l2->begin()+3, $l2->end(), front_inserter($l3));
+ok (join(' ', map($_->data(), $l3->to_array())), "9 8 7 6 5 4", 'front_inserter()');
+
+$l3->clear();
+copy_backward($l2->begin()+3, $l2->end(), front_inserter($l3));
+ok (join(' ', map($_->data(), $l3->to_array())), "4 5 6 7 8 9", 'front_inserter()');
+
+my $ins = inserter($l3, $l3->begin()+2);
+$ins->assign($l3->factory(qw(10)));
+$ins->assign($l3->factory(qw(11)));
+ok (join(' ', map($_->data(), $l3->to_array())), "4 5 10 11 6 7 8 9", 'inserter()');
+
+transform($l3->begin(), $l3->end(), front_inserter($l2), bind1st(multiplies(), 2));
+ok (join(' ', map($_->data(), $l2->to_array())), "18 16 14 12 22 20 10 8 1 2 3 4 5 6 7 8 9", 'front_inserter()');
+
+my $ll1 = list(qw(3 2 1));
+my $ll2 = list(qw(4 5 6));
+my $ll3 = list(qw(7 8 9));
+my $ll4 = list();
+copy($ll1->begin(), $ll1->end(), front_inserter($ll4));
+copy($ll3->begin(), $ll3->end(), back_inserter($ll4));
+ok (join(' ', map($_->data(), $ll4->to_array())), "1 2 3 7 8 9", 'inserters');
+my $iseven = find($ll4->begin(), $ll4->end(), 7);
+copy($ll2->begin(), $ll2->end(), inserter($ll4, $iseven));
+ok (join(' ', map($_->data(), $ll4->to_array())), "1 2 3 4 5 6 7 8 9", 'inserters');

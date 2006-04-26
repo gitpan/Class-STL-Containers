@@ -77,11 +77,11 @@ $BUILD = 'Monday March 27 21:08:34 GMT 2006';
 	{
 		my $self = shift;
 		my $other = shift;
-		return ref($self->data()) && $self->data()->can('eq')
+		return defined($self->data()) && ref($self->data()) && $self->data()->can('eq')
 			? $self->data()->eq($other)
 			: $self->data_type() eq 'string'
-				? $self->data() eq $other->data()
-				: $self->data() == $other->data();
+				? defined($self->data()) && defined($other->data()) && $self->data() eq $other->data()
+				: defined($self->data()) && defined($other->data()) && $self->data() == $other->data();
 	}
 	sub ne # (element)
 	{
@@ -92,41 +92,41 @@ $BUILD = 'Monday March 27 21:08:34 GMT 2006';
 	{
 		my $self = shift;
 		my $other = shift;
-		return ref($self->data()) && $self->data()->can('gt')
+		return defined($self->data()) && ref($self->data()) && $self->data()->can('gt')
 			? $self->data()->gt($other)
 			: $self->data_type() eq 'string'
-				? $self->data() gt $other->data()
-				: $self->data() > $other->data();
+				? defined($self->data()) && defined($other->data()) && $self->data() gt $other->data()
+				: defined($self->data()) && defined($other->data()) && $self->data() > $other->data();
 	}
 	sub lt # (element)
 	{
 		my $self = shift;
 		my $other = shift;
-		return ref($self->data()) && $self->data()->can('lt')
+		return defined($self->data()) && ref($self->data()) && $self->data()->can('lt')
 			? $self->data()->lt($other)
 			: $self->data_type() eq 'string'
-				? $self->data() lt $other->data()
-				: $self->data() < $other->data();
+				? defined($self->data()) && defined($other->data()) && $self->data() lt $other->data()
+				: defined($self->data()) && defined($other->data()) && $self->data() < $other->data();
 	}
 	sub ge # (element)
 	{
 		my $self = shift;
 		my $other = shift;
-		return ref($self->data()) && $self->data()->can('ge')
+		return defined($self->data()) && ref($self->data()) && $self->data()->can('ge')
 			? $self->data()->ge($other)
 			: $self->data_type() eq 'string'
-				? $self->data() ge $other->data()
-				: $self->data() >= $other->data();
+				? defined($self->data()) && defined($other->data()) && $self->data() ge $other->data()
+				: defined($self->data()) && defined($other->data()) && $self->data() >= $other->data();
 	}
 	sub le # (element)
 	{
 		my $self = shift;
 		my $other = shift;
-		return ref($self->data()) && $self->data()->can('le')
+		return defined($self->data()) && ref($self->data()) && $self->data()->can('le')
 			? $self->data()->le($other)
 			: $self->data_type() eq 'string'
-				? $self->data() le $other->data()
-				: $self->data() <= $other->data();
+				? defined($self->data()) && defined($other->data()) && $self->data() le $other->data()
+				: defined($self->data()) && defined($other->data()) && $self->data() <= $other->data();
 	}
 	sub cmp # (element)
 	{
@@ -205,6 +205,20 @@ $BUILD = 'Monday March 27 21:08:34 GMT 2006';
 		return ref($self->data()) && $self->data()->can('match_ic')
 			? $self->data()->match_ic($other)
 			: $self->data() =~ /@{[ $other->data() ]}/i;
+	}
+	sub neg # (void)
+	{
+		my $self = shift;
+		return ref($self->data()) && $self->data()->can('neg')
+			? $self->data()->neg()
+			: $self->data(-($self->data()));
+	}
+	sub print # (void)
+	{
+		my $self = shift;
+		return ref($self->data()) && $self->data()->can('print')
+			? $self->data()->print()
+			: $self->data();
 	}
 }
 # ----------------------------------------------------------------------------------------------------

@@ -12,7 +12,7 @@ use Test;
 use Class::STL::Containers;
 use Class::STL::Algorithms;
 use Class::STL::Utilities;
-BEGIN { plan tests => 22 }
+BEGIN { plan tests => 60 }
 
 #########################
 
@@ -36,18 +36,59 @@ my $e = MyClass->new(data => 100, data_type => 'numeric');
 my $e2 = MyClass->new($e);
 my $e3 = MyClass->new(data => 101, data_type => 'numeric');
 ok (equal_to()->function_operator($e, $e2), "1", "equal_to()");
+ok (equal_to()->function_operator($e, 100), "1", "equal_to()");
+ok (equal_to()->function_operator(100, $e), "1", "equal_to()");
+ok (equal_to()->function_operator(100, 100), "1", "equal_to()");
+
 ok (not_equal_to()->function_operator($e, $e2), "", "not_equal_to()");
+ok (not_equal_to()->function_operator($e, 100), "", "not_equal_to()");
+ok (not_equal_to()->function_operator(100, $e), "", "not_equal_to()");
+ok (not_equal_to()->function_operator(100, 100), "", "not_equal_to()");
+
+ok (not_equal_to()->function_operator($e, $e3), "1", "not_equal_to()");
+ok (not_equal_to()->function_operator($e, 101), "1", "not_equal_to()");
+ok (not_equal_to()->function_operator(101, $e), "1", "not_equal_to()");
+ok (not_equal_to()->function_operator(100, 101), "1", "not_equal_to()");
+
 ok (greater()->function_operator($e3, $e2), "1", "greater()"); # $e3 > $e2
+ok (greater()->function_operator($e3, 100), "1", "greater()"); # $e3 > $e2
+ok (greater()->function_operator(102, $e3), "1", "greater()"); # $e3 > $e2
+ok (greater()->function_operator(102, 101), "1", "greater()"); # $e3 > $e2
+
 ok (less()->function_operator($e2, $e3), "1", "less()"); # $e2 < $e3
+ok (less()->function_operator($e2, 101), "1", "less()"); # $e2 < $e3
+ok (less()->function_operator(100, $e3), "1", "less()"); # $e2 < $e3
+ok (less()->function_operator(100, 101), "1", "less()"); # $e2 < $e3
+
 ok (greater_equal()->function_operator($e3, $e2), "1", "greater_equal()");
+ok (greater_equal()->function_operator($e3, 101), "1", "greater_equal()");
+ok (greater_equal()->function_operator(100, $e2), "1", "greater_equal()");
+ok (greater_equal()->function_operator(101, 100), "1", "greater_equal()");
+
 ok (less_equal()->function_operator($e2, $e3), "1", "less_equal()");
+ok (less_equal()->function_operator($e2, 101), "1", "less_equal()");
+ok (less_equal()->function_operator(100, $e3), "1", "less_equal()");
+ok (less_equal()->function_operator(100, 101), "1", "less_equal()");
+
 ok (compare()->function_operator($e2, $e3), "-1", "compare()"); # $e2 < $e3
+ok (compare()->function_operator($e2, 101), "-1", "compare()"); # $e2 < $e3
+ok (compare()->function_operator(100, $e3), "-1", "compare()"); # $e2 < $e3
+ok (compare()->function_operator(100, 101), "-1", "compare()"); # $e2 < $e3
+
 ok (compare()->function_operator($e3, $e), "1", "compare()"); # $e3 > $e
+ok (compare()->function_operator($e3, 100), "1", "compare()"); # $e3 > $e
+ok (compare()->function_operator(101, $e), "1", "compare()"); # $e3 > $e
+ok (compare()->function_operator(101, 100), "1", "compare()"); # $e3 > $e
+
 ok (compare()->function_operator($e2, $e), "0", "compare()");
+ok (compare()->function_operator($e2, 100), "0", "compare()");
+ok (compare()->function_operator(100, $e), "0", "compare()");
+ok (compare()->function_operator(100, 100), "0", "compare()");
 
 $l2 = list(qw(1 2 3 4 5));
 $e2 = $l2->factory(2);
 ok (count_if($l2->begin(), $l2->end(), bind2nd(greater(), $e2)), "3", 'bind2nd()');
+ok (count_if($l2->begin(), $l2->end(), bind2nd(greater(), 2)), "3", 'bind2nd()');
 ok (count_if($l2->begin(), $l2->end(), bind1st(greater(), $e2)), "1", 'bind1st()');
 ok (count_if($l2->begin(), $l2->end(), bind2nd(greater(), 2)), "3", 'bind2nd()');
 ok (count_if($l2->begin(), $l2->end(), bind1st(greater(), 2)), "1", 'bind1st()');
@@ -79,3 +120,17 @@ ok (join(' ', map($_->data(), $l5->to_array())), "1 1 0 1 1", 'logical_and()');
 $l5->clear();
 transform($l3->begin(), $l3->end(), $l4->begin(), $l5->begin(), logical_or());
 ok (join(' ', map($_->data(), $l5->to_array())), "1 1 1 1 1", 'logical_or()');
+
+ok (not2(less())->function_operator(1, 4), '', 'not2');
+ok (not2(less())->function_operator(4, 1), '1', 'not2');
+ok (not2(greater())->function_operator(1, 4), '1', 'not2');
+ok (not2(greater())->function_operator(4, 1), '', 'not2');
+
+$l2 = list(qw(1 2 3 4 5));
+$l5->clear();
+transform($l2->begin(), $l2->end(), $l5->begin(), negate());
+ok (join(' ', map($_->data(), $l5->to_array())), "-1 -2 -3 -4 -5", 'negate()');
+
+$l2->clear();
+transform($l5->begin(), $l5->end(), $l2->begin(), negate());
+ok ($l2->join(' '), "1 2 3 4 5", 'negate()');

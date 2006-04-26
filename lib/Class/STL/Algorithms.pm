@@ -74,7 +74,73 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 		unique 
 		unique_copy
 		adjacent_find
+		sort
+		stable_sort
+		qsort
+		stable_qsort
+		accumulate
 	);
+	sub new
+	{
+		use Carp qw(confess);
+		confess "@{[ __PACKAGE__ ]} contains STATIC functions only!\n";
+	}
+	sub accumulate  # (iterator-start, iterator-finish, element [, binary-function ] )
+	{
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		my $element = shift;
+		my $binary_op = shift || undef;
+		$element = $iter_start->p_container()->factory($element);
+		defined($binary_op) 
+			? _usage_check('accumulate', 'IIEB', $iter_start, $iter_finish, $element, $binary_op)
+			: _usage_check('accumulate', 'IIE', $iter_start, $iter_finish, $element);
+		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
+		{
+			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
+			{
+				accumulate($iter->p_element()->begin(), $iter->p_element()->end(), $element, $binary_op); # its a tree -- recurse
+			}
+			else 
+			{
+				defined($binary_op) 
+					? $element = $binary_op->function_operator($element, $iter->p_element())
+					: $element->add($iter->p_element());
+			}
+		}
+		return $element;
+	}
+	sub qsort # (iterator-start, iterator-finish [, binary-function ] )
+	{
+		use sort qw(stable _qsort);
+		::sort(@_);
+	}
+	sub stable_qsort # (iterator-start, iterator-finish [, binary-function ] )
+	{
+		use sort qw(stable _qsort); 
+		::sort(@_);
+	}
+	sub stable_sort # (iterator-start, iterator-finish [, binary-function ] )
+	{
+		use sort qw(stable); 
+		::sort(@_);
+	}
+	sub sort # (iterator-start, iterator-finish [, binary-function ] )
+	{
+		use Class::STL::Iterators;
+		int(@_) == 2 ? _usage_check('sort(1)', 'II', @_) : _usage_check('sort(2)', 'IIB', @_);
+		my $iter_start = shift;
+		my $iter_finish = shift;
+		my $binary_op = shift || undef;
+		defined($binary_op) 
+			? CORE::splice(@{$iter_start->p_container()->data()}, $iter_start->arr_idx(), distance($iter_start, $iter_finish)+1,
+				CORE::sort { $binary_op->function_operator($a, $b) } 
+					(@{$iter_start->p_container()->data()}[$iter_start->arr_idx()..$iter_finish->arr_idx()]))
+			: CORE::splice(@{$iter_start->p_container()->data()}, $iter_start->arr_idx(), distance($iter_start, $iter_finish)+1,
+				CORE::sort { $a->cmp($b) } 
+					(@{$iter_start->p_container()->data()}[$iter_start->arr_idx()..$iter_finish->arr_idx()]));
+		return; # void
+	}
 	sub transform 
 	{
 		return @_ == 5 ? transform_2(@_) : transform_1(@_);
@@ -86,7 +152,7 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 		my $iter_finish = shift;
 		my $iter_result = shift;
 		my $unary_op = shift; # unary-function
-		for (my $iter = $iter_finish->clone(); $iter >= $iter_start; --$iter)
+		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
 			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
 			{
@@ -131,14 +197,12 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 				my $e = $iter->p_element()->clone();
 #>				$e->negate($binary_op->function_operator($iter->p_element(), $iter2->p_element()) ? 0 : 1);
 				$e->data($binary_op->function_operator($iter->p_element(), $iter2->p_element()) ? 1 : 0);
-				$iter_result = $iter_result->p_container()->insert($iter_result, $e);
-				$iter_result++;	
+				$iter_result->p_container()->insert($iter_result, $e);
 			}
 			else # $binary_op->isa('Class::STL::Utilities::FunctionObject::BinaryFunction')
 			{
-				$iter_result = $iter_result->p_container()->insert($iter_result, 
+				$iter_result->p_container()->insert($iter_result, 
 					$binary_op->function_operator($iter->p_element(), $iter2->p_element()));
-				$iter_result++;	
 			}
 		}
 		return;
@@ -181,21 +245,20 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 		my $iter_finish = shift;
 		my $iter_result = shift;
 		my $binary_op = shift || undef;
-		my $iter_next = $iter_finish->clone();
-		my $end = $iter_result->p_container()->insert($iter_result, 1, $iter_next->p_element());
-		for (my $iter = $iter_finish->clone()-1; $iter >= $iter_start; --$iter, --$iter_next)
+		my $iter_prev = $iter_start->clone();
+		$iter_result->p_container()->insert($iter_result, 1, $iter_prev->p_element());
+		for (my $iter = $iter_start->clone()+1; $iter != $iter_prev && $iter <= $iter_finish; ++$iter, ++$iter_prev)
 		{
 			if 
 			(
-				(defined($binary_op) && !$binary_op->function_operator($iter_next->p_element(), $iter->p_element()))
-				|| (!defined($binary_op) && !$iter_next->p_element()->eq($iter->p_element()))
+				(defined($binary_op) && !$binary_op->function_operator($iter_prev->p_element(), $iter->p_element()))
+				|| (!defined($binary_op) && !$iter_prev->p_element()->eq($iter->p_element()))
 			)
 			{
 				$iter_result->p_container()->insert($iter_result, 1, $iter->p_element());
-				$end++;
 			}
 		}
-		return $end; # iterator
+		return $iter_result-1; # iterator
 	}
 	sub adjacent_find # (iterator, iterator [, binary-predicate ] ) -- static function
 	{
@@ -225,18 +288,13 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 		my $iter_start = shift;
 		my $iter_finish = shift;
 		my $function = shift;
-		my $position = $iter_start;
-		for (my $iter = $iter_finish->clone(); $iter >= $iter_start;)
+		my $position = $iter_start->clone();
+		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
 			if ($function->function_operator($iter->p_element()))
 			{
-				$position = $iter->p_container()->insert($position, 1, $iter->p_element());
-				$iter_start++;
+				$iter->p_container()->insert($position, 1, $iter->p_element());
 				$iter->p_container()->erase($iter+1);
-			}
-			else
-			{
-				--$iter;
 			}
 		}
 		return;
@@ -307,9 +365,8 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 		my $iter_mid = shift;
 		my $iter_finish = shift;
 		my $iter_result = shift;
-		my $iter_end = $iter_mid; --$iter_end;
-		copy($iter_start, $iter_end, $iter_result);
 		copy($iter_mid, $iter_finish, $iter_result);
+		copy($iter_start, $iter_mid-1, $iter_result);
 		return;
 	}
 	sub rotate # (iterator, iterator, iterator) -- static function
@@ -346,6 +403,7 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
 			$iter_result->p_container()->insert($iter_result, 1, $iter->p_element());
+			$iter_result--;
 		}
 		return;
 	}
@@ -398,7 +456,7 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 		my $iter_start = shift;
 		my $iter_finish = shift;
 		my $element = shift;
-		$element = Class::STL::Element->new($element)
+		$element = $iter_start->p_container()->factory(data => $element)
 			unless (ref($element) && $element->isa('Class::STL::Element'));
 		_usage_check('fill', 'IIE', $iter_start, $iter_finish, $element);
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
@@ -414,7 +472,7 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 		my $iter_start = shift;
 		my $size = shift;
 		my $element = shift;
-		$element = Class::STL::Element->new($element)
+		$element = $iter_start->p_container()->factory(data => $element)
 			unless (ref($element) && $element->isa('Class::STL::Element'));
 		_usage_check('fill_n', 'ISE', $iter_start, $size, $element);
 		my $iter = $iter_start->clone(); 
@@ -444,17 +502,19 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 			}
 			elsif ($function->function_operator($iter->p_element()))
 			{
-				return $iter->clone();
+				return $iter->clone(); # iterator
 			}
 		}
 		return 0;
 	}
 	sub find # (iterator, iterator, element-ref) -- static function
 	{
-		_usage_check('find', 'IIE', @_);
 		my $iter_start = shift;
 		my $iter_finish = shift;
 		my $element = shift; # element-ref
+		$element = $iter_start->p_container()->factory(data => $element)
+			unless (ref($element) && $element->isa('Class::STL::Element'));
+		_usage_check('find', 'IIE', $iter_start, $iter_finish, $element);
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
 			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
@@ -489,10 +549,12 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 	}
 	sub count # (iterator, iterator, element-ref) -- static function
 	{
-		_usage_check('count', 'IIE', @_);
 		my $iter_start = shift;
 		my $iter_finish = shift;
-		my $element = shift; # unary-function 
+		my $element = shift;
+		$element = $iter_start->p_container()->factory(data => $element)
+			unless (ref($element) && $element->isa('Class::STL::Element'));
+		_usage_check('count', 'IIE', $iter_start, $iter_finish, $element);
 		my $count=0;
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
@@ -525,10 +587,12 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 	}
 	sub remove # (iterator, iterator, element-ref) -- static function
 	{
-		_usage_check('remove', 'IIE', @_);
 		my $iter_start = shift;
 		my $iter_finish = shift;
 		my $element = shift; # element-ref
+		$element = $iter_start->p_container()->factory(data => $element)
+			unless (ref($element) && $element->isa('Class::STL::Element'));
+		_usage_check('remove', 'IIE', $iter_start, $iter_finish, $element);
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; )
 		{
 			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
@@ -550,7 +614,7 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 		my $iter_finish = shift;
 		my $iter_result = shift;
 		my $function = shift; # unary-function or class-member-name
-		for (my $iter = $iter_finish->clone(); $iter >= $iter_start; --$iter)
+		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
 			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
 			{
@@ -565,12 +629,14 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 	}
 	sub remove_copy # (iterator, iterator, iterator, element-ref) -- static function
 	{
-		_usage_check('remove_copy', 'IIIE', @_);
 		my $iter_start = shift;
 		my $iter_finish = shift;
 		my $iter_result = shift;
 		my $element = shift; # element-ref
-		for (my $iter = $iter_finish->clone(); $iter >= $iter_start; --$iter)
+		$element = $iter_start->p_container()->factory(data => $element)
+			unless (ref($element) && $element->isa('Class::STL::Element'));
+		_usage_check('remove_copy', 'IIIE', $iter_start, $iter_finish, $iter_result, $element);
+		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
 			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
 			{
@@ -589,12 +655,9 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 		my $iter_start = shift;
 		my $iter_finish = shift;
 		my $iter_result = shift;
-		for (my $iter = $iter_finish->clone(); $iter >= $iter_start; --$iter)
+		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
-			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract')
-				? copy($iter->p_element()->begin(), $iter->p_element()->end(), $iter_result) # its a tree -- recurse
-				: $iter_result->p_container()->insert($iter_result, 1, $iter->p_element());
-			$iter_result->first() if ($iter_result->at_end());
+			$iter_result->p_container()->insert($iter_result, 1, $iter->p_element());
 		}
 		return;
 	}
@@ -604,23 +667,22 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 		my $iter_start = shift;
 		my $iter_finish = shift;
 		my $iter_result = shift;
-		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
+		for (my $iter = $iter_finish->clone(); $iter >= $iter_start; --$iter)
 		{
-			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract')
-				? copy_backward($iter->p_element()->begin(), $iter->p_element()->end(), $iter_result) # its a tree -- recurse
-				: $iter_result->p_container()->insert($iter_result, 1, $iter->p_element());
-			$iter_result->first() if ($iter_result->at_end());
+			$iter_result->p_container()->insert($iter_result, 1, $iter->p_element());
 		}
 		return;
 	}
 	sub replace_if # (iterator, iterator, unary-function, element-ref) -- static function
 	{
-		_usage_check('replace_if', 'IIFE', @_);
 		my $iter_start = shift;
 		my $iter_finish = shift;
 		my $function = shift; 
 		my $new_element = shift; # element-ref
-		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
+		$new_element = $iter_start->p_container()->factory(data => $new_element)
+			unless (ref($new_element) && $new_element->isa('Class::STL::Element'));
+		_usage_check('replace_if', 'IIFE', $iter_start, $iter_finish, $function, $new_element);
+		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; )
 		{
 			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
 			{
@@ -631,17 +693,25 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 				$iter->p_container()->erase($iter);
 				$iter->p_container()->insert($iter, 1, $new_element);
 			}
+			else
+			{
+				++$iter;
+			}
 		}
 		return;
 	}
 	sub replace # (iterator, iterator, element-ref, element-ref) -- static function
 	{
-		_usage_check('replace', 'IIEE', @_);
 		my $iter_start = shift;
 		my $iter_finish = shift;
 		my $old_element = shift; # element-ref
 		my $new_element = shift; # element-ref
-		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
+		$old_element = $iter_start->p_container()->factory(data => $old_element)
+			unless (ref($old_element) && $old_element->isa('Class::STL::Element'));
+		$new_element = $iter_start->p_container()->factory(data => $new_element)
+			unless (ref($new_element) && $new_element->isa('Class::STL::Element'));
+		_usage_check('replace', 'IIEE', $iter_start, $iter_finish, $old_element, $new_element);
+		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; )
 		{
 			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
 			{
@@ -652,55 +722,60 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 				$iter->p_container()->erase($iter);
 				$iter->p_container()->insert($iter, 1, $new_element);
 			}
+			else
+			{
+				++$iter;
+			}
 		}
 		return;
 	}
 	sub replace_copy_if # (iterator, iterator, iterator, unary-function, element-ref) -- static function
 	{
-		_usage_check('replace_copy_if', 'IIIFE', @_);
 		my $iter_start = shift;
 		my $iter_finish = shift;
 		my $iter_result = shift;
 		my $function = shift; 
 		my $new_element = shift; # element-ref
-		for (my $iter = $iter_finish->clone(); $iter >= $iter_start; --$iter)
+		$new_element = $iter_start->p_container()->factory(data => $new_element)
+			unless (ref($new_element) && $new_element->isa('Class::STL::Element'));
+		_usage_check('replace_copy_if', 'IIIFE', $iter_start, $iter_finish, $iter_result, $function, $new_element);
+		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
 			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
 			{
+#? 				Insert tree here???
 				replace_copy_if($iter->p_element()->begin(), $iter->p_element()->end(), $iter_result, $function, $new_element); # its a tree -- recurse
-			}
-			elsif ($function->function_operator($iter->p_element()))
-			{
-				$iter_result->p_container()->insert($iter_result, 1, $new_element);
 			}
 			else
 			{
-				$iter_result->p_container()->insert($iter_result, 1, $iter->p_element());
+				$iter_result->p_container()->insert($iter_result, 1, 
+					($function->function_operator($iter->p_element()) ? $new_element : $iter->p_element()));
 			}
 		}
 		return;
 	}
 	sub replace_copy # (iterator, iterator, iterator, element-ref, element-ref) -- static function
 	{
-		_usage_check('replace_copy', 'IIIEE', @_);
 		my $iter_start = shift;
 		my $iter_finish = shift;
 		my $iter_result = shift;
 		my $old_element = shift; # element-ref
 		my $new_element = shift; # element-ref
-		for (my $iter = $iter_finish->clone(); $iter >= $iter_start; --$iter)
+		$old_element = $iter_start->p_container()->factory(data => $old_element)
+			unless (ref($old_element) && $old_element->isa('Class::STL::Element'));
+		$new_element = $iter_start->p_container()->factory(data => $new_element)
+			unless (ref($new_element) && $new_element->isa('Class::STL::Element'));
+		_usage_check('replace_copy', 'IIIEE', $iter_start, $iter_finish, $iter_result, $old_element, $new_element);
+		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
 			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
 			{
 				replace_copy($iter->p_element()->begin(), $iter->p_element()->end(), $iter_result, $old_element, $new_element); # its a tree -- recurse
 			}
-			elsif ($iter->p_element()->eq($old_element))
-			{
-				$iter_result->p_container()->insert($iter_result, 1, $new_element);
-			}
 			else
 			{
-				$iter_result->p_container()->insert($iter_result, 1, $iter->p_element());
+				$iter_result->p_container()->insert($iter_result, 1, 
+					($iter->p_element()->eq($old_element) ? $new_element : $iter->p_element()));
 			}
 		}
 		return;

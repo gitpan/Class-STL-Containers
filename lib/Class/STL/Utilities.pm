@@ -33,9 +33,32 @@ use strict;
 use warnings;
 use vars qw( $VERSION $BUILD @EXPORT );
 use Exporter;
-@EXPORT = qw( equal_to not_equal_to greater greater_equal less less_equal compare 
-	bind1st bind2nd mem_fun ptr_fun ptr_fun_binary matches matches_ic logical_and logical_or 
-	multiplies divides plus minus modulus );
+@EXPORT = qw( 
+	equal_to 
+	not_equal_to 
+	greater 
+	greater_equal 
+	less 
+	less_equal 
+	compare 
+	bind1st 
+	bind2nd 
+	mem_fun 
+	ptr_fun 
+	ptr_fun_binary 
+	matches 
+	matches_ic 
+	logical_and 
+	logical_or 
+	multiplies 
+	divides 
+	plus 
+	minus 
+	modulus 
+	not1
+	not2
+	negate
+);
 use lib './lib';
 use Class::STL::DataMembers;
 $VERSION = '0.01';
@@ -68,6 +91,9 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 		return Class::STL::Utilities::MemberFunction->new(@_) 	if ($func eq 'mem_fun');
 		return Class::STL::Utilities::PointerToUnaryFunction->new(@_)if ($func eq 'ptr_fun');
 		return Class::STL::Utilities::PointerToBinaryFunction->new(@_)if ($func eq 'ptr_fun_binary');
+		return Class::STL::Utilities::UnaryNegate->new(@_)		if ($func eq 'not1');
+		return Class::STL::Utilities::BinaryNegate->new(@_)		if ($func eq 'not2');
+		return Class::STL::Utilities::Negate->new(@_)			if ($func eq 'negate');
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -332,6 +358,49 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 }
 # ----------------------------------------------------------------------------------------------------
 {
+	package Class::STL::Utilities::UnaryNegate;
+	use base qw(Class::STL::Utilities::FunctionObject::UnaryPredicate);
+	sub BEGIN { Class::STL::DataMembers->new(qw( predicate )); }
+	sub new
+	{
+		my $self = shift;
+		my $class = ref($self) || $self;
+		$self = $class->SUPER::new();
+		bless($self, $class);
+		$self->members_init(predicate => shift);
+		return $self;
+	}
+	sub function_operator
+	{
+		my $self = shift;
+		my $arg = shift;
+		return !($self->predicate()->function_operator($arg));
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
+	package Class::STL::Utilities::BinaryNegate;
+	use base qw(Class::STL::Utilities::FunctionObject::BinaryPredicate);
+	sub BEGIN { Class::STL::DataMembers->new(qw( predicate )); }
+	sub new
+	{
+		my $self = shift;
+		my $class = ref($self) || $self;
+		$self = $class->SUPER::new();
+		bless($self, $class);
+		$self->members_init(predicate => shift);
+		return $self;
+	}
+	sub function_operator
+	{
+		my $self = shift;
+		my $arg1 = shift;
+		my $arg2 = shift;
+		return !($self->predicate()->function_operator($arg1, $arg2));
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
 	package Class::STL::Utilities::Binder1st;
 	use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
 	sub BEGIN { Class::STL::DataMembers->new(qw( operation first_argument )); }
@@ -407,7 +476,7 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 				? ($arg2->data_type() eq 'string') ? $arg1 ne $arg2->data() : $arg1 != $arg2->data()
 				: (ref($arg1) && $arg1->isa('Class::STL::Element'))
 					? ($arg1->data_type() eq 'string') ? $arg1->data() ne $arg2 : $arg1->data() != $arg2
-					: $arg1 == $arg2;
+					: $arg1 != $arg2;
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -445,7 +514,7 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 				? ($arg2->data_type() eq 'string') ? $arg1 ge $arg2->data() : $arg1 >= $arg2->data()
 				: (ref($arg1) && $arg1->isa('Class::STL::Element'))
 					? ($arg1->data_type() eq 'string') ? $arg1->data() ge $arg2 : $arg1->data() >= $arg2
-					: $arg1 > $arg2;
+					: $arg1 >= $arg2;
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -464,7 +533,7 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 				? ($arg2->data_type() eq 'string') ? $arg1 lt $arg2->data() : $arg1 < $arg2->data()
 				: (ref($arg1) && $arg1->isa('Class::STL::Element'))
 					? ($arg1->data_type() eq 'string') ? $arg1->data() lt $arg2 : $arg1->data() < $arg2
-					: $arg1 > $arg2;
+					: $arg1 < $arg2;
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -483,7 +552,7 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 				? ($arg2->data_type() eq 'string') ? $arg1 le $arg2->data() : $arg1 <= $arg2->data()
 				: (ref($arg1) && $arg1->isa('Class::STL::Element'))
 					? ($arg1->data_type() eq 'string') ? $arg1->data() le $arg2 : $arg1->data() <= $arg2
-					: $arg1 > $arg2;
+					: $arg1 <= $arg2;
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -502,7 +571,7 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 				? ($arg2->data_type() eq 'string') ? $arg1 cmp $arg2->data() : $arg1 <=> $arg2->data()
 				: (ref($arg1) && $arg1->isa('Class::STL::Element'))
 					? ($arg1->data_type() eq 'string') ? $arg1->data() cmp $arg2 : $arg1->data() <=> $arg2
-					: $arg1 > $arg2;
+					: $arg1 <=> $arg2;
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -717,6 +786,27 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 		{
 			$tmp = $arg1->clone();
 			$tmp->data($arg1->data() / $arg2);
+		}
+		return $tmp;
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
+	package Class::STL::Utilities::Negate;
+	use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
+	sub function_operator
+	{
+		my $self = shift;
+		my $arg = shift;
+		my $tmp;
+		if (ref($arg) && $arg->isa('Class::STL::Element'))
+		{
+			$tmp = $arg->clone();
+			$tmp->neg();
+		}
+		else
+		{
+			$tmp = Class::STL::Element->new(data => -$arg, data_type => 'numeric');
 		}
 		return $tmp;
 	}

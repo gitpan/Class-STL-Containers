@@ -1,6 +1,19 @@
 Revision history for Perl extension Class::STL::Containers.
 
-0.15 Tues Apr 12 20:19:22 2006
+0.16 Wed Apr 26 22:12:32 2006
+	- Fixed members_init function to call SUPER::members_init where appropriate.
+	- DataMembers new() function generation via make_new().
+	- accumulate algorithm.
+	- sort and stable_sort algorithm.
+	- Containers join() member function.
+	- back_insert_iterator class and back_inserter helper function.
+	- front_insert_iterator class and front_inserter helper function.
+	- insert_iterator class and inserter helper function.
+	- The insert() container member function will now advance the position (1st) argument up one
+		prior to returning.
+	- not1(), not2(), negate() utility functions.
+
+0.14 Tues Apr 12 20:19:22 2006
 	- Added algorithms: generate generate_n fill fill_n equal reverse reverse_copy
 		rotate rotate_copy partition stable_partition min_element max_element
 		unique unique_copy adjacent_find
