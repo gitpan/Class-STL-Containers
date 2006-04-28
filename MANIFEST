@@ -7,10 +7,13 @@ t/Class-STL-Algorithms.t
 t/Class-STL-Utilities.t
 t/Class-STL-Iterators.t
 t/Class-STL-Element.t
-t/Class-STL-DataMembers.t
+t/Class-STL-ClassMembers.t
+lib/stl.pm
 lib/Class/STL/Algorithms.pm
 lib/Class/STL/Containers.pm
-lib/Class/STL/DataMembers.pm
+lib/Class/STL/ClassMembers.pm
+lib/Class/STL/ClassMembers/DataMember.pm
+lib/Class/STL/ClassMembers/FunctionMember.pm
 lib/Class/STL/Element.pm
 lib/Class/STL/Iterators.pm
 lib/Class/STL/Utilities.pm
@@ -19,7 +22,7 @@ docs/class-stl-containers.pdf
 META.yml                                 Module meta-data (added by MakeMaker)
 examples/algorithms.pl
 examples/compare.pl
-examples/data_members.pl
+examples/class_members.pl
 examples/deque.pl
 examples/find_if.pl
 examples/foreach.pl

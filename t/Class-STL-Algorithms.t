@@ -9,10 +9,7 @@
 #BEGIN { use_ok('Class::STL::Utilities') };
 
 use Test;
-use Class::STL::Containers;
-use Class::STL::Algorithms;
-use Class::STL::Utilities;
-use Class::STL::DataMembers;
+use stl;
 BEGIN { plan tests => 64 }
 
 #########################
@@ -248,7 +245,7 @@ ok ($l3->join(' '), "-1 -1 -1 1 1 2 3 4 4 5 5 5 5 5 6 7 7 7 7 9", 'stable_qsort(
 {
   package MyGenerator;
   use base qw(Class::STL::Utilities::FunctionObject::Generator);
-  sub BEGIN { Class::STL::DataMembers->new(qw( counter )); }
+  use Class::STL::ClassMembers qw(counter);
   sub new
   {
     my $self = shift;

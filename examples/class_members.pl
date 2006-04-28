@@ -2,33 +2,23 @@
 use strict;
 use warnings;
 use lib './lib';
-use Class::STL::DataMembers;
+use stl;
 
 {
 	package MyPack;
-	sub BEGIN 
-	{ 
-		Class::STL::DataMembers->new(
+	use Class::STL::ClassMembers (
 			qw(msg_text msg_type),
-			Class::STL::DataMembers::Attributes->new(
+			Class::STL::ClassMembers::DataMember->new(
 				name => 'on', validate => '^(input|output)$', default => 'input'),
-			Class::STL::DataMembers::Attributes->new(
+			Class::STL::ClassMembers::DataMember->new(
 				name => 'display_target', default => 'STDERR'),
-			Class::STL::DataMembers::Attributes->new(
+			Class::STL::ClassMembers::DataMember->new(
 				name => 'count', validate => '^\d+$', default => '100'),
-			Class::STL::DataMembers::Attributes->new(
+			Class::STL::ClassMembers::DataMember->new(
 				name => 'comment', validate => '^\w+$', default => 'hello'),
-		); 
-	}
-	sub new
-	{
-		my $proto = shift;
-		my $class = ref($proto) || $proto;
-		my $self = {};
-		bless($self, $class);
-		$self->members_init(@_);
-		return $self;
-	}
+			Class::STL::ClassMembers::FunctionMember::New->new(),
+			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(somfunc)),
+	); 
 }
 
 print ">>>$0>>>>:\n";

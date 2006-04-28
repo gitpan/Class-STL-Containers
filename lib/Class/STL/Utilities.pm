@@ -59,10 +59,8 @@ use Exporter;
 	not2
 	negate
 );
-use lib './lib';
-use Class::STL::DataMembers;
-$VERSION = '0.01';
-$BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
+$VERSION = '0.18';
+$BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Utilities;
@@ -99,16 +97,10 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Utilities::FunctionObject;
-	sub BEGIN { Class::STL::DataMembers->new(qw( result_type _caller )); }
-	sub new
-	{
-		my $proto = shift;
-		my $class = ref($proto) || $proto;
-		my $self = {};
-		bless($self, $class);
-		$self->members_init(_caller => (caller())[0], @_);
-		return $self;
-	}
+	use Class::STL::ClassMembers (
+			qw(result_type),
+			Class::STL::ClassMembers::FunctionMember::New->new(),
+	); 
 	sub function_operator
 	{
 		my $self = shift;
@@ -120,14 +112,6 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 {
 	package Class::STL::Utilities::FunctionObject::Generator;
 	use base qw(Class::STL::Utilities::FunctionObject);
-	sub new
-	{
-		my $self = shift;
-		my $class = ref($self) || $self;
-		$self = $class->SUPER::new(@_);
-		bless($self, $class);
-		return $self;
-	}
 	sub function_operator
 	{
 		my $self = shift;
@@ -139,14 +123,6 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 {
 	package Class::STL::Utilities::FunctionObject::UnaryFunction;
 	use base qw(Class::STL::Utilities::FunctionObject);
-	sub new
-	{
-		my $self = shift;
-		my $class = ref($self) || $self;
-		$self = $class->SUPER::new(@_);
-		bless($self, $class);
-		return $self;
-	}
 	sub function_operator
 	{
 		my $self = shift;
@@ -159,14 +135,6 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 {
 	package Class::STL::Utilities::FunctionObject::BinaryFunction;
 	use base qw(Class::STL::Utilities::FunctionObject);
-	sub new
-	{
-		my $self = shift;
-		my $class = ref($self) || $self;
-		$self = $class->SUPER::new(@_);
-		bless($self, $class);
-		return $self;
-	}
 	sub function_operator
 	{
 		my $self = shift;
@@ -180,12 +148,10 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 {
 	package Class::STL::Utilities::FunctionObject::UnaryPredicate;
 	use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
-	sub new
+	sub new_extra
 	{
 		my $self = shift;
-		my $class = ref($self) || $self;
-		$self = $class->SUPER::new(@_, result_type => 'bool');
-		bless($self, $class);
+		$self->result_type('bool');
 		return $self;
 	}
 	sub function_operator
@@ -200,12 +166,10 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 {
 	package Class::STL::Utilities::FunctionObject::BinaryPredicate;
 	use base qw(Class::STL::Utilities::FunctionObject::BinaryFunction);
-	sub new
+	sub new_extra
 	{
 		my $self = shift;
-		my $class = ref($self) || $self;
-		$self = $class->SUPER::new(@_, result_type => 'bool');
-		bless($self, $class);
+		$self->result_type('bool');
 		return $self;
 	}
 	sub function_operator
@@ -221,7 +185,7 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 {
 	package Class::STL::Utilities::MemberFunction;
 	use base qw(Class::STL::Utilities::FunctionObject);
-	sub BEGIN { Class::STL::DataMembers->new(qw( function_name )); }
+	use Class::STL::ClassMembers qw(function_name); 
 	sub new
 	{
 		my $self = shift;
@@ -244,7 +208,7 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 	package Class::STL::Utilities::PointerToUnaryFunction;
 	use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
 	use Carp qw(confess);
-	sub BEGIN { Class::STL::DataMembers->new(qw( function_name )); }
+	use Class::STL::ClassMembers qw(function_name); 
 	sub new
 	{
 		my $self = shift;
@@ -264,14 +228,6 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 			{
 				package Class::STL::Utilities::PointerToUnaryFunction::__@{[ $self->function_name() ]};
 				use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
-				sub new
-				{
-					my \$self = shift;
-					my \$class = ref(\$self) || \$self;
-					\$self = \$class->SUPER::new();
-					bless(\$self, \$class);
-					return \$self;
-				}
 				sub function_operator
 				{
 					my \$self = shift;
@@ -297,7 +253,7 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 	package Class::STL::Utilities::PointerToBinaryFunction;
 	use base qw(Class::STL::Utilities::FunctionObject::BinaryFunction);
 	use Carp qw(confess);
-	sub BEGIN { Class::STL::DataMembers->new(qw( function_name )); }
+	use Class::STL::ClassMembers qw(function_name); 
 	sub new
 	{
 		my $self = shift;
@@ -317,14 +273,6 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 			{
 				package Class::STL::Utilities::PointerToBinaryFunction::__@{[ $self->function_name() ]};
 				use base qw(Class::STL::Utilities::FunctionObject::BinaryFunction);
-				sub new
-				{
-					my \$self = shift;
-					my \$class = ref(\$self) || \$self;
-					\$self = \$class->SUPER::new();
-					bless(\$self, \$class);
-					return \$self;
-				}
 				sub function_operator
 				{
 					my \$self = shift;
@@ -360,7 +308,7 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 {
 	package Class::STL::Utilities::UnaryNegate;
 	use base qw(Class::STL::Utilities::FunctionObject::UnaryPredicate);
-	sub BEGIN { Class::STL::DataMembers->new(qw( predicate )); }
+	use Class::STL::ClassMembers qw(predicate); 
 	sub new
 	{
 		my $self = shift;
@@ -381,7 +329,7 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 {
 	package Class::STL::Utilities::BinaryNegate;
 	use base qw(Class::STL::Utilities::FunctionObject::BinaryPredicate);
-	sub BEGIN { Class::STL::DataMembers->new(qw( predicate )); }
+	use Class::STL::ClassMembers qw(predicate); 
 	sub new
 	{
 		my $self = shift;
@@ -403,7 +351,7 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 {
 	package Class::STL::Utilities::Binder1st;
 	use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
-	sub BEGIN { Class::STL::DataMembers->new(qw( operation first_argument )); }
+	use Class::STL::ClassMembers qw(operation first_argument); 
 	sub new
 	{
 		my $self = shift;
@@ -424,7 +372,7 @@ $BUILD = 'Wednesday February 22 15:08:34 GMT 2006';
 {
 	package Class::STL::Utilities::Binder2nd;
 	use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
-	sub BEGIN { Class::STL::DataMembers->new(qw( operation second_argument )); }
+	use Class::STL::ClassMembers qw(operation second_argument); 
 	sub new
 	{
 		my $self = shift;

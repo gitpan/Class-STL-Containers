@@ -4,7 +4,7 @@
 #########################
 
 use Test;
-use Class::STL::DataMembers;
+use stl;
 BEGIN { plan tests => 5 }
 
 #########################
@@ -14,29 +14,19 @@ BEGIN { plan tests => 5 }
 
 {
 	package MyPack;
-	sub BEGIN 
-	{ 
-		Class::STL::DataMembers->new(
+	use Class::STL::ClassMembers (
 			qw(msg_text msg_type),
-			Class::STL::DataMembers::Attributes->new(
+			Class::STL::ClassMembers::DataMember->new(
 				name => 'on', validate => '^(input|output)$', default => 'input'),
-			Class::STL::DataMembers::Attributes->new(
+			Class::STL::ClassMembers::DataMember->new(
 				name => 'display_target', default => 'STDERR'),
-			Class::STL::DataMembers::Attributes->new(
+			Class::STL::ClassMembers::DataMember->new(
 				name => 'count', validate => '^\d+$', default => '100'),
-			Class::STL::DataMembers::Attributes->new(
+			Class::STL::ClassMembers::DataMember->new(
 				name => 'comment', validate => '^\w+$', default => 'hello'),
-		); 
-	}
-	sub new
-	{
-		my $proto = shift;
-		my $class = ref($proto) || $proto;
-		my $self = {};
-		bless($self, $class);
-		$self->members_init(@_);
-		return $self;
-	}
+			Class::STL::ClassMembers::FunctionMember::New->new(),
+			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(somfunc)),
+	); 
 }
 
 my $att = MyPack->new();
@@ -55,10 +45,16 @@ ok (join(' ', $n->name(), $n->name2(), $n->data()), 'hello world 123', 'members_
 {
 	package MyElem;
 	use base qw(Class::STL::Element);
-	sub BEGIN { Class::STL::DataMembers->new( qw( name ) )->make_new(); }
+	use Class::STL::ClassMembers (
+		qw(name),
+		Class::STL::ClassMembers::FunctionMember::New->new(),
+	); 
 }
 {
 	package MyElem2;
 	use base qw(MyElem);
-	sub BEGIN { Class::STL::DataMembers->new( qw( name2 ) )->make_new(); }
+	use Class::STL::ClassMembers (
+		qw(name2 name3 add1 add2 zip country ),
+		Class::STL::ClassMembers::FunctionMember::New->new(),
+	); 
 }

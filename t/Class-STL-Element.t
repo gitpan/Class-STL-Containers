@@ -9,7 +9,7 @@
 #BEGIN { use_ok('Class::STL::Utilities') };
 
 use Test;
-use Class::STL::Element;
+use stl;
 BEGIN { plan tests => 15 }
 
 #########################

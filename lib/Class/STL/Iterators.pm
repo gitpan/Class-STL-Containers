@@ -47,10 +47,8 @@ use Exporter;
 	insert_iterator 
 	inserter 
 );
-use lib './lib';
-use Class::STL::DataMembers;
-$VERSION = '0.01';
-$BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
+$VERSION = '0.18';
+$BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Iterators;
@@ -80,13 +78,10 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 	use overload '++' => 'next', '--' => 'prev', '=' => 'clone', 'bool' => '_bool',
 		'+' => 'advance', '+=' => 'advance', '-' => 'retreat', '-=' => 'retreat',
 		'==' => 'eq', '!=' => 'ne', '>' => 'gt', '<' => 'lt', '>=' => 'ge', '<=' => 'le', '<=>' => 'cmp';
-	sub BEGIN 
-	{ 
-		Class::STL::DataMembers->new(
-			qw( p_container ),
-			Class::STL::DataMembers::Attributes->new(name => 'arr_idx', default => -1),
-		);
-	}
+	use Class::STL::ClassMembers (
+			qw(p_container),
+			Class::STL::ClassMembers::DataMember->new(name => 'arr_idx', default => -1),
+	); 
 	sub new 
 	{
 		my $self = shift;
@@ -287,7 +282,11 @@ $BUILD = 'Wednesday February 28 21:08:34 GMT 2006';
 {
 	package Class::STL::Iterators::Forward;
 	use base qw(Class::STL::Iterators::BiDirectional); 
-	sub BEGIN { Class::STL::Members::Disable->new( qw ( prev last ) ); }
+	use Class::STL::ClassMembers (
+			qw(__dummy__),
+			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(prev)),
+			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(last)),
+	); 
 }
 # ----------------------------------------------------------------------------------------------------
 {

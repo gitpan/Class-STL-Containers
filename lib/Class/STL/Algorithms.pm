@@ -32,9 +32,8 @@ use strict;
 use attributes qw(get reftype);
 use warnings;
 use vars qw($VERSION $BUILD);
-use lib './lib';
-$VERSION = '0.01';
-$BUILD = 'Thursday April 06 21:08:34 GMT 2006';
+$VERSION = '0.18';
+$BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Algorithms;
@@ -112,7 +111,7 @@ $BUILD = 'Thursday April 06 21:08:34 GMT 2006';
 	}
 	sub qsort # (iterator-start, iterator-finish [, binary-function ] )
 	{
-		use sort qw(stable _qsort);
+		use sort qw(_qsort);
 		::sort(@_);
 	}
 	sub stable_qsort # (iterator-start, iterator-finish [, binary-function ] )

@@ -1,10 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use lib './lib';
-use Class::STL::Containers;
-use Class::STL::Algorithms;
-use Class::STL::Utilities;
+use stl;
 
 print ">>>$0>>>>:\n";
 my $l1 = list(qw(first second third fourth fifth));

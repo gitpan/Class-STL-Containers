@@ -6,11 +6,7 @@ Class::STL::Containers - Perl extension for STL-like object management
 
 =head1 SYNOPSIS
 
-  use Class::STL::Containers;
-  use Class::STL::Algorithms;
-  use Class::STL::Utilities;
-  use Class::STL::Iterators;
-  use Class::STL::DataMembers;
+  use stl;
 
   # Deque container...
   my $d = deque(qw(first second third fourth));
@@ -23,7 +19,7 @@ Class::STL::Containers - Perl extension for STL-like object management
   sub myprint { print "Data:", @_, "\n"; }
 
   # Copy constructor...
-  my $d_copy($d);
+  my $d_copy = deque($d);
 
   # Algorithms -- find_if()
   print "Element 'second' was ", 
@@ -122,23 +118,14 @@ Class::STL::Containers - Perl extension for STL-like object management
   # DataMembers -- Class builder helper...
   {
     package MyClass;
-    sub BEGIN 
-    { 
-      Class::STL::DataMembers->new(qw( attrib1 attrib2 ), # simple data members
-        Class::STL::DataMembers::Attributes->new(  # complex data members
-          name => 'attrib3', default => '100', validate => '^\d+$',
-          name => 'attrib4', default => 'med', validate => '^(high|med|low)$')
-      ); # our named arguments
-    } 
-    sub new
-    {
-        my $self = shift;
-        my $class = ref($self) || $self;
-        $self = $class->SUPER::new(@_);
-        bless($self, $class);
-        $self->members_init(@_); # initialise any named arguments.
-        return $self;
-    }
+    use Class::STL::ClassMembers (
+        qw(attrib1 attrib2), # data members
+        Class::STL::ClassMembers::DataMember->new(
+            name => 'attrib3', default => '100', validate => '^\d+$'), # data member with attributes
+        Class::STL::ClassMembers::DataMember->new(
+            name => 'attrib4', default => 'med', validate => '^(high|med|low)$'),
+        Class::STL::ClassMembers::FunctionMember::New->new(), # produce class new() function
+    ); 
   }
   my $cl = MyClass->new(attrib1 => 'hello', attrib2 => 'world');
   print $cl->attrib1(), " ", $cl->attrib2(), "\n"; # 'hello world'
@@ -146,34 +133,6 @@ Class::STL::Containers - Perl extension for STL-like object management
   $cl->attrib2(ucfirst($cl->attrib2));
   print $cl->attrib1(), " ", $cl->attrib2(), "\n"; # 'Hello World'
   $cl->attrib4('avg'); # Causes progam to die with '** Function attrib2 value failed validation...'
-
-  # MakeFind -- Class builder helper...
-  # MakeFind is only available to classes derived from Class::STL::Containers::Abstract.
-  {
-    package MyContainerClass;
-    use base qw(Class::STL::Containers::Vector);
-    sub begin
-    {
-      Class::STL::DataMembers->new(qw( name value ));
-      Class::STL::Containers::MakeFind->new(qw( name )); # Create find() function based on 'name' members.
-    }
-    sub new
-    {
-        my $self = shift;
-        my $class = ref($self) || $self;
-        $self = $class->SUPER::new(@_);
-        bless($self, $class);
-        $self->members_init(@_); # initialise any named arguments.
-        return $self;
-    }
-  }
-  my $cl = MyContainerClass->new();
-  $cl->push_back($cl->factory(name => 'red', value => 100));
-  $cl->push_back($cl->factory(name => 'blue', value => 102));
-  $cl->push_back($cl->factory(name => 'green', value => 104));
-  $cl->push_back($cl->factory(name => 'orange', value => 107));
-  print "Green value=", $cl->find('green')->value(), "\n"; # 'Green value=104';
-    # find element where name eq 'green';
 
 
 =head1 DESCRIPTION
@@ -250,12 +209,12 @@ All containers contain collections of objects which are of type F<Class::STL::El
 
 =cut --------------------------------------------------------------------------------
 
-=head1 F<CLASS Class::STL::DataMembers>
+=head1 F<CLASS Class::STL::ClassMembers>
 
-This I<helper> class can be used to generate code for various basic class functions. An object of this class should be constructed (and destroyed) in the F<BEGIN> subroutine for the target class. Construction is done via its I<new> function. This function requires a list consisting of target data member names, or I<Class::STL::DataMembers::Attributes> objects. When using I<DataMembers> B<ALL> data members should be included in order for the generated I<clone> and I<swap> functions to function correctly. 
+This I<helper> class can be used to generate code for various basic class functions. This module requires an import list consisting of target data member names, I<Class::STL::ClassMembers::DataMember>, or I<Class::STL::ClassMembers::FunctionMember> objects. When using I<ClassMembers> B<ALL> data members should be included in order for the generated I<clone> and I<swap> functions to function correctly. 
 
 
-A debug version of I<new>, I<new_debug> can be used to display the generated code. The following target member functions will be generated and made available to the class:
+The following target member functions will be generated and made available to the class:
 
 
 =item Data Member Accessor Get/Put Function
@@ -278,34 +237,30 @@ This function will construct and return an object containing a copy of the calle
 This function requires one argument consisting of an object of the same type as the caller. It will swap the caller object with this I<other> object.
 
 
-=item Class::STL::DataMembers::Attributes
+=item Class::STL::ClassMembers::DataMember
 
 For more complex data members, this class may be used to provide additional information about the member. This information consist of: F<name>, F<default>, and F<validate>. The F<name> attribute contains the member name; the F<default> attribute contains a default value for the member when initialised; the F<validate> attribute consists of a regular expression string that will be used to validate the member value by matching it to this regex string.
+
+
+=item Class::STL::ClassMembers::FunctionMember::New
+
+By including a constructed object of this type (via the new() function) in the import list for F<Class::STL::ClassMembers>, the F<new()> function will be produced for the I<caller> class.
+
 
 =head2 Example
 
 =begin
 
-  use Class::STL::DataMembers;
   {
     package MyClass;
-    sub BEGIN 
-    { 
-      Class::STL::DataMembers->new(qw( attrib1 attrib2 ), # simple data members
-        Class::STL::DataMembers::Attributes->new(  # complex data members
-          name => 'attrib3', default => '100', validate => '^\d+$',
-          name => 'attrib4', default => 'med', validate => '^(high|med|low)$')
-      ); # our named arguments
-    } 
-    sub new
-    {
-        my $self = shift;
-        my $class = ref($self) || $self;
-        $self = $class->SUPER::new(@_);
-        bless($self, $class);
-        $self->members_init(@_); # initialise any named arguments.
-        return $self;
-    }
+    use Class::STL::ClassMembers (
+        qw(attrib1 attrib2),
+        Class::STL::ClassMembers::DataMember->new(
+            name => 'attrib3', default => '100', validate => '^\d+$'),
+        Class::STL::ClassMembers::DataMember->new(
+            name => 'attrib4', default => 'med', validate => '^(high|med|low)$'),
+        Class::STL::ClassMembers::FunctionMember::New->new(), # produce class new() function
+    ); 
   }
   my $cl = MyClass->new(attrib1 => 'hello', attrib2 => 'world');
   print $cl->attrib1(), " ", $cl->attrib2(), "\n"; # 'hello world'
@@ -537,7 +492,7 @@ The I<sort> function will alter the order of the elements in list by sorting the
 
 =begin
 
-  use Class::STL::Containers;
+  use stl;
 
   # Construct the list object:
   my $list = list(qw( first second third fourth fifth));

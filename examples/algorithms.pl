@@ -1,20 +1,17 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use lib './lib';
-use Class::STL::Containers;
-use Class::STL::Algorithms;
-use Class::STL::Utilities;
+use stl;
 
 print ">>>$0>>>>:\n";
 my $v = list(data_type => 'MyElem', qw(first second third fourth fifth));
 for_each($v->begin(), $v->end(), ptr_fun('::myprint'));
 
-print 'Class::STL::Algorithms::for_each($v->begin(), $v->end(), ptr_fun(\'uc\'));', "\n";
+print 'for_each($v->begin(), $v->end(), ptr_fun(\'uc\'));', "\n";
 for_each($v->begin(), $v->end(), ptr_fun('uc'));
 for_each($v->begin(), $v->end(), ptr_fun('::myprint'));
 
-print 'Class::STL::Algorithms::for_each($v->begin(), $v->end(), "something");', "\n";
+print 'for_each($v->begin(), $v->end(), "something");', "\n";
 for_each($v->begin(), $v->end(), mem_fun('something'));
 
 print "Static Foreach with unary-function-object:\n";

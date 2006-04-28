@@ -32,16 +32,16 @@ require 5.005_62;
 use strict;
 use warnings;
 use vars qw($VERSION $BUILD);
-use lib './lib';
-use Class::STL::DataMembers;
-$VERSION = '0.01';
-$BUILD = 'Monday March 27 21:08:34 GMT 2006';
+use Class::STL::ClassMembers::DataMember;
+use Class::STL::ClassMembers::FunctionMember;
+$VERSION = '0.18';
+$BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Element;
 	use UNIVERSAL qw(isa can);
 	use Carp qw(confess);
-	sub BEGIN { Class::STL::DataMembers->new(qw( data data_type )); }
+	use Class::STL::ClassMembers qw(data data_type); 
 	sub new
 	{
 		my $proto = shift;

@@ -11,10 +11,7 @@
 #BEGIN { use_ok('Class::STL::Element') };
 
 use Test;
-use Class::STL::Containers;
-use Class::STL::Utilities;
-use Class::STL::Iterators;
-use Class::STL::Algorithms;
+use stl;
 BEGIN { plan tests => 34 }
 
 #########################

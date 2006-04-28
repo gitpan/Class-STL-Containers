@@ -34,9 +34,7 @@ use warnings;
 use vars qw( $VERSION $BUILD @EXPORT );
 use Exporter;
 @EXPORT = qw( vector list deque queue priority_queue stack tree );
-use lib './lib';
-use Class::STL::DataMembers;
-$VERSION = 0.16;
+$VERSION = 0.18;
 $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
@@ -63,13 +61,10 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 	use Class::STL::Iterators;
 	use UNIVERSAL qw(isa can);
 	use Carp qw(confess);
-	sub BEGIN 
-	{ 
-		Class::STL::DataMembers->new(
-			Class::STL::DataMembers::Attributes->new(
-				name => 'data_type', default => 'Class::STL::Element'),
-		);
-	}
+	use Class::STL::ClassMembers (
+		Class::STL::ClassMembers::DataMember->new(
+			name => 'data_type', default => 'Class::STL::Element'),
+	);
 	# new(named-argument-list);
 	# new(container-ref); -- copy ctor
 	# new(element [, ...]); -- initialise new container with element(s).
@@ -336,7 +331,10 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 {
 	package Class::STL::Containers::Vector;
 	use base qw(Class::STL::Containers::Abstract); # vector is also an element
-	sub BEGIN { Class::STL::Members::Disable->new( qw ( push_front ) ); }
+	use Class::STL::ClassMembers (
+			qw(__dummy__),
+			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(push_front)),
+	); 
 	sub push_back # (element [, ...])
 	{
 		my $self = shift;
@@ -387,7 +385,11 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 {
 	package Class::STL::Containers::Queue;
 	use base qw(Class::STL::Containers::Abstract);
-	sub BEGIN { Class::STL::Members::Disable->new( qw ( push_back pop_back ) ); }
+	use Class::STL::ClassMembers (
+			qw(__dummy__),
+			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(push_back)),
+			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(pop_back)),
+	); 
 	sub back # (void)
 	{
 		my $self = shift;
@@ -415,7 +417,12 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 {
 	package Class::STL::Containers::Stack;
 	use base qw(Class::STL::Containers::Abstract);
-	sub BEGIN { Class::STL::Members::Disable->new( qw ( push_back pop_back front ) ); }
+	use Class::STL::ClassMembers (
+			qw(__dummy__),
+			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(push_back)),
+			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(pop_back)),
+			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(front)),
+	); 
 	sub top # (void)
 	{
 		my $self = shift;
@@ -454,7 +461,10 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 {
 	package Class::STL::Containers::List;
 	use base qw(Class::STL::Containers::Deque);
-	sub BEGIN { Class::STL::Members::Disable->new( qw ( at ) ); }
+	use Class::STL::ClassMembers (
+			qw(__dummy__),
+			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(at)),
+	); 
 	sub reverse # (void)
 	{
 		my $self = shift;
@@ -488,17 +498,10 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 {
 	package Class::STL::Element::Priority;
 	use base qw(Class::STL::Element);
-	sub BEGIN { Class::STL::DataMembers->new(qw( priority )); }
-	sub new
-	{
-		my $self = shift;
-		my $class = ref($self) || $self;
-		$self = $class->SUPER::new(@_);
-		bless($self, $class);
-		$self->members_init(@_);
-#?		$self->priority(0) unless (defined($self->priority()));
-		return $self;
-	}
+	use Class::STL::ClassMembers (
+			qw(priority),
+			Class::STL::ClassMembers::FunctionMember::New->new(),
+	); 
 	sub cmp
 	{
 		my $self = shift;
@@ -545,15 +548,21 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 {
 	package Class::STL::Containers::PriorityQueue;
 	use base qw(Class::STL::Containers::Vector);
-	sub BEGIN { Class::STL::Members::Disable->new( qw ( push_back pop_back front ) ); }
-	sub new
-	{
-		my $self = shift;
-		my $class = ref($self) || $self;
-		$self = $class->SUPER::new(@_, data_type => 'Class::STL::Element::Priority');
-		bless($self, $class);
-		return $self;
-	}
+	use Class::STL::ClassMembers (
+#>			qw( compare ),
+			Class::STL::ClassMembers::DataMember->new(
+				name => 'data_type', default => 'Class::STL::Element::Priority'),
+			Class::STL::ClassMembers::FunctionMember::New->new(),
+			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(push_back)),
+			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(pop_back)),
+			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(front)),
+	); 
+#>	sub new_extra
+#>	{
+#>		my $self = shift;
+#>		$self->SUPER::new_extra(@_);
+#>		$self->compare(...);
+#>	}
 	sub push
 	{
 		my $self = shift;
@@ -621,7 +630,7 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 	package Class::STL::Containers::MakeFind;
 	use UNIVERSAL qw(isa can);
 	use Carp qw(cluck confess);
-	sub new
+	sub new # --> import...
 	{
 		my $proto = shift;
 		my $class = ref($proto) || $proto;
@@ -646,17 +655,13 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 			}
 			{
 				package $package\::Find@{[ uc($member_name) ]};
+                use Class::STL::ClassMembers::DataMember;
+                use Class::STL::ClassMembers::FunctionMember;
 				use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
-				sub BEGIN { Class::STL::DataMembers->new(qw( what )); }
-				sub new
-				{
-					my \$self = shift;
-					my \$class = ref(\$self) || \$self;
-					\$self = \$class->SUPER::new(\@_);
-					bless(\$self, \$class);
-					\$self->members_init(\@_);
-					return \$self;
-				}
+                use Class::STL::ClassMembers (
+                    qw(what),
+                    Class::STL::ClassMembers::FunctionMember::New->new(),
+                ); 
 				sub function_operator
 				{
 					my \$self = shift;

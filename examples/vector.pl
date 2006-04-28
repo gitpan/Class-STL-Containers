@@ -1,12 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use lib './lib';
-use Class::STL::Containers;
-use Class::STL::Algorithms;
-use Class::STL::Utilities;
-use Class::STL::Iterators;
-
+use stl;
 print ">>>$0>>>>:\n";
 my $v = vector();
 $v->push_back($v->factory(data => 'first'));
@@ -47,7 +42,8 @@ my $i2 = $v->end();
 $i1++;
 $i2--;
 print '$v->erase($i1, $i2);', "\n";
-print $v->erase($i1, $i2), " Elements Deleted.\n";
+$v->erase($i1, $i2);
+print "Elements Deleted.\n";
 for_each($v->begin(), $v->end(), MyPrint->new());
 
 # ----------------------------------------------------------------------------------------------------

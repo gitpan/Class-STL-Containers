@@ -1,5 +1,27 @@
 Revision history for Perl extension Class::STL::Containers.
 
+0.18 Fri Apr 28 21:11:02 2006
+	- stl.pm -- wrapper package to import all STL classes.
+	- Replaced Class::STL::DataMembers with Class::STL::ClassMembers, 
+		Class::STL::ClassMembers::DataMember.pm, Class::STL::ClassMembers::FunctionMember;
+	- Class::STL::ClassMembers::FunctionMember::New for producing class new() function.
+	- Class::STL::ClassMembers::FunctionMember::Disable to disable class function.
+	- Class::STL::ClassMembers::DataMember replaces Class::STL::DataMembers::Attributes;
+	- Example:
+		use stl;
+		{
+			package MyPack;
+			use Class::STL::ClassMembers (
+					qw(msg_text msg_type),
+					Class::STL::ClassMembers::DataMember->new(
+						name => 'on', validate => '^(input|output)$', default => 'input'),
+					Class::STL::ClassMembers::DataMember->new(
+						name => 'count', validate => '^\d+$', default => '100'),
+					Class::STL::ClassMembers::FunctionMember::New->new(),
+					Class::STL::ClassMembers::FunctionMember::Disable->new(qw(somfunc)),
+			); 
+		}
+
 0.16 Wed Apr 26 22:12:32 2006
 	- Fixed members_init function to call SUPER::members_init where appropriate.
 	- DataMembers new() function generation via make_new().
