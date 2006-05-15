@@ -124,8 +124,8 @@ Class::STL::Containers - Perl extension for STL-like object management
             name => 'attrib3', default => '100', validate => '^\d+$'), # data member with attributes
         Class::STL::ClassMembers::DataMember->new(
             name => 'attrib4', default => 'med', validate => '^(high|med|low)$'),
-        Class::STL::ClassMembers::FunctionMember::New->new(), # produce class new() function
     ); 
+    use Class::STL::ClassMembers::Constructor;  # produce class new() function
   }
   my $cl = MyClass->new(attrib1 => 'hello', attrib2 => 'world');
   print $cl->attrib1(), " ", $cl->attrib2(), "\n"; # 'hello world'
@@ -211,7 +211,7 @@ All containers contain collections of objects which are of type F<Class::STL::El
 
 =head1 F<CLASS Class::STL::ClassMembers>
 
-This I<helper> class can be used to generate code for various basic class functions. This module requires an import list consisting of target data member names, I<Class::STL::ClassMembers::DataMember>, or I<Class::STL::ClassMembers::FunctionMember> objects. When using I<ClassMembers> B<ALL> data members should be included in order for the generated I<clone> and I<swap> functions to function correctly. 
+These I<helper> classes can be used to generate code for various basic class functions. This module requires an import list consisting of target data member names or I<Class::STL::ClassMembers::DataMember> objects. When using I<ClassMembers> B<ALL> data members should be included in order for the generated I<clone> and I<swap> functions to function correctly. The constructor function code can be produces as well by using the package F<Class::STL::ClassMembers::Constructor>, or F<Class::STL::ClassMembers::SingletonConstructor> to create a singleton class type.
 
 
 The following target member functions will be generated and made available to the class:
@@ -237,14 +237,29 @@ This function will construct and return an object containing a copy of the calle
 This function requires one argument consisting of an object of the same type as the caller. It will swap the caller object with this I<other> object.
 
 
+=item Class I<members()> Function
+
+This function will return a pointer to an anonymous hash containing the data member names (as the key) and data member attibutes array list consisting of F<default> and F<validate> attribute fields in that order. All data members, including inherited members are contained in this hash.
+
+
+=item Class I<members_local()> Function
+
+Same as F<members> function except that only the data members local to the class are contained in the hash returned.
+
+
 =item Class::STL::ClassMembers::DataMember
 
 For more complex data members, this class may be used to provide additional information about the member. This information consist of: F<name>, F<default>, and F<validate>. The F<name> attribute contains the member name; the F<default> attribute contains a default value for the member when initialised; the F<validate> attribute consists of a regular expression string that will be used to validate the member value by matching it to this regex string.
 
 
-=item Class::STL::ClassMembers::FunctionMember::New
+=item Class::STL::ClassMembers::Constructor
 
-By including a constructed object of this type (via the new() function) in the import list for F<Class::STL::ClassMembers>, the F<new()> function will be produced for the I<caller> class.
+The constructor function with the name F<new()> will be produced for a package that uses this module. It is recomended that this constructor is produced for any class (package) that uses the F<ClassMembers> package to produce the data members. This will ensure that the correct calls are done during construction and copy-construction of an object. This constructor will make a call to the C<static> user member function F<new_extra> if it exists in the calling class. The F<new_extra> function will have the object reference passed as the first argument.
+
+
+=item Class::STL::ClassMembers::SingletonConstructor
+
+Use this package to produce a singleton class. This constructor will ensure that only one instance of this class will be constructed.
 
 
 =head2 Example
@@ -259,8 +274,8 @@ By including a constructed object of this type (via the new() function) in the i
             name => 'attrib3', default => '100', validate => '^\d+$'),
         Class::STL::ClassMembers::DataMember->new(
             name => 'attrib4', default => 'med', validate => '^(high|med|low)$'),
-        Class::STL::ClassMembers::FunctionMember::New->new(), # produce class new() function
     ); 
+    use Class::STL::ClassMembers::Constructor;  # produce class new() function
   }
   my $cl = MyClass->new(attrib1 => 'hello', attrib2 => 'world');
   print $cl->attrib1(), " ", $cl->attrib2(), "\n"; # 'hello world'
@@ -304,7 +319,7 @@ I<container-ref new ( iterator-start [, iterator-finish ] );>
 I<container-ref new ( raw-data [, ... ] );>
 
 
-The I<new> function constructs an object for this class and returns a blessed reference to this object. All forms accept an optional I<hash> containing any of the following named arguments: I<data_type>. The I<data_type> defines the class type of element objects that the container will hold.
+The I<new> function constructs an object for this class and returns a blessed reference to this object. All forms accept an optional I<hash> containing any of the following named arguments: I<element_type>. The I<element_type> defines the class type of element objects that the container will hold. I<element_type> will default to F<Class::STL::Element> if not specified; when specified, the type must be derived from F<Class::STL::Element>.
 
 
 The second form is a I<copy constructor>. It requires another container reference as the argument, and will return a copy of this container.

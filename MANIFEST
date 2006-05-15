@@ -8,15 +8,20 @@ t/Class-STL-Utilities.t
 t/Class-STL-Iterators.t
 t/Class-STL-Element.t
 t/Class-STL-ClassMembers.t
+t/Class-STL-ClassMembers-Constructor.t
 lib/stl.pm
 lib/Class/STL/Algorithms.pm
 lib/Class/STL/Containers.pm
 lib/Class/STL/ClassMembers.pm
 lib/Class/STL/ClassMembers/DataMember.pm
 lib/Class/STL/ClassMembers/FunctionMember.pm
+lib/Class/STL/ClassMembers/Constructor.pm
+lib/Class/STL/ClassMembers/SingletonConstructor.pm
+lib/Class/STL/ClassMembers/Disable.pm
 lib/Class/STL/Element.pm
 lib/Class/STL/Iterators.pm
 lib/Class/STL/Utilities.pm
+lib/Class/STL/Trace.pm
 docs/class-stl-containers.pod
 docs/class-stl-containers.pdf
 META.yml                                 Module meta-data (added by MakeMaker)

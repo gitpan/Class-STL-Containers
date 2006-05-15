@@ -1,5 +1,15 @@
 Revision history for Perl extension Class::STL::Containers.
 
+0.26 Mon May 15 18:19:37 GMTDT 2006
+	- Changed Class::STL::Containers::Abstract->data_type member to 'element_type'.
+	- Deep container inheritence corrected.
+	- ClassMembers members_local() replaces members() function, and new
+		members() function returns all data members included those
+		all base classes.
+	- ClassMembes allow empty data member list.
+	- Class::STL::ClassMembers::Constructor.
+	- Singleton class implementation with Class::STL::ClassMembers::SingletonConstructor.
+
 0.18 Fri Apr 28 21:11:02 2006
 	- stl.pm -- wrapper package to import all STL classes.
 	- Replaced Class::STL::DataMembers with Class::STL::ClassMembers, 

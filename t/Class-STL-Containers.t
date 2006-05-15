@@ -12,7 +12,7 @@
 
 use Test;
 use stl;
-BEGIN { plan tests => 48 }
+BEGIN { plan tests => 53 }
 
 #########################
 
@@ -50,7 +50,7 @@ ok ($l->back()->data(), "fifth", "list->pop_back()"); # test-15
 ok (join(' ', map($_->data(), $l->to_array())), "first second third fourth fifth", 'list->to_array()');
 
 $f = $l->factory('eighth');
-ok (ref($f), $l->data_type(), 'list->factory()');
+ok (ref($f), $l->element_type(), 'list->factory()');
 
 my $i = $l->begin();
 $l->insert($i, $l->factory('tenth'));
@@ -144,7 +144,7 @@ $ifinish--;
 my $l9 = vector($start, $ifinish);
 ok (join(' ', map($_->data(), $l9->to_array())), "repeated repeated blue", 'ctor(iterator-start, iterator-finish)');
 
-my $l10 = vector(data_type => 'MyElem');
+my $l10 = vector(element_type => 'MyElem');
 $l10->push_back($l10->factory(name => 'one', data => '_one'));
 $l10->push_back($l10->factory(name => 'two', data => '_two'));
 $l10->push_back($l10->factory(name => 'three', data => '_three'));
@@ -162,11 +162,33 @@ ok (join(' ', map($_->data(), $l10->to_array())), "BLUE _two _one", 'set element
 
 ok ($l10->join(' '), "BLUE _two _one", 'join()');
 
+my $myd = MyDerivedContainer->new(name => 'derived');
+ok ($myd->name(), "derived", 'derived container');
+
+my $myd3 = MyDerivedContainer->new(name => 'derived-1', qw(nsw sa wa nt vic));
+ok (join(' ', map($_->data(), $myd3->to_array())), "nsw sa wa nt vic", 'derived container');
+ok ($myd3->name(), "derived-1", 'derived container 1');
+
+my $myd4 = MyDerivedContainer2->new(name => 'derived', name2 => '2', qw(nsw sa wa nt vic));
+ok (join(' ', map($_->data(), $myd4->to_array())), "nsw sa wa nt vic", 'derived container 2');
+ok ($myd4->name() . '-' . $myd4->name2(), "derived-2", 'derived container 2');
+
 {
 	package MyElem;
 	use base qw(Class::STL::Element);
-	use Class::STL::ClassMembers (
-		qw(name),
-		Class::STL::ClassMembers::FunctionMember::New->new(),
-	); 
+	use Class::STL::ClassMembers qw(name);
+	use Class::STL::ClassMembers::Constructor;
 }
+
+{
+	package MyDerivedContainer;
+	use base qw(Class::STL::Containers::List);
+	use Class::STL::ClassMembers qw(name);
+	use Class::STL::ClassMembers::Constructor;
+}	
+{
+	package MyDerivedContainer2;
+	use base qw(MyDerivedContainer);
+	use Class::STL::ClassMembers qw(name2);
+	use Class::STL::ClassMembers::Constructor;
+}	

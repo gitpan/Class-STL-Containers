@@ -34,8 +34,8 @@ use warnings;
 use vars qw( $VERSION $BUILD @EXPORT );
 use Exporter;
 @EXPORT = qw( vector list deque queue priority_queue stack tree );
-$VERSION = 0.18;
-$BUILD = 'Thursday April 20 21:08:34 GMT 2006';
+$VERSION = '0.26';
+$BUILD = 'Monday May 15 23:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Containers;
@@ -61,21 +61,20 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 	use Class::STL::Iterators;
 	use UNIVERSAL qw(isa can);
 	use Carp qw(confess);
-	use Class::STL::ClassMembers (
+	use Class::STL::ClassMembers
 		Class::STL::ClassMembers::DataMember->new(
-			name => 'data_type', default => 'Class::STL::Element'),
-	);
+			name => 'element_type', default => 'Class::STL::Element');
+	use Class::STL::ClassMembers::Constructor;
 	# new(named-argument-list);
 	# new(container-ref); -- copy ctor
 	# new(element [, ...]); -- initialise new container with element(s).
 	# new(iterator-start); -- initialise new container with copy of elments from other container.
 	# new(iterator-start, iterator-finish); -- initialise new container with copy of elments from other container.
 	# new(raw-data, [...]); -- 
-	sub new
+	sub new_extra # static function
 	{
 		my $self = shift;
-		my $class = ref($self) || $self;
-		my @copy_containers;
+		use vars qw(@ISA);
 		my @copy_elements;
 		my @copy_iterators;
 		my @raw_data;
@@ -83,37 +82,32 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 		while (@_)
 		{
 			my $p = shift;
-			if (ref($p) && $p->isa(__PACKAGE__)) # copy ctor
+			if (!ref($p) && exists(${$self->members()}{$p}))
 			{
-				CORE::push(@copy_containers, $p);
-				CORE::push(@params, 'data_type', $p->data_type());
+				shift;
 			}
 			elsif (ref($p) && $p->isa('Class::STL::Iterators::Abstract')) 
 			{
 				CORE::push(@copy_iterators, $p);
 			}
+			elsif (ref($p) && $p->isa(__PACKAGE__))
+			{
+				shift;
+			}
 			elsif (ref($p) && $p->isa('Class::STL::Element'))
 			{
 				CORE::push(@copy_elements, $p);
 			}
-			elsif ($p eq 'data' || $p eq 'data_type')
-			{
-				CORE::push(@params, $p, shift);
-			}
-			else
-			{
+			else {
 				CORE::push(@raw_data, $p);
 			}
 		}
-		$self = $class->SUPER::new(@params); #, data_type => 'array');
-		bless($self, $class);
-		$self->members_init(@params);
-		confess "data_type (@{[ $self->data_type() ]}) must be derived from Class::STL::Element!"
-			unless (UNIVERSAL::isa($self->data_type(), 'Class::STL::Element'));
+		confess "element_type (@{[ $self->element_type() ]}) must be derived from Class::STL::Element!"
+			unless (UNIVERSAL::isa($self->element_type(), 'Class::STL::Element'));
+		$self->data_type('array');
 		$self->data([]); # Array of (base) type Class::STL::Element
-		foreach (@copy_containers) { $self->insert($self->begin(), $_->begin(), $_->end()); }
 		foreach (@copy_elements) { $self->push($_); }
-		foreach (@raw_data) { $self->push($self->factory(data => $_)); }
+		while (@raw_data) { $self->push($self->factory(data => shift(@raw_data))); }
 		if (@copy_iterators) {
 			@copy_iterators >= 2 
 				? $self->insert($self->begin(), $copy_iterators[0], $copy_iterators[1])
@@ -131,9 +125,10 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 	sub factory # (@params) -- construct an element object and return it;
 	{
 		my $self = shift;
-		return $self->data_type() eq 'Class::STL::Element'
-			? Class::STL::Element->new(@_)
-			: eval("@{[ $self->data_type() ]}->new(\@_);");
+		return Class::STL::Element->new(@_) if	($self->element_type() eq 'Class::STL::Element');
+		my $e = eval("@{[ $self->element_type() ]}->new(\@_);");
+		confess "**Error in eval for @{[ $self->element_type() ]} factory creation:\n$@" if ($@);
+		return $e;
 	}
 	sub push # (element [, ...] ) -- append elements to container...
 	{
@@ -278,7 +273,7 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 	sub size # (void)
 	{
 		my $self = shift;
-		return int(@{$self->data()});
+		return defined($self->data()) ? int(@{$self->data()}) : 0;
 	}
 	sub empty # return bool
 	{
@@ -331,10 +326,9 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 {
 	package Class::STL::Containers::Vector;
 	use base qw(Class::STL::Containers::Abstract); # vector is also an element
-	use Class::STL::ClassMembers (
-			qw(__dummy__),
-			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(push_front)),
-	); 
+	use Class::STL::ClassMembers;
+	use Class::STL::ClassMembers::Constructor;
+	use Class::STL::ClassMembers::Disable qw(push_front);
 	sub push_back # (element [, ...])
 	{
 		my $self = shift;
@@ -367,6 +361,8 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 {
 	package Class::STL::Containers::Deque;
 	use base qw(Class::STL::Containers::Vector);
+	use Class::STL::ClassMembers;
+	use Class::STL::ClassMembers::Constructor;
 	sub push_front # (element [, ...])
 	{
 		my $self = shift;
@@ -385,11 +381,10 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 {
 	package Class::STL::Containers::Queue;
 	use base qw(Class::STL::Containers::Abstract);
-	use Class::STL::ClassMembers (
-			qw(__dummy__),
-			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(push_back)),
-			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(pop_back)),
-	); 
+	use Class::STL::ClassMembers;
+	use Class::STL::ClassMembers::Constructor;
+	use Class::STL::ClassMembers::Disable qw(push_back);
+	use Class::STL::ClassMembers::Disable qw(pop_back);
 	sub back # (void)
 	{
 		my $self = shift;
@@ -417,12 +412,11 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 {
 	package Class::STL::Containers::Stack;
 	use base qw(Class::STL::Containers::Abstract);
-	use Class::STL::ClassMembers (
-			qw(__dummy__),
-			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(push_back)),
-			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(pop_back)),
-			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(front)),
-	); 
+	use Class::STL::ClassMembers;
+	use Class::STL::ClassMembers::Constructor;
+	use Class::STL::ClassMembers::Disable qw(push_back);
+	use Class::STL::ClassMembers::Disable qw(pop_back);
+	use Class::STL::ClassMembers::Disable qw(front);
 	sub top # (void)
 	{
 		my $self = shift;
@@ -443,12 +437,12 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 {
 	package Class::STL::Containers::Tree;
 	use base qw(Class::STL::Containers::Deque);
-	sub new
+	use Class::STL::ClassMembers;
+	use Class::STL::ClassMembers::Constructor;
+	sub new_extra
 	{
 		my $self = shift;
-		my $class = ref($self) || $self;
-		$self = $class->SUPER::new(@_, data_type => __PACKAGE__);
-		bless($self, $class);
+		$self->element_type(__PACKAGE__);
 		return $self;
 	}
 	sub to_array # (void)
@@ -461,10 +455,9 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 {
 	package Class::STL::Containers::List;
 	use base qw(Class::STL::Containers::Deque);
-	use Class::STL::ClassMembers (
-			qw(__dummy__),
-			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(at)),
-	); 
+	use Class::STL::ClassMembers;
+	use Class::STL::ClassMembers::Constructor;
+	use Class::STL::ClassMembers::Disable qw(at);
 	sub reverse # (void)
 	{
 		my $self = shift;
@@ -498,10 +491,8 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 {
 	package Class::STL::Element::Priority;
 	use base qw(Class::STL::Element);
-	use Class::STL::ClassMembers (
-			qw(priority),
-			Class::STL::ClassMembers::FunctionMember::New->new(),
-	); 
+	use Class::STL::ClassMembers qw(priority);
+	use Class::STL::ClassMembers::Constructor;
 	sub cmp
 	{
 		my $self = shift;
@@ -548,21 +539,17 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 {
 	package Class::STL::Containers::PriorityQueue;
 	use base qw(Class::STL::Containers::Vector);
-	use Class::STL::ClassMembers (
-#>			qw( compare ),
-			Class::STL::ClassMembers::DataMember->new(
-				name => 'data_type', default => 'Class::STL::Element::Priority'),
-			Class::STL::ClassMembers::FunctionMember::New->new(),
-			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(push_back)),
-			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(pop_back)),
-			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(front)),
-	); 
-#>	sub new_extra
-#>	{
-#>		my $self = shift;
-#>		$self->SUPER::new_extra(@_);
-#>		$self->compare(...);
-#>	}
+	use Class::STL::ClassMembers;
+	use Class::STL::ClassMembers::Constructor;
+	use Class::STL::ClassMembers::Disable qw(push_back);
+	use Class::STL::ClassMembers::Disable qw(pop_back);
+	use Class::STL::ClassMembers::Disable qw(front);
+	sub new_extra
+	{
+		my $self = shift;
+		$self->element_type('Class::STL::Element::Priority');
+		return $self;
+	}
 	sub push
 	{
 		my $self = shift;
@@ -655,13 +642,9 @@ $BUILD = 'Thursday April 20 21:08:34 GMT 2006';
 			}
 			{
 				package $package\::Find@{[ uc($member_name) ]};
-                use Class::STL::ClassMembers::DataMember;
-                use Class::STL::ClassMembers::FunctionMember;
 				use base qw(Class::STL::Utilities::FunctionObject::UnaryFunction);
-                use Class::STL::ClassMembers (
-                    qw(what),
-                    Class::STL::ClassMembers::FunctionMember::New->new(),
-                ); 
+                use Class::STL::ClassMembers qw(what);
+				use Class::STL::ClassMembers::Constructor;
 				sub function_operator
 				{
 					my \$self = shift;

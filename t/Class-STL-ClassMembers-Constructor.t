@@ -10,51 +10,41 @@
 
 use Test;
 use stl;
-BEGIN { plan tests => 17 }
+BEGIN { plan tests => 8 }
 
 #########################
 
 # Insert your test code below, the Test::More module is use()ed here so read
 # its man page ( perldoc Test::More ) for help writing this test script.
 
-my $e = Class::STL::Element->new(data => "hello", data_type => 'string');
-ok ($e->data(), "hello", "ctor");
+# Copy Constructor:
+my $l1 = deque(qw(1 2 3 4));
+ok (join(' ', map($_->data(), $l1->to_array())), "1 2 3 4", 'copy ctor');
+my $l2 = deque($l1);
+ok (join(' ', map($_->data(), $l2->to_array())), "1 2 3 4", 'copy ctor');
 
-my $e2 = Class::STL::Element->new($e);
-ok ($e2->eq($e), 1, "copy ctor");
-ok ($e2->ne($e), "", "copy ctor");
+$l2->push_back($l2->factory(data => 5));
+$l1->push_front($l1->factory(data => -1));
+ok (join(' ', map($_->data(), $l2->to_array())), "1 2 3 4 5", 'copy ctor');
+ok (join(' ', map($_->data(), $l1->to_array())), "-1 1 2 3 4", 'copy ctor');
 
-my $e3 = Class::STL::Element->new(data => 100, data_type => 'numeric');
-my $e4 = Class::STL::Element->new(data => 103, data_type => 'numeric');
-my $e5 = Class::STL::Element->new(data => 103, data_type => 'numeric');
-ok ($e3->eq($e4), "", "eq()");
-ok ($e4->eq($e5), "1", "eq()");
-ok ($e3->ne($e4), "1", "ne()");
-ok ($e3->lt($e4), "1", "lt()");
-ok ($e3->gt($e4), "", "gt()");
-ok ($e3->le($e4), "1", "le()");
-ok ($e3->ge($e4), "", "ge()");
-ok ($e3->cmp($e4), "-1", "cmp()");
-ok ($e4->cmp($e3), "1", "cmp()");
-ok ($e4->cmp($e5), "0", "cmp()");
+$l2->back()->swap($l2->front());
+ok (join(' ', map($_->data(), $l2->to_array())), "5 2 3 4 1", 'copy ctor');
+ok (join(' ', map($_->data(), $l1->to_array())), "-1 1 2 3 4", 'copy ctor');
 
-$e3->swap($e4);
-ok ($e3->data(), "103", "swap()");
-ok ($e4->data(), "100", "swap()");
 
+# Inheritance:
 my $e1 = MyClass->new(name => 'n1');
-$e2 = MyClass2->new(name => 'n2', name2 => 'n2-2', add2 => 'mosman', zip => 2080);
-$e3 = MyClass3->new(name => 'n3', name2 => 'n2-3', name3 => 'n3-3', zip => 2065, phone => '02897733', 
+my $e2 = MyClass2->new(name => 'n2', name2 => 'n2-2', add2 => 'mosman', zip => 2080);
+my $e3 = MyClass3->new(name => 'n3', name2 => 'n2-3', name3 => 'n3-3', zip => 2065, phone => '02897733', 
 	state => 'SA');
 
 ok (join(' ', $e3->name(), $e3->name2(), $e3->name3(), $e3->zip(), $e3->country(), 
 	$e3->phone(), $e3->state()), "n3 n2-3 n3-3 2065 au 02897733 SA", 'inheritance');
 
-$e4 = MyClass3->new($e3);
+my $e4 = MyClass3->new($e3);
 ok (join(' ', $e4->name(), $e4->name2(), $e4->name3(), $e4->zip(), $e4->country(), 
 	$e4->phone(), $e4->state()), "n3 n2-3 n3-3 2065 au 02897733 SA", 'inheritance');
-
-
 {
 	package MyClass;
 	use base qw(Class::STL::Element);

@@ -31,13 +31,14 @@ require 5.005_62;
 use strict;
 use warnings;
 use vars qw($VERSION $BUILD);
-$VERSION = '0.18';
-$BUILD = 'Thursday April 27 23:08:34 GMT 2006';
+$VERSION = '0.26';
+$BUILD = 'Monday May 15 23:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::ClassMembers;
 	use UNIVERSAL qw(isa can);
 	use Carp qw(confess);
+	use Class::STL::Trace;
 	sub import
 	{
 		my $proto = shift;
@@ -45,7 +46,8 @@ $BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 		my $self = {};
 		bless($self, $class);
 		$self->_caller((caller())[0]);
-		$self->_debug(0);
+		$self->_debug(Class::STL::Trace->new(debug_on => 0));
+		$self->{MEMBERS} = { };
 		$self->_members(grep(!ref($_) || (ref($_) && !$_->isa('Class::STL::ClassMembers::FunctionMember::Abstract')), @_));
 		$self->_code([]);
 		push(@{$self->_code()}, 
@@ -60,28 +62,18 @@ $BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 	sub _prepare
 	{
 		my $self = shift;
-		confess __PACKAGE__ . " usage:\nnew(<data member name list>);\n***Error empty data member names list!\n"
-			unless (keys(%{$self->_members()}));
-
-		map($self->_public_member_func($_), values(%{$self->_members()}));
-		$self->_init_func();
-		$self->_print_func();
-		$self->_members_func();
-		$self->_swap_func();
-		$self->_clone_func();
-		$self->_ignore_local_func();
+		$self->code_members_access();
+		$self->code_members_init();
+		$self->code_members_print();
+		$self->code_members_local();
+		$self->code_members();
+		$self->code_swap();
+		$self->code_clone();
 
 		unshift(@{$self->_code()}, "{\npackage @{[ $self->_caller() ]};\n");
 		push(@{$self->_code()}, "}\n");
 
-		if ($self->_debug())
-		{
-			open(DEBUG, ">>datemembers$$.out");
-			print DEBUG "# @{[ $self->_caller() ]} data members (", 
-				join(', ', keys( %{$self->_members()} )), ")\n";
-			print DEBUG join("", @{$self->_code()}), "\n";
-			close(DEBUG);
-		}
+		$self->_debug()->print($self->_caller(), join("", @{$self->_code()})) if ($self->_debug()->debug_on());
 		eval(join("", @{$self->_code()}));
 		confess "**Error in eval for @{[ $self->_caller() ]} ClassMembers functions creation:\n$@" if ($@);
 	}
@@ -113,40 +105,20 @@ $BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 	sub _members
 	{
 		my $self = shift;
-		if (@_)
-		{
-			foreach my $member (@_)
-			{
-				ref($member) && $member->isa('Class::STL::ClassMembers::DataMember')
-					?  $self->{MEMBERS}->{$member->name()} = $member
-					:  $self->{MEMBERS}->{$member} = $member;
-			}
+		foreach (@_) {
+			my $m = ref($_) ? $_
+				: Class::STL::ClassMembers::DataMember->new(name => $_);
+			$self->{MEMBERS}->{$m->name()} = $m;
 		}
 		return $self->{MEMBERS};
 	}
-	sub _public_member_func
+	sub code_members_access
 	{
 		my $self = shift;
-		my $member = shift;
-		my $tab = ' ' x 4;
-		my $member_name = ref($member) && $member->isa('Class::STL::ClassMembers::DataMember') 
-			? $member->name() : $member;
-		my $code = "sub $member_name {\n${tab}my \$self = shift;\n";
-
-		if (ref($member) && $member->isa('Class::STL::ClassMembers::DataMember') && defined($member->validate()))
-		{
-			$code .= $member->accessor_func_code();
-		}
-		else
-		{
-			$code .= "${tab}\$self->{@{[ $self->_caller_str() ]}}->{@{[ uc($member_name) ]}} = shift if (\@_);\n";
-		}
-		$code .= "${tab}return \$self->{@{[ $self->_caller_str() ]}}->{@{[ uc($member_name) ]}};\n";
-		$code .= "}\n";
-		push(@{$self->_code()}, $code);
+		map(push(@{$self->_code()}, $_->code_memaccess($_)), values(%{$self->_members()}));
 		return;
 	}
-	sub _init_func
+	sub code_members_init
 	{
 		my $self = shift;
 		my $tab = ' ' x 4;
@@ -156,70 +128,78 @@ $BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 		$code .= "${tab}if (int(\@ISA) && (caller())[0] ne __PACKAGE__) {\n";
 		$code .= "${tab}${tab}\$self->SUPER::members_init(\@_);\n";
 		$code .= "${tab}}\n";
-		$code .= "${tab}my \@p;\n";
-		$code .= "${tab}while (\@_) { my \$p=shift; push(\@p, \$p, shift) if (!ref(\$p)); }\n";
-		$code .= "${tab}my \%p = \@p;\n";
-		$code .= "${tab}@{[ join(\"\n    \", map($self->_member_init_func($_), values( %{$self->_members()} ))) ]}\n";
+		if (keys(%{$self->_members()})) {
+			$code .= "${tab}my \@p;\n";
+			$code .= "${tab}while (\@_) { my \$p=shift; push(\@p, \$p, shift) if (!ref(\$p)); }\n";
+			$code .= "${tab}my \%p = \@p;\n";
+			$code .= "${tab}@{[ join(\"\n    \", map($_->code_meminit(), values( %{$self->_members()} ))) ]}\n";
+		}
 		$code .= "}\n";
 		push(@{$self->_code()}, $code);
 		return;
 	}
-	sub _member_init_func
-	{
-		my $self = shift;
-		my $member = shift;
-		my $member_name = ref($member) && $member->isa('Class::STL::ClassMembers::DataMember') 
-			? $member->name() : $member;
-		return ref($member) && $member->isa('Class::STL::ClassMembers::DataMember')
-			? $member->init_func_code()
-			: "\$self->$member_name(\$p{'$member_name'});";
-	}
-	sub _print_func
+	sub code_members_print
 	{
 		my $self = shift;
 		my $tab = ' ' x 4;
-		my $code = "sub member_print {\n";
+		my $code = "sub members_print {\n";
 		$code .= "${tab}my \$self = shift;\n";
 		$code .= "${tab}my \$delim = shift || '|';\n";
-		$code .= "${tab}return join(\"\$delim\",\n${tab}${tab}";
-		$code .= 
-			join(qq/,\n$tab$tab/, 
-				map
-				(
-					qq/"$_=\@{[ defined(\$self->$_()) ? \$self->$_() : 'NULL' ]}"/, 
-					sort(map(ref($_) ? $_->name() : $_, values( %{$self->_members()} )))
-				)
-			);
-		$code .= "\n${tab});\n";
+		if (keys(%{$self->_members()})) {
+			$code .= "${tab}return join(\"\$delim\",\n${tab}${tab}";
+			$code .= 
+				join(qq/,\n$tab$tab/, 
+					map
+					(
+						qq/"$_=\@{[ defined(\$self->$_()) ? \$self->$_() : 'NULL' ]}"/, 
+						sort(keys(%{$self->_members()}))
+					)
+				);
+			$code .= "\n${tab});\n";
+		} else {
+			$code .= "${tab}return '';\n";
+		}
 		$code .= "}\n";
 		push(@{$self->_code()}, $code);
 		return;
 	}
-	sub _members_func
+	sub code_members_local
 	{
 		my $self = shift;
 		my $tab = ' ' x 4;
-		my $code = "sub members { # static function\n";
-    	$code .= "${tab}return {\n${tab}${tab}";
-		$code .= join
-		(
-			",\n${tab}${tab}", 
-			map
-			(
-				"$_=>[ " 
-					. (ref(${$self->_members()}{$_}) && ${$self->_members()}{$_}->isa('Class::STL::ClassMembers::DataMember') 
-						? "'@{[ defined(${$self->_members()}{$_}->default()) ? ${$self->_members()}{$_}->default() : q## ]}', "
-							. "'@{[ defined(${$self->_members()}{$_}->validate()) ? ${$self->_members()}{$_}->validate() : q## ]}'" : '')
-					. " ]", 
-				sort keys(%{$self->_members()})
-			)
-		);
-		$code .= "\n${tab}}\n";
+		my $code = "sub members_local { # static function\n";
+		if (keys(%{$self->_members()})) {
+			$code .= "${tab}return {\n${tab}${tab}";
+			$code .= join(",\n${tab}${tab}", map($_->code_memattr(), values(%{$self->_members()})));
+			$code .= "\n${tab}};\n";
+		} else {
+			$code .= "${tab}return {};\n";
+		}
 		$code .= "}\n";
 		push(@{$self->_code()}, $code);
 		return;
 	}
-	sub _swap_func
+	sub code_members
+	{
+		my $self = shift;
+		my $tab = ' ' x 4;
+		my $code = "sub members {\n";
+		$code .= "${tab}my \$self = shift;\n";
+		$code .= "${tab}use vars qw(\@ISA);\n";
+		$code .= "${tab}my \$super = (int(\@ISA))";
+		$code .= " ? \$self->SUPER::members() : {};\n";
+    	$code .= "${tab}return keys(\%\$super)\n${tab}? {\n${tab}${tab}";
+		$code .= "\%\$super,\n${tab}${tab}";
+		$code .= join(",\n${tab}${tab}", map($_->code_memattr(), values(%{$self->_members()})));
+		$code .= "\n${tab}}\n";
+    	$code .= "${tab}: {\n${tab}${tab}";
+		$code .= join(",\n${tab}${tab}", map($_->code_memattr(), values(%{$self->_members()})));
+		$code .= "\n${tab}};\n";
+		$code .= "}\n";
+		push(@{$self->_code()}, $code);
+		return;
+	}
+	sub code_swap
 	{
 		my $self = shift;
 		my $tab = ' ' x 4;
@@ -227,38 +207,31 @@ $BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 		$code .= "${tab}my \$self = shift;\n";
 		$code .= "${tab}my \$other = shift;\n";
 		$code .= "${tab}use vars qw(\@ISA);\n";
-		$code .= "${tab}my \$tmp = int(\@ISA) ? \$self->SUPER\::swap(\$other) : \$self->clone();\n";
-		$code .= "${tab}@{[ join(qq#\n${tab}#, 
-			map(qq#\$self->$_(\$other->$_());#, keys( %{$self->_members()} ) )) ]}\n";
-		$code .= "${tab}@{[ join(qq#\n${tab}#, 
-			map(qq#\$other->$_(\$tmp->$_());#, keys( %{$self->_members()} ) )) ]}\n";
-		$code .= "${tab}return \$tmp;\n";
+		$code .= "${tab}my \$tmp = \$self->clone();\n";
+		$code .= "${tab}\$self->SUPER\::swap(\$other) if (int(\@ISA));\n";
+		if (keys(%{$self->_members()})) {
+			$code .= "${tab}@{[ join(qq#\n${tab}#, 
+				map(qq#\$self->$_(\$other->$_());#, keys( %{$self->_members()} ) )) ]}\n";
+			$code .= "${tab}@{[ join(qq#\n${tab}#, 
+				map(qq#\$other->$_(\$tmp->$_());#, keys( %{$self->_members()} ) )) ]}\n";
+		}
 		$code .= "}\n";
 		push(@{$self->_code()}, $code);
 		return;
 	}
-	sub _clone_func
+	sub code_clone
 	{
 		my $self = shift;
 		my $tab = ' ' x 4;
 		my $code = "sub clone {\n";
 		$code .= "${tab}my \$self = shift;\n";
-		$code .= "${tab}my \$clone = \$self->new(\$self);\n";
-		$code .= "${tab}@{[ join(qq#\n${tab}#, 
-			map(qq#\$clone->$_(\$self->$_());#, keys( %{$self->_members()} ) )) ]}\n";
+		$code .= "${tab}use vars qw(\@ISA);\n";
+		$code .= "${tab}my \$clone = int(\@ISA) ? \$self->SUPER\::clone() : \$self->new();\n";
+		if (keys(%{$self->_members()})) {
+			$code .= "${tab}@{[ join(qq#\n${tab}#, 
+				map(qq#\$clone->$_(\$self->$_());#, keys( %{$self->_members()} ) )) ]}\n";
+		}
 		$code .= "${tab}return \$clone;\n";
-		$code .= "}\n";
-		push(@{$self->_code()}, $code);
-		return;
-	}
-	sub _ignore_local_func
-	{
-		my $self = shift;
-		my $tab = ' ' x 4;
-		my $code = "sub ignore_local { # static function\n";
-		$code .= "${tab}my \@ign;\n";
-		$code .= "${tab}foreach (\@_) { !ref(\$_) && exists(\${members()}{\$_}) ? shift : push(\@ign, \$_); }\n";
-		$code .= "${tab}return \@ign;\n";
 		$code .= "}\n";
 		push(@{$self->_code()}, $code);
 		return;

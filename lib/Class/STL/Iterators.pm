@@ -78,27 +78,9 @@ $BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 	use overload '++' => 'next', '--' => 'prev', '=' => 'clone', 'bool' => '_bool',
 		'+' => 'advance', '+=' => 'advance', '-' => 'retreat', '-=' => 'retreat',
 		'==' => 'eq', '!=' => 'ne', '>' => 'gt', '<' => 'lt', '>=' => 'ge', '<=' => 'le', '<=>' => 'cmp';
-	use Class::STL::ClassMembers (
-			qw(p_container),
-			Class::STL::ClassMembers::DataMember->new(name => 'arr_idx', default => -1),
-	); 
-	sub new 
-	{
-		my $self = shift;
-		my $class = ref($self) || $self;
-		my @params;
-		while (@_)
-		{
-			my $p = shift;
-			(ref($p) && ref($p) ne 'ARRAY' && $p->isa(__PACKAGE__)) # copy ctor
-			? CORE::push(@params, 'arr_idx', $p->arr_idx(), 'p_container', $p->p_container())
-			: ref($p) ? CORE::push(@params, $p) : CORE::push(@params, $p, shift);
-		}
-		$self = $class->SUPER::new(ignore_local(@params));
-		bless($self, $class);
-		$self->members_init(@params);
-		return $self;
-	}
+	use Class::STL::ClassMembers qw(p_container),
+		Class::STL::ClassMembers::DataMember->new(name => 'arr_idx', default => -1);
+	use Class::STL::ClassMembers::Constructor;
 	sub p_element
 	{
 		my $self = shift;
@@ -277,21 +259,24 @@ $BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 {
 	package Class::STL::Iterators::BiDirectional;
 	use base qw(Class::STL::Iterators::Abstract); 
+	use Class::STL::ClassMembers;
+	use Class::STL::ClassMembers::Constructor;
 }
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Iterators::Forward;
 	use base qw(Class::STL::Iterators::BiDirectional); 
-	use Class::STL::ClassMembers (
-			qw(__dummy__),
-			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(prev)),
-			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(last)),
-	); 
+	use Class::STL::ClassMembers;
+	use Class::STL::ClassMembers::Constructor;
+	use Class::STL::ClassMembers::Disable qw(prev);
+	use Class::STL::ClassMembers::Disable qw(last);
 }
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Iterators::Reverse;
 	use base qw(Class::STL::Iterators::BiDirectional); 
+	use Class::STL::ClassMembers;
+	use Class::STL::ClassMembers::Constructor;
 	sub last # (void)
 	{
 		my $self = shift;
@@ -317,6 +302,8 @@ $BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 {
 	package Class::STL::Iterators::BackInsertIterator;
 	use base qw(Class::STL::Iterators::Abstract); 
+	use Class::STL::ClassMembers;
+	use Class::STL::ClassMembers::Constructor;
 	sub assign # (element)
 	{
 		my $self = shift;
@@ -327,6 +314,8 @@ $BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 {
 	package Class::STL::Iterators::FrontInsertIterator;
 	use base qw(Class::STL::Iterators::Abstract); 
+	use Class::STL::ClassMembers;
+	use Class::STL::ClassMembers::Constructor;
 	sub assign # (element)
 	{
 		my $self = shift;
@@ -337,6 +326,8 @@ $BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 {
 	package Class::STL::Iterators::InsertIterator;
 	use base qw(Class::STL::Iterators::Abstract); 
+	use Class::STL::ClassMembers;
+	use Class::STL::ClassMembers::Constructor;
 	sub assign # (element)
 	{
 		my $self = shift;

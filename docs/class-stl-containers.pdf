@@ -11,7 +11,7 @@
 endobj
 2 0 obj
 <<
-/CreationDate (D:20060428150404+0100)
+/CreationDate (D:20060515140643+0100)
 /Producer (Pequel)
 /Title (Class::STL::Containers)
 >>
@@ -447,7 +447,7 @@ BT
 /F10 7 Tf
 /F21 10 Tf
 1 0 0 1 52 37 Tm
-(28 April 2006 15:04) Tj
+(15 May 2006 14:06) Tj
 1 0 0 1 537.44 37 Tm
 (1) Tj
 ET
@@ -457,7 +457,7 @@ S
 endstream
 endobj
 19 0 obj
-6329
+6327
 endobj
 20 0 obj
 <<
@@ -646,11 +646,11 @@ BT
 /F10 7 Tf
 1 0 0 1 76.0 418.8 Tm
 0.0000 Tw
-(        Class::STL::ClassMembers::FunctionMember::New->new\(\), # produce class new\(\) function ) Tj
+(    \);  ) Tj
 /F10 7 Tf
 1 0 0 1 76.0 410.4 Tm
 0.0000 Tw
-(    \);  ) Tj
+(    use Class::STL::ClassMembers::Constructor;  # produce class new\(\) function ) Tj
 /F10 7 Tf
 1 0 0 1 76.0 402.0 Tm
 0.0000 Tw
@@ -810,8 +810,8 @@ BT
 /F21 10 Tf
 1 0 0 1 52 37 Tm
 (2) Tj
-1 0 0 1 452.95 37 Tm
-(28 April 2006 15:04) Tj
+1 0 0 1 456.28 37 Tm
+(15 May 2006 14:06) Tj
 ET
 52 50 m
 543 50 l
@@ -819,7 +819,7 @@ S
 endstream
 endobj
 23 0 obj
-7376
+7358
 endobj
 24 0 obj
 <<
@@ -1107,69 +1107,84 @@ BT
 ( ) Tj
 /F20 10 Tf
 1 0 0 1 76.0 322.8 Tm
-0.0076 Tw
-(This ) Tj
+2.2127 Tw
+(These ) Tj
 /F22 10 Tf
-0.0076 Tw
+2.2127 Tw
 (helper) Tj
 /F20 10 Tf
-0.0076 Tw
-( class can be used to generate code for various basic class functions. This module requires an) Tj
+2.2127 Tw
+( classes can be used to generate code for various basic class functions. This module) Tj
 1 0 0 1 76.0 310.8 Tm
-4.2511 Tw
-(import list consisting of target data member names, ) Tj
-/F22 10 Tf
-4.2511 Tw
-(Class::STL::ClassMembers::DataMember) Tj
-/F20 10 Tf
-4.2511 Tw
-(, or) Tj
+0 Tw
+(requires an import list consisting of target data member names or) Tj
 1 0 0 1 76.0 298.8 Tm
-1.9757 Tw
+4.4371 Tw
 () Tj
 /F22 10 Tf
-1.9757 Tw
-(Class::STL::ClassMembers::FunctionMember) Tj
+4.4371 Tw
+(Class::STL::ClassMembers::DataMember) Tj
 /F20 10 Tf
-1.9757 Tw
+4.4371 Tw
 ( objects. When using ) Tj
 /F22 10 Tf
-1.9757 Tw
+4.4371 Tw
 (ClassMembers) Tj
 /F20 10 Tf
-1.9757 Tw
+4.4371 Tw
 ( ) Tj
 /F21 10 Tf
-1.9757 Tw
+4.4371 Tw
 (ALL) Tj
 /F20 10 Tf
-1.9757 Tw
+4.4371 Tw
 ( data members) Tj
 1 0 0 1 76.0 286.8 Tm
-0.0000 Tw
+2.6927 Tw
 (should be included in order for the generated ) Tj
 /F22 10 Tf
-0.0000 Tw
+2.6927 Tw
 (clone) Tj
 /F20 10 Tf
-0.0000 Tw
+2.6927 Tw
 ( and ) Tj
 /F22 10 Tf
-0.0000 Tw
+2.6927 Tw
 (swap) Tj
 /F20 10 Tf
-0.0000 Tw
-( functions to function correctly.  ) Tj
-/F20 10 Tf
+2.6927 Tw
+( functions to function correctly. The) Tj
+1 0 0 1 76.0 274.8 Tm
+0 Tw
+(constructor function code can be produces as well by using the package) Tj
 1 0 0 1 76.0 262.8 Tm
+2.0367 Tw
+() Tj
+/F23 10 Tf
+2.0367 Tw
+(Class::STL::ClassMembers::Constructor) Tj
+/F20 10 Tf
+2.0367 Tw
+(, or ) Tj
+/F23 10 Tf
+2.0367 Tw
+(Class::STL::ClassMembers::SingletonConstructor) Tj
+/F20 10 Tf
+2.0367 Tw
+( to) Tj
+1 0 0 1 76.0 250.8 Tm
+0.0000 Tw
+(create a singleton class type. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 226.8 Tm
 0.0000 Tw
 (The following target member functions will be generated and made available to the class: ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 236.4 Tm
+1 0 0 1 76.0 200.4 Tm
 0.0000 Tw
 (Data Member Accessor Get/Put Function ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 224.4 Tm
+1 0 0 1 76.0 188.4 Tm
 0.1105 Tw
 (This function will have the same name as the data member and should be used to ) Tj
 /F22 10 Tf
@@ -1184,10 +1199,10 @@ BT
 /F20 10 Tf
 0.1105 Tw
 ( the value for) Tj
-1 0 0 1 76.0 212.4 Tm
+1 0 0 1 76.0 176.4 Tm
 2.2129 Tw
 (the data member. Pass the value as the argument when setting the value for a data member. For) Tj
-1 0 0 1 76.0 200.4 Tm
+1 0 0 1 76.0 164.4 Tm
 0.2500 Tw
 () Tj
 /F22 10 Tf
@@ -1202,7 +1217,7 @@ BT
 /F20 10 Tf
 0.2500 Tw
 ( attribute, a validation check will be performed when attempting to) Tj
-1 0 0 1 76.0 188.4 Tm
+1 0 0 1 76.0 152.4 Tm
 0.0000 Tw
 (set the member value by matching the value against the ) Tj
 /F22 10 Tf
@@ -1212,7 +1227,7 @@ BT
 0.0000 Tw
 ( regular expression string. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 162.0 Tm
+1 0 0 1 76.0 126.0 Tm
 0.0000 Tw
 (Class ) Tj
 /F22 10 Tf
@@ -1222,7 +1237,7 @@ BT
 0.0000 Tw
 ( Function ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 150.0 Tm
+1 0 0 1 76.0 114.0 Tm
 1.8865 Tw
 (This function should be called in the target class`s ) Tj
 /F22 10 Tf
@@ -1237,11 +1252,11 @@ BT
 /F20 10 Tf
 1.8865 Tw
 ( has been blessed. It will) Tj
-1 0 0 1 76.0 138.0 Tm
+1 0 0 1 76.0 102.0 Tm
 0.0000 Tw
 (perform the necessary data members initialisation. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 111.6 Tm
+1 0 0 1 76.0 75.6 Tm
 0.0000 Tw
 (Class ) Tj
 /F22 10 Tf
@@ -1250,23 +1265,9 @@ BT
 /F20 10 Tf
 0.0000 Tw
 ( Function ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 99.6 Tm
-0.0000 Tw
-(This function will construct and return an object containing a copy of the caller object. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 73.2 Tm
-0.0000 Tw
-(Class ) Tj
-/F22 10 Tf
-0.0000 Tw
-(swap\(\)) Tj
-/F20 10 Tf
-0.0000 Tw
-( Function ) Tj
 /F21 10 Tf
 1 0 0 1 52 37 Tm
-(28 April 2006 15:04) Tj
+(15 May 2006 14:06) Tj
 1 0 0 1 537.44 37 Tm
 (3) Tj
 ET
@@ -1276,7 +1277,7 @@ S
 endstream
 endobj
 27 0 obj
-7465
+7508
 endobj
 28 0 obj
 <<
@@ -1318,9 +1319,23 @@ BT
 (Programmer's Reference) Tj
 /F20 10 Tf
 1 0 0 1 76.0 780.0 Tm
+0.0000 Tw
+(This function will construct and return an object containing a copy of the caller object. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 753.6 Tm
+0.0000 Tw
+(Class ) Tj
+/F22 10 Tf
+0.0000 Tw
+(swap\(\)) Tj
+/F20 10 Tf
+0.0000 Tw
+( Function ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 741.6 Tm
 0.0647 Tw
 (This function requires one argument consisting of an object of the same type as the caller. It will swap the) Tj
-1 0 0 1 76.0 768.0 Tm
+1 0 0 1 76.0 729.6 Tm
 0.0000 Tw
 (caller object with this ) Tj
 /F22 10 Tf
@@ -1330,14 +1345,69 @@ BT
 0.0000 Tw
 ( object. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 741.6 Tm
+1 0 0 1 76.0 703.2 Tm
+0.0000 Tw
+(Class ) Tj
+/F22 10 Tf
+0.0000 Tw
+(members\(\)) Tj
+/F20 10 Tf
+0.0000 Tw
+( Function ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 691.2 Tm
+0.2524 Tw
+(This function will return a pointer to an anonymous hash containing the data member names \(as the key\)) Tj
+1 0 0 1 76.0 679.2 Tm
+0.9981 Tw
+(and data member attibutes array list consisting of ) Tj
+/F23 10 Tf
+0.9981 Tw
+(default) Tj
+/F20 10 Tf
+0.9981 Tw
+( and ) Tj
+/F23 10 Tf
+0.9981 Tw
+(validate) Tj
+/F20 10 Tf
+0.9981 Tw
+( attribute fields in that order. All) Tj
+1 0 0 1 76.0 667.2 Tm
+0.0000 Tw
+(data members, including inherited members are contained in this hash. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 640.8 Tm
+0.0000 Tw
+(Class ) Tj
+/F22 10 Tf
+0.0000 Tw
+(members_local\(\)) Tj
+/F20 10 Tf
+0.0000 Tw
+( Function ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 628.8 Tm
+1.1012 Tw
+(Same as ) Tj
+/F23 10 Tf
+1.1012 Tw
+(members) Tj
+/F20 10 Tf
+1.1012 Tw
+( function except that only the data members local to the class are contained in the) Tj
+1 0 0 1 76.0 616.8 Tm
+0.0000 Tw
+(hash returned. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 590.4 Tm
 0.0000 Tw
 (Class::STL::ClassMembers::DataMember ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 729.6 Tm
+1 0 0 1 76.0 578.4 Tm
 1.5840 Tw
 (For more complex data members, this class may be used to provide additional information about the) Tj
-1 0 0 1 76.0 717.6 Tm
+1 0 0 1 76.0 566.4 Tm
 2.2123 Tw
 (member. This information consist of: ) Tj
 /F23 10 Tf
@@ -1364,7 +1434,7 @@ BT
 /F20 10 Tf
 2.2123 Tw
 ( attribute contains the) Tj
-1 0 0 1 76.0 705.6 Tm
+1 0 0 1 76.0 554.4 Tm
 0.0087 Tw
 (member name; the ) Tj
 /F23 10 Tf
@@ -1377,115 +1447,148 @@ BT
 0.0087 Tw
 (validate) Tj
 /F20 10 Tf
-1 0 0 1 76.0 693.6 Tm
+1 0 0 1 76.0 542.4 Tm
 2.5613 Tw
 (attribute consists of a regular expression string that will be used to validate the member value by) Tj
-1 0 0 1 76.0 681.6 Tm
+1 0 0 1 76.0 530.4 Tm
 0.0000 Tw
 (matching it to this regex string. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 655.2 Tm
+1 0 0 1 76.0 504.0 Tm
 0.0000 Tw
-(Class::STL::ClassMembers::FunctionMember::New ) Tj
+(Class::STL::ClassMembers::Constructor ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 643.2 Tm
-4.8544 Tw
-(By including a constructed object of this type \(via the new\(\) function\) in the import list for) Tj
-1 0 0 1 76.0 631.2 Tm
-0.0000 Tw
-() Tj
+1 0 0 1 76.0 492.0 Tm
+0.4856 Tw
+(The constructor function with the name ) Tj
 /F23 10 Tf
-0.0000 Tw
-(Class::STL::ClassMembers) Tj
-/F20 10 Tf
-0.0000 Tw
-(, the ) Tj
-/F23 10 Tf
-0.0000 Tw
+0.4856 Tw
 (new\(\)) Tj
 /F20 10 Tf
-0.0000 Tw
-( function will be produced for the ) Tj
-/F22 10 Tf
-0.0000 Tw
-(caller) Tj
+0.4856 Tw
+( will be produced for a package that uses this module. It is) Tj
+1 0 0 1 76.0 480.0 Tm
+2.0831 Tw
+(recomended that this constructor is produced for any class \(package\) that uses the ) Tj
+/F23 10 Tf
+2.0831 Tw
+(ClassMembers) Tj
 /F20 10 Tf
+1 0 0 1 76.0 468.0 Tm
+3.7320 Tw
+(package to produce the data members. This will ensure that the correct calls are done during) Tj
+1 0 0 1 76.0 456.0 Tm
+1.3140 Tw
+(construction and copy-construction of an object. This constructor will make a call to the ) Tj
+/F10 10 Tf
+1.3140 Tw
+(static) Tj
+/F20 10 Tf
+1.3140 Tw
+( user) Tj
+1 0 0 1 76.0 444.0 Tm
+0.8250 Tw
+(member function ) Tj
+/F23 10 Tf
+0.8250 Tw
+(new_extra) Tj
+/F20 10 Tf
+0.8250 Tw
+( if it exists in the calling class. The ) Tj
+/F23 10 Tf
+0.8250 Tw
+(new_extra) Tj
+/F20 10 Tf
+0.8250 Tw
+( function will have the object) Tj
+1 0 0 1 76.0 432.0 Tm
 0.0000 Tw
-( class. ) Tj
+(reference passed as the first argument. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 405.6 Tm
+0.0000 Tw
+(Class::STL::ClassMembers::SingletonConstructor ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 393.6 Tm
+0.4159 Tw
+(Use this package to produce a singleton class. This constructor will ensure that only one instance of this) Tj
+1 0 0 1 76.0 381.6 Tm
+0.0000 Tw
+(class will be constructed. ) Tj
 /F21 10 Tf
-1 0 0 1 52.0 589.2 Tm
+1 0 0 1 52.0 339.6 Tm
 0.0000 Tw
 (Example ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 573.0 Tm
+1 0 0 1 76.0 323.4 Tm
 0.0000 Tw
 (  \{ ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 564.6 Tm
+1 0 0 1 76.0 315.0 Tm
 0.0000 Tw
 (    package MyClass; ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 556.2 Tm
+1 0 0 1 76.0 306.6 Tm
 0.0000 Tw
 (    use Class::STL::ClassMembers \( ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 547.8 Tm
+1 0 0 1 76.0 298.2 Tm
 0.0000 Tw
 (        qw\(attrib1 attrib2\), ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 539.4 Tm
+1 0 0 1 76.0 289.8 Tm
 0.0000 Tw
 (        Class::STL::ClassMembers::DataMember->new\( ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 531.0 Tm
+1 0 0 1 76.0 281.4 Tm
 0.0000 Tw
 (            name => 'attrib3', default => '100', validate => '^\\d+$'\), ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 522.6 Tm
+1 0 0 1 76.0 273.0 Tm
 0.0000 Tw
 (        Class::STL::ClassMembers::DataMember->new\( ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 514.2 Tm
+1 0 0 1 76.0 264.6 Tm
 0.0000 Tw
 (            name => 'attrib4', default => 'med', validate => '^\(high|med|low\)$'\), ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 505.8 Tm
-0.0000 Tw
-(        Class::STL::ClassMembers::FunctionMember::New->new\(\), # produce class new\(\) function ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 497.4 Tm
+1 0 0 1 76.0 256.2 Tm
 0.0000 Tw
 (    \);  ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 489.0 Tm
+1 0 0 1 76.0 247.8 Tm
+0.0000 Tw
+(    use Class::STL::ClassMembers::Constructor;  # produce class new\(\) function ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 239.4 Tm
 0.0000 Tw
 (  \} ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 480.6 Tm
+1 0 0 1 76.0 231.0 Tm
 0.0000 Tw
 (  my $cl = MyClass->new\(attrib1 => 'hello', attrib2 => 'world'\); ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 472.2 Tm
+1 0 0 1 76.0 222.6 Tm
 0.0000 Tw
 (  print $cl->attrib1\(\), " ", $cl->attrib2\(\), "\\n"; # 'hello world' ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 463.8 Tm
+1 0 0 1 76.0 214.2 Tm
 0.0000 Tw
 (  $cl->attrib1\(ucfirst\($cl->attrib1\)\); ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 455.4 Tm
+1 0 0 1 76.0 205.8 Tm
 0.0000 Tw
 (  $cl->attrib2\(ucfirst\($cl->attrib2\)\); ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 447.0 Tm
+1 0 0 1 76.0 197.4 Tm
 0.0000 Tw
 (  print $cl->attrib1\(\), " ", $cl->attrib2\(\), "\\n"; # 'Hello World' ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 438.6 Tm
+1 0 0 1 76.0 189.0 Tm
 0.0000 Tw
 (  $cl->attrib4\('avg'\); # Causes progam to die with '** Function attrib2 value failed validation...' ) Tj
 /F21 12 Tf
-1 0 0 1 52.0 417.6 Tm
+1 0 0 1 52.0 168.0 Tm
 0.0000 Tw
 () Tj
 /F23 12 Tf
@@ -1495,11 +1598,11 @@ BT
 0.0000 Tw
 ( ) Tj
 /F21 10 Tf
-1 0 0 1 52.0 381.6 Tm
+1 0 0 1 52.0 132.0 Tm
 0.0000 Tw
 (Exports ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 369.6 Tm
+1 0 0 1 76.0 120.0 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -1544,158 +1647,11 @@ BT
 /F20 10 Tf
 0.0000 Tw
 (. ) Tj
-/F21 12 Tf
-1 0 0 1 52.0 327.6 Tm
-0.0000 Tw
-() Tj
-/F23 12 Tf
-0.0000 Tw
-(CLASS Class::STL::Containers::Abstract) Tj
-/F21 12 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 313.2 Tm
-0.5469 Tw
-(This is the ) Tj
-/F22 10 Tf
-0.5469 Tw
-(abstract) Tj
-/F20 10 Tf
-0.5469 Tw
-( base class for all other container classes. Objects should not be constructed directly) Tj
-1 0 0 1 76.0 301.2 Tm
-0.0000 Tw
-(from this class, but from any of the derived container classes. Common functions are documented here. ) Tj
-/F21 10 Tf
-1 0 0 1 52.0 271.2 Tm
-0.0000 Tw
-(Extends ) Tj
-/F22 10 Tf
-0.0000 Tw
-(Class::STL::Element) Tj
-/F21 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 256.8 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(new) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 244.8 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(container-ref new \( [ named-argument-list ] \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 232.8 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(container-ref new \( container-ref \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 220.8 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(container-ref new \( element [, ...] \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 208.8 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(container-ref new \( iterator-start [, iterator-finish ] \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 196.8 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(container-ref new \( raw-data [, ... ] \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 172.8 Tm
-0.6781 Tw
-(The ) Tj
-/F22 10 Tf
-0.6781 Tw
-(new) Tj
-/F20 10 Tf
-0.6781 Tw
-( function constructs an object for this class and returns a blessed reference to this object.) Tj
-1 0 0 1 100.0 160.8 Tm
-0.2179 Tw
-(All forms accept an optional ) Tj
-/F22 10 Tf
-0.2179 Tw
-(hash) Tj
-/F20 10 Tf
-0.2179 Tw
-( containing any of the following named arguments: ) Tj
-/F22 10 Tf
-0.2179 Tw
-(data_type) Tj
-/F20 10 Tf
-0.2179 Tw
-(. The) Tj
-1 0 0 1 100.0 148.8 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(data_type) Tj
-/F20 10 Tf
-0.0000 Tw
-( defines the class type of element objects that the container will hold. ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 124.8 Tm
-0.0380 Tw
-(The second form is a ) Tj
-/F22 10 Tf
-0.0380 Tw
-(copy constructor) Tj
-/F20 10 Tf
-0.0380 Tw
-(. It requires another container reference as the argument, and) Tj
-1 0 0 1 100.0 112.8 Tm
-0.0000 Tw
-(will return a copy of this container. ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 88.8 Tm
-0.3331 Tw
-(The third form requires one or more element refs as arguments. These elements will be copied into) Tj
-1 0 0 1 100.0 76.8 Tm
-0.0000 Tw
-(the newly constructed container. ) Tj
 /F21 10 Tf
 1 0 0 1 52 37 Tm
 (4) Tj
-1 0 0 1 452.95 37 Tm
-(28 April 2006 15:04) Tj
+1 0 0 1 456.28 37 Tm
+(15 May 2006 14:06) Tj
 ET
 52 50 m
 543 50 l
@@ -1703,7 +1659,7 @@ S
 endstream
 endobj
 31 0 obj
-7161
+6744
 endobj
 32 0 obj
 <<
@@ -1743,8 +1699,179 @@ BT
 (Programmer's Reference) Tj
 1 0 0 1 431.88 797 Tm
 (Class::STL::Containers) Tj
+/F21 12 Tf
+1 0 0 1 52.0 780.0 Tm
+0.0000 Tw
+() Tj
+/F23 12 Tf
+0.0000 Tw
+(CLASS Class::STL::Containers::Abstract) Tj
+/F21 12 Tf
+0.0000 Tw
+( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 780.0 Tm
+1 0 0 1 76.0 765.6 Tm
+0.5469 Tw
+(This is the ) Tj
+/F22 10 Tf
+0.5469 Tw
+(abstract) Tj
+/F20 10 Tf
+0.5469 Tw
+( base class for all other container classes. Objects should not be constructed directly) Tj
+1 0 0 1 76.0 753.6 Tm
+0.0000 Tw
+(from this class, but from any of the derived container classes. Common functions are documented here. ) Tj
+/F21 10 Tf
+1 0 0 1 52.0 723.6 Tm
+0.0000 Tw
+(Extends ) Tj
+/F22 10 Tf
+0.0000 Tw
+(Class::STL::Element) Tj
+/F21 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 709.2 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(new) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 697.2 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(container-ref new \( [ named-argument-list ] \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 685.2 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(container-ref new \( container-ref \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 673.2 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(container-ref new \( element [, ...] \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 661.2 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(container-ref new \( iterator-start [, iterator-finish ] \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 649.2 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(container-ref new \( raw-data [, ... ] \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 625.2 Tm
+0.6781 Tw
+(The ) Tj
+/F22 10 Tf
+0.6781 Tw
+(new) Tj
+/F20 10 Tf
+0.6781 Tw
+( function constructs an object for this class and returns a blessed reference to this object.) Tj
+1 0 0 1 100.0 613.2 Tm
+0.5346 Tw
+(All forms accept an optional ) Tj
+/F22 10 Tf
+0.5346 Tw
+(hash) Tj
+/F20 10 Tf
+0.5346 Tw
+( containing any of the following named arguments: ) Tj
+/F22 10 Tf
+0.5346 Tw
+(element_type) Tj
+/F20 10 Tf
+0.5346 Tw
+(.) Tj
+1 0 0 1 100.0 601.2 Tm
+4.5108 Tw
+(The ) Tj
+/F22 10 Tf
+4.5108 Tw
+(element_type) Tj
+/F20 10 Tf
+4.5108 Tw
+( defines the class type of element objects that the container will hold.) Tj
+1 0 0 1 100.0 589.2 Tm
+0.2808 Tw
+() Tj
+/F22 10 Tf
+0.2808 Tw
+(element_type) Tj
+/F20 10 Tf
+0.2808 Tw
+( will default to ) Tj
+/F23 10 Tf
+0.2808 Tw
+(Class::STL::Element) Tj
+/F20 10 Tf
+0.2808 Tw
+( if not specified; when specified, the type must be) Tj
+1 0 0 1 100.0 577.2 Tm
+0.0000 Tw
+(derived from ) Tj
+/F23 10 Tf
+0.0000 Tw
+(Class::STL::Element) Tj
+/F20 10 Tf
+0.0000 Tw
+(. ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 553.2 Tm
+0.0380 Tw
+(The second form is a ) Tj
+/F22 10 Tf
+0.0380 Tw
+(copy constructor) Tj
+/F20 10 Tf
+0.0380 Tw
+(. It requires another container reference as the argument, and) Tj
+1 0 0 1 100.0 541.2 Tm
+0.0000 Tw
+(will return a copy of this container. ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 517.2 Tm
+0.3331 Tw
+(The third form requires one or more element refs as arguments. These elements will be copied into) Tj
+1 0 0 1 100.0 505.2 Tm
+0.0000 Tw
+(the newly constructed container. ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 481.2 Tm
 1.5020 Tw
 (The fourth form requires one ) Tj
 /F22 10 Tf
@@ -1759,7 +1886,7 @@ BT
 /F20 10 Tf
 1.5020 Tw
 ( iterator. All the element objects) Tj
-1 0 0 1 100.0 768.0 Tm
+1 0 0 1 100.0 469.2 Tm
 0.0011 Tw
 (with, and including, the ) Tj
 /F22 10 Tf
@@ -1780,14 +1907,14 @@ BT
 /F20 10 Tf
 0.0011 Tw
 ( if not specified\) positions will be copied into the newly) Tj
-1 0 0 1 100.0 756.0 Tm
+1 0 0 1 100.0 457.2 Tm
 0.0000 Tw
 (constructed container. ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 732.0 Tm
+1 0 0 1 100.0 433.2 Tm
 2.3633 Tw
 (The fifth form accepts a list of raw data values. Each of these values will be stored inside a) Tj
-1 0 0 1 100.0 720.0 Tm
+1 0 0 1 100.0 421.2 Tm
 0.1555 Tw
 () Tj
 /F23 10 Tf
@@ -1806,11 +1933,11 @@ BT
 0.1555 Tw
 (data) Tj
 /F20 10 Tf
-1 0 0 1 100.0 708.0 Tm
+1 0 0 1 100.0 409.2 Tm
 0.0000 Tw
 (member containing the raw data value. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 681.6 Tm
+1 0 0 1 76.0 382.8 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -1820,11 +1947,11 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 669.6 Tm
+1 0 0 1 100.0 370.8 Tm
 0.0000 Tw
 (Returns a newly constructed object which is identical to the calling \(this\) object. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 643.2 Tm
+1 0 0 1 76.0 344.4 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -1834,7 +1961,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 631.2 Tm
+1 0 0 1 100.0 332.4 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -1844,7 +1971,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 619.2 Tm
+1 0 0 1 100.0 320.4 Tm
 1.0944 Tw
 (The ) Tj
 /F22 10 Tf
@@ -1853,7 +1980,7 @@ BT
 /F20 10 Tf
 1.0944 Tw
 ( function constructs a new element object and returns a reference to this. The type of) Tj
-1 0 0 1 100.0 607.2 Tm
+1 0 0 1 100.0 308.4 Tm
 2.2467 Tw
 (object created is as specified by the ) Tj
 /F22 10 Tf
@@ -1868,7 +1995,7 @@ BT
 /F20 10 Tf
 2.2467 Tw
 ( argument) Tj
-1 0 0 1 100.0 595.2 Tm
+1 0 0 1 100.0 296.4 Tm
 0.3861 Tw
 (consists of a hash and is passed on to the element class ) Tj
 /F22 10 Tf
@@ -1877,11 +2004,11 @@ BT
 /F20 10 Tf
 0.3861 Tw
 ( function. Override this function if you) Tj
-1 0 0 1 100.0 583.2 Tm
+1 0 0 1 100.0 284.4 Tm
 0.0000 Tw
 (want to avoid the `eval' call. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 556.8 Tm
+1 0 0 1 76.0 258.0 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -1891,7 +2018,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 544.8 Tm
+1 0 0 1 100.0 246.0 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -1901,7 +2028,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 532.8 Tm
+1 0 0 1 100.0 234.0 Tm
 0.6500 Tw
 (The ) Tj
 /F22 10 Tf
@@ -1910,18 +2037,18 @@ BT
 /F20 10 Tf
 0.6500 Tw
 ( function requires one starting iterator and an optional finish iterator as arguments. It will) Tj
-1 0 0 1 100.0 520.8 Tm
+1 0 0 1 100.0 222.0 Tm
 0.2413 Tw
 (delete all the elements in the container within, and including, these two iterator positions. The ) Tj
 /F22 10 Tf
 0.2413 Tw
 (erase) Tj
 /F20 10 Tf
-1 0 0 1 100.0 508.8 Tm
+1 0 0 1 100.0 210.0 Tm
 0.0000 Tw
 (funtion returns and iterator pointing to the element following the last  deleted element. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 482.4 Tm
+1 0 0 1 76.0 183.6 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -1931,7 +2058,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 470.4 Tm
+1 0 0 1 100.0 171.6 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -1941,7 +2068,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 458.4 Tm
+1 0 0 1 100.0 159.6 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -1951,7 +2078,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 446.4 Tm
+1 0 0 1 100.0 147.6 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -1961,7 +2088,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 434.4 Tm
+1 0 0 1 100.0 135.6 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -1971,7 +2098,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 422.4 Tm
+1 0 0 1 100.0 123.6 Tm
 1.9069 Tw
 (The first form will insert copies of elements within the ) Tj
 /F22 10 Tf
@@ -1986,7 +2113,7 @@ BT
 /F20 10 Tf
 1.9069 Tw
 ( positions) Tj
-1 0 0 1 100.0 410.4 Tm
+1 0 0 1 100.0 111.6 Tm
 0.0000 Tw
 (before ) Tj
 /F22 10 Tf
@@ -1996,7 +2123,7 @@ BT
 0.0000 Tw
 (. ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 386.4 Tm
+1 0 0 1 100.0 87.6 Tm
 1.5107 Tw
 (The second form will insert copies of elements within the ) Tj
 /F22 10 Tf
@@ -2011,198 +2138,18 @@ BT
 /F20 10 Tf
 1.5107 Tw
 ( positions before) Tj
-1 0 0 1 100.0 374.4 Tm
+1 0 0 1 100.0 75.6 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
 0.0000 Tw
 (position) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 350.4 Tm
-0.0000 Tw
-(The third form will insert the element, or elements \() Tj
-/F22 10 Tf
-0.0000 Tw
-(not copies) Tj
-/F20 10 Tf
-0.0000 Tw
-(\) before ) Tj
-/F22 10 Tf
-0.0000 Tw
-(position) Tj
-/F20 10 Tf
-0.0000 Tw
-(. ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 326.4 Tm
-0.0000 Tw
-(The fourth form will insert ) Tj
-/F22 10 Tf
-0.0000 Tw
-(size) Tj
-/F20 10 Tf
-0.0000 Tw
-( copies of ) Tj
-/F22 10 Tf
-0.0000 Tw
-(element) Tj
-/F20 10 Tf
-0.0000 Tw
-( before ) Tj
-/F22 10 Tf
-0.0000 Tw
-(position) Tj
-/F20 10 Tf
-0.0000 Tw
-(. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 300.0 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(pop) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 288.0 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(void pop \( \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 276.0 Tm
-0.0000 Tw
-(The ) Tj
-/F22 10 Tf
-0.0000 Tw
-(pop) Tj
-/F20 10 Tf
-0.0000 Tw
-( function requires no arguments. It will remove the element at the ) Tj
-/F22 10 Tf
-0.0000 Tw
-(top) Tj
-/F20 10 Tf
-0.0000 Tw
-( of the container. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 249.6 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(push) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 237.6 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(void push \( element [, ...] \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 225.6 Tm
-1.5700 Tw
-(The ) Tj
-/F22 10 Tf
-1.5700 Tw
-(push) Tj
-/F20 10 Tf
-1.5700 Tw
-( function requires one or more arguments consisting of elements. This will append the) Tj
-1 0 0 1 100.0 213.6 Tm
-0.0000 Tw
-(element\(s\) to the end of the container. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 187.2 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(clear) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 175.2 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(void clear \( \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 163.2 Tm
-0.0000 Tw
-(This function will delete all the elements from the container. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 136.8 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(begin) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 124.8 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(iterator-ref begin \( \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 112.8 Tm
-1.2787 Tw
-(The ) Tj
-/F22 10 Tf
-1.2787 Tw
-(begin) Tj
-/F20 10 Tf
-1.2787 Tw
-( function constructs and returns a new iterator object which points to the ) Tj
-/F22 10 Tf
-1.2787 Tw
-(front) Tj
-/F20 10 Tf
-1.2787 Tw
-( element) Tj
-1 0 0 1 100.0 100.8 Tm
-0.0000 Tw
-(within the container.  ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 74.4 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(end) Tj
 /F20 10 Tf
 0.0000 Tw
 ( ) Tj
 /F21 10 Tf
 1 0 0 1 52 37 Tm
-(28 April 2006 15:04) Tj
+(15 May 2006 14:06) Tj
 1 0 0 1 537.44 37 Tm
 (5) Tj
 ET
@@ -2212,7 +2159,7 @@ S
 endstream
 endobj
 35 0 obj
-7403
+7847
 endobj
 36 0 obj
 <<
@@ -2254,6 +2201,186 @@ BT
 /F20 10 Tf
 1 0 0 1 100.0 780.0 Tm
 0.0000 Tw
+(The third form will insert the element, or elements \() Tj
+/F22 10 Tf
+0.0000 Tw
+(not copies) Tj
+/F20 10 Tf
+0.0000 Tw
+(\) before ) Tj
+/F22 10 Tf
+0.0000 Tw
+(position) Tj
+/F20 10 Tf
+0.0000 Tw
+(. ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 756.0 Tm
+0.0000 Tw
+(The fourth form will insert ) Tj
+/F22 10 Tf
+0.0000 Tw
+(size) Tj
+/F20 10 Tf
+0.0000 Tw
+( copies of ) Tj
+/F22 10 Tf
+0.0000 Tw
+(element) Tj
+/F20 10 Tf
+0.0000 Tw
+( before ) Tj
+/F22 10 Tf
+0.0000 Tw
+(position) Tj
+/F20 10 Tf
+0.0000 Tw
+(. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 729.6 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(pop) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 717.6 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(void pop \( \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 705.6 Tm
+0.0000 Tw
+(The ) Tj
+/F22 10 Tf
+0.0000 Tw
+(pop) Tj
+/F20 10 Tf
+0.0000 Tw
+( function requires no arguments. It will remove the element at the ) Tj
+/F22 10 Tf
+0.0000 Tw
+(top) Tj
+/F20 10 Tf
+0.0000 Tw
+( of the container. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 679.2 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(push) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 667.2 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(void push \( element [, ...] \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 655.2 Tm
+1.5700 Tw
+(The ) Tj
+/F22 10 Tf
+1.5700 Tw
+(push) Tj
+/F20 10 Tf
+1.5700 Tw
+( function requires one or more arguments consisting of elements. This will append the) Tj
+1 0 0 1 100.0 643.2 Tm
+0.0000 Tw
+(element\(s\) to the end of the container. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 616.8 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(clear) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 604.8 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(void clear \( \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 592.8 Tm
+0.0000 Tw
+(This function will delete all the elements from the container. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 566.4 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(begin) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 554.4 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(iterator-ref begin \( \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 542.4 Tm
+1.2787 Tw
+(The ) Tj
+/F22 10 Tf
+1.2787 Tw
+(begin) Tj
+/F20 10 Tf
+1.2787 Tw
+( function constructs and returns a new iterator object which points to the ) Tj
+/F22 10 Tf
+1.2787 Tw
+(front) Tj
+/F20 10 Tf
+1.2787 Tw
+( element) Tj
+1 0 0 1 100.0 530.4 Tm
+0.0000 Tw
+(within the container.  ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 504.0 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(end) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 492.0 Tm
+0.0000 Tw
 () Tj
 /F22 10 Tf
 0.0000 Tw
@@ -2262,7 +2389,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 768.0 Tm
+1 0 0 1 100.0 480.0 Tm
 1.6120 Tw
 (The ) Tj
 /F22 10 Tf
@@ -2277,20 +2404,20 @@ BT
 /F20 10 Tf
 1.6120 Tw
 ( element) Tj
-1 0 0 1 100.0 756.0 Tm
+1 0 0 1 100.0 468.0 Tm
 0.2944 Tw
 (within the container. **Note that, unlike C++/STL, this object points to the last element and not ) Tj
 /F22 10 Tf
 0.2944 Tw
 (after) Tj
-1 0 0 1 100.0 744.0 Tm
+1 0 0 1 100.0 456.0 Tm
 0.0000 Tw
 (the last element) Tj
 /F20 10 Tf
 0.0000 Tw
 (. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 717.6 Tm
+1 0 0 1 76.0 429.6 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -2300,7 +2427,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 705.6 Tm
+1 0 0 1 100.0 417.6 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -2310,7 +2437,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 693.6 Tm
+1 0 0 1 100.0 405.6 Tm
 0.9206 Tw
 (The ) Tj
 /F22 10 Tf
@@ -2325,11 +2452,11 @@ BT
 /F20 10 Tf
 0.9206 Tw
 ( function \217 the newly constructed iterator points to) Tj
-1 0 0 1 100.0 681.6 Tm
+1 0 0 1 100.0 393.6 Tm
 0.0000 Tw
 (the last element. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 655.2 Tm
+1 0 0 1 76.0 367.2 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -2339,7 +2466,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 643.2 Tm
+1 0 0 1 100.0 355.2 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -2349,7 +2476,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 631.2 Tm
+1 0 0 1 100.0 343.2 Tm
 0.8006 Tw
 (The ) Tj
 /F22 10 Tf
@@ -2364,11 +2491,11 @@ BT
 /F20 10 Tf
 0.8006 Tw
 ( function \217 the newly constructed iterator points to the) Tj
-1 0 0 1 100.0 619.2 Tm
+1 0 0 1 100.0 331.2 Tm
 0.0000 Tw
 (first element. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 592.8 Tm
+1 0 0 1 76.0 304.8 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -2378,7 +2505,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 580.8 Tm
+1 0 0 1 100.0 292.8 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -2388,7 +2515,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 568.8 Tm
+1 0 0 1 100.0 280.8 Tm
 1.3907 Tw
 (The ) Tj
 /F22 10 Tf
@@ -2397,11 +2524,11 @@ BT
 /F20 10 Tf
 1.3907 Tw
 ( function requires no arguments. It will return an integer value containing the number of) Tj
-1 0 0 1 100.0 556.8 Tm
+1 0 0 1 100.0 268.8 Tm
 0.0000 Tw
 (elements in the container. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 530.4 Tm
+1 0 0 1 76.0 242.4 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -2411,7 +2538,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 518.4 Tm
+1 0 0 1 100.0 230.4 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -2421,7 +2548,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 506.4 Tm
+1 0 0 1 100.0 218.4 Tm
 0.6065 Tw
 (This function returns ) Tj
 /F22 10 Tf
@@ -2436,11 +2563,11 @@ BT
 /F20 10 Tf
 0.6065 Tw
 ( if the container) Tj
-1 0 0 1 100.0 494.4 Tm
+1 0 0 1 100.0 206.4 Tm
 0.0000 Tw
 (contains one or more elements. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 468.0 Tm
+1 0 0 1 76.0 180.0 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -2450,7 +2577,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 456.0 Tm
+1 0 0 1 100.0 168.0 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -2460,7 +2587,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 444.0 Tm
+1 0 0 1 100.0 156.0 Tm
 0.0000 Tw
 (The ) Tj
 /F22 10 Tf
@@ -2470,7 +2597,7 @@ BT
 0.0000 Tw
 ( function returns an array containing the elements \(references\) from the container. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 417.6 Tm
+1 0 0 1 76.0 129.6 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -2480,7 +2607,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 405.6 Tm
+1 0 0 1 100.0 117.6 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -2490,7 +2617,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 393.6 Tm
+1 0 0 1 100.0 105.6 Tm
 0.5380 Tw
 (The ) Tj
 /F22 10 Tf
@@ -2511,7 +2638,7 @@ BT
 /F20 10 Tf
 0.5380 Tw
 ( in the container refered) Tj
-1 0 0 1 100.0 381.6 Tm
+1 0 0 1 100.0 93.6 Tm
 0.7936 Tw
 (to by the argument ) Tj
 /F22 10 Tf
@@ -2526,7 +2653,7 @@ BT
 /F20 10 Tf
 0.7936 Tw
 ( function. The) Tj
-1 0 0 1 100.0 369.6 Tm
+1 0 0 1 100.0 81.6 Tm
 0.8875 Tw
 (function will return ) Tj
 /F22 10 Tf
@@ -2535,7 +2662,7 @@ BT
 /F20 10 Tf
 0.8875 Tw
 ( if both containers contain the same number of elements and all elements in) Tj
-1 0 0 1 100.0 357.6 Tm
+1 0 0 1 100.0 69.6 Tm
 0.0000 Tw
 (one container are equal to, and in the same order as, all elements in the ) Tj
 /F22 10 Tf
@@ -2544,106 +2671,11 @@ BT
 /F20 10 Tf
 0.0000 Tw
 ( container. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 331.2 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(ne) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 319.2 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(bool ne \( container-ref \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 307.2 Tm
-0.0000 Tw
-(Inverse of ) Tj
-/F22 10 Tf
-0.0000 Tw
-(eq) Tj
-/F20 10 Tf
-0.0000 Tw
-( function. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 280.8 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(operator +) Tj
-/F20 10 Tf
-0.0000 Tw
-(, ) Tj
-/F23 10 Tf
-0.0000 Tw
-(operator +=) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 268.8 Tm
-0.0000 Tw
-(Append containers. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 242.4 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(operator == ) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 230.4 Tm
-0.0000 Tw
-(Containers equality comparison. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 204.0 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(operator != ) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 192.0 Tm
-0.0000 Tw
-(Containers non-equality comparison. ) Tj
-/F21 12 Tf
-1 0 0 1 52.0 150.0 Tm
-0.0000 Tw
-() Tj
-/F23 12 Tf
-0.0000 Tw
-(CLASS Class::STL::Containers::List) Tj
-/F21 12 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 135.6 Tm
-0.1353 Tw
-(A list container can have elements pushed and popped from both ends, and also inserted at any location.) Tj
-1 0 0 1 76.0 123.6 Tm
-0.0000 Tw
-(Access to the elements is sequential. ) Tj
 /F21 10 Tf
 1 0 0 1 52 37 Tm
 (6) Tj
-1 0 0 1 452.95 37 Tm
-(28 April 2006 15:04) Tj
+1 0 0 1 456.28 37 Tm
+(15 May 2006 14:06) Tj
 ET
 52 50 m
 543 50 l
@@ -2651,7 +2683,7 @@ S
 endstream
 endobj
 39 0 obj
-6097
+7246
 endobj
 40 0 obj
 <<
@@ -2690,8 +2722,103 @@ BT
 (Programmer's Reference) Tj
 1 0 0 1 431.88 797 Tm
 (Class::STL::Containers) Tj
+/F20 10 Tf
+1 0 0 1 76.0 780.0 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(ne) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 768.0 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(bool ne \( container-ref \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 756.0 Tm
+0.0000 Tw
+(Inverse of ) Tj
+/F22 10 Tf
+0.0000 Tw
+(eq) Tj
+/F20 10 Tf
+0.0000 Tw
+( function. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 729.6 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(operator +) Tj
+/F20 10 Tf
+0.0000 Tw
+(, ) Tj
+/F23 10 Tf
+0.0000 Tw
+(operator +=) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 717.6 Tm
+0.0000 Tw
+(Append containers. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 691.2 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(operator == ) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 679.2 Tm
+0.0000 Tw
+(Containers equality comparison. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 652.8 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(operator != ) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 640.8 Tm
+0.0000 Tw
+(Containers non-equality comparison. ) Tj
+/F21 12 Tf
+1 0 0 1 52.0 598.8 Tm
+0.0000 Tw
+() Tj
+/F23 12 Tf
+0.0000 Tw
+(CLASS Class::STL::Containers::List) Tj
+/F21 12 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 584.4 Tm
+0.1353 Tw
+(A list container can have elements pushed and popped from both ends, and also inserted at any location.) Tj
+1 0 0 1 76.0 572.4 Tm
+0.0000 Tw
+(Access to the elements is sequential. ) Tj
 /F21 10 Tf
-1 0 0 1 52.0 780.0 Tm
+1 0 0 1 52.0 530.4 Tm
 0.0000 Tw
 (Extends ) Tj
 /F22 10 Tf
@@ -2701,7 +2828,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 765.6 Tm
+1 0 0 1 76.0 516.0 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -2711,7 +2838,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 753.6 Tm
+1 0 0 1 100.0 504.0 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -2721,7 +2848,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 741.6 Tm
+1 0 0 1 100.0 492.0 Tm
 0.0000 Tw
 (The ) Tj
 /F22 10 Tf
@@ -2731,7 +2858,7 @@ BT
 0.0000 Tw
 ( function will alter the order of the elements in list by reversing their order. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 715.2 Tm
+1 0 0 1 76.0 465.6 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -2741,7 +2868,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 703.2 Tm
+1 0 0 1 100.0 453.6 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -2751,7 +2878,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 691.2 Tm
+1 0 0 1 100.0 441.6 Tm
 0.6344 Tw
 (The ) Tj
 /F22 10 Tf
@@ -2760,7 +2887,7 @@ BT
 /F20 10 Tf
 0.6344 Tw
 ( function will alter the order of the elements in list by sorting the elements. Sorting is done) Tj
-1 0 0 1 100.0 679.2 Tm
+1 0 0 1 100.0 429.6 Tm
 0.0000 Tw
 (based on the elements ) Tj
 /F22 10 Tf
@@ -2770,257 +2897,121 @@ BT
 0.0000 Tw
 ( comparison function. ) Tj
 /F21 10 Tf
-1 0 0 1 52.0 637.2 Tm
+1 0 0 1 52.0 387.6 Tm
 0.0000 Tw
 (Example ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 621.0 Tm
+1 0 0 1 76.0 371.4 Tm
 0.0000 Tw
 (  use stl; ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 604.2 Tm
+1 0 0 1 76.0 354.6 Tm
 0.0000 Tw
 (  # Construct the list object: ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 595.8 Tm
+1 0 0 1 76.0 346.2 Tm
 0.0000 Tw
 (  my $list = list\(qw\( first second third fourth fifth\)\); ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 579.0 Tm
+1 0 0 1 76.0 329.4 Tm
 0.0000 Tw
 (  # Display the number of elements in the list: ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 570.6 Tm
+1 0 0 1 76.0 321.0 Tm
 0.0000 Tw
 (  print "Size:", $list->size\(\), "\\n"; # Size:5 ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 553.8 Tm
+1 0 0 1 76.0 304.2 Tm
 0.0000 Tw
 (  # Reverse the order of elements in the list: ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 545.4 Tm
+1 0 0 1 76.0 295.8 Tm
 0.0000 Tw
 (  $list->reverse\(\);  ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 528.6 Tm
+1 0 0 1 76.0 279.0 Tm
 0.0000 Tw
 (  # Display the contents of the element at the front of the list: ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 520.2 Tm
+1 0 0 1 76.0 270.6 Tm
 0.0000 Tw
 (  print 'Front:', $list->front\(\), "\\n"; ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 503.4 Tm
+1 0 0 1 76.0 253.8 Tm
 0.0000 Tw
 (  # Display the contents of the element at the back of the list: ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 495.0 Tm
+1 0 0 1 76.0 245.4 Tm
 0.0000 Tw
 (  print 'Back:', $list->back\(\), "\\n"; ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 478.2 Tm
+1 0 0 1 76.0 228.6 Tm
 0.0000 Tw
 (  # Display the contents of all the elements in the list: ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 469.8 Tm
+1 0 0 1 76.0 220.2 Tm
 0.0000 Tw
 (  for_each\($list->begin\(\), $list->end\(\), MyPrint->new\(\)\); ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 453.0 Tm
+1 0 0 1 76.0 203.4 Tm
 0.0000 Tw
 (  # Return an array of all elements-refs: ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 444.6 Tm
+1 0 0 1 76.0 195.0 Tm
 0.0000 Tw
 (  my @arr = $l1->to_array\(\);  ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 427.8 Tm
+1 0 0 1 76.0 178.2 Tm
 0.0000 Tw
 (  # Delete all elements from list: ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 419.4 Tm
+1 0 0 1 76.0 169.8 Tm
 0.0000 Tw
 (  $list->clear\(\);  ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 402.6 Tm
+1 0 0 1 76.0 153.0 Tm
 0.0000 Tw
 (  print "Size:", $list->size\(\), "\\n"; # Size:0 ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 394.2 Tm
+1 0 0 1 76.0 144.6 Tm
 0.0000 Tw
 (  print '$list container is ',  ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 385.8 Tm
+1 0 0 1 76.0 136.2 Tm
 0.0000 Tw
 (    $list->empty\(\) ? 'empty' : 'not empty', "\\n";  ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 369.0 Tm
+1 0 0 1 76.0 119.4 Tm
 0.0000 Tw
 (  # MyPrint Unary Function -- used in for_each\(\) above... ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 360.6 Tm
+1 0 0 1 76.0 111.0 Tm
 0.0000 Tw
 (  \{ ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 352.2 Tm
+1 0 0 1 76.0 102.6 Tm
 0.0000 Tw
 (    package MyPrint; ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 343.8 Tm
+1 0 0 1 76.0 94.2 Tm
 0.0000 Tw
 (    use base qw\(Class::STL::Utilities::FunctionObject::UnaryFunction\); ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 335.4 Tm
+1 0 0 1 76.0 85.8 Tm
 0.0000 Tw
 (    sub function_operator ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 327.0 Tm
+1 0 0 1 76.0 77.4 Tm
 0.0000 Tw
 (    \{ ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 318.6 Tm
+1 0 0 1 76.0 69.0 Tm
 0.0000 Tw
 (      my $self = shift; ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 310.2 Tm
-0.0000 Tw
-(      my $arg = shift; ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 301.8 Tm
-0.0000 Tw
-(      print "Data:", $arg->data\(\), "\\n"; ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 293.4 Tm
-0.0000 Tw
-(    \} ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 285.0 Tm
-0.0000 Tw
-(  \} ) Tj
-/F21 12 Tf
-1 0 0 1 52.0 264.0 Tm
-0.0000 Tw
-() Tj
-/F23 12 Tf
-0.0000 Tw
-(CLASS Class::STL::Containers::Vector) Tj
-/F21 12 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 249.6 Tm
-0.0000 Tw
-(A vector allows for random access to its elements via the ) Tj
-/F22 10 Tf
-0.0000 Tw
-(at) Tj
-/F20 10 Tf
-0.0000 Tw
-( function. ) Tj
-/F21 10 Tf
-1 0 0 1 52.0 207.6 Tm
-0.0000 Tw
-(Extends ) Tj
-/F22 10 Tf
-0.0000 Tw
-(Class::STL::Containers::Abstract) Tj
-/F21 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 193.2 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(push_back) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 181.2 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(void push_back \( element [, ...] \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 169.2 Tm
-0.9215 Tw
-(The ) Tj
-/F22 10 Tf
-0.9215 Tw
-(push_back) Tj
-/F20 10 Tf
-0.9215 Tw
-( function requires one or more arguments consisting of elements. This will append) Tj
-1 0 0 1 100.0 157.2 Tm
-0.0000 Tw
-(the element\(s\) to the end of the ) Tj
-/F22 10 Tf
-0.0000 Tw
-(vector) Tj
-/F20 10 Tf
-0.0000 Tw
-(. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 130.8 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(pop_back) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 118.8 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(void pop_back \( \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 106.8 Tm
-0.0000 Tw
-(The ) Tj
-/F22 10 Tf
-0.0000 Tw
-(pop_back) Tj
-/F20 10 Tf
-0.0000 Tw
-( function requires no arguments. It will remove the element at the ) Tj
-/F22 10 Tf
-0.0000 Tw
-(top) Tj
-/F20 10 Tf
-0.0000 Tw
-( of the ) Tj
-/F22 10 Tf
-0.0000 Tw
-(vector) Tj
-/F20 10 Tf
-0.0000 Tw
-(. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 80.4 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(back) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
 /F21 10 Tf
 1 0 0 1 52 37 Tm
-(28 April 2006 15:04) Tj
+(15 May 2006 14:06) Tj
 1 0 0 1 537.44 37 Tm
 (7) Tj
 ET
@@ -3030,7 +3021,7 @@ S
 endstream
 endobj
 43 0 obj
-5881
+5293
 endobj
 44 0 obj
 <<
@@ -3070,8 +3061,145 @@ BT
 (Class::STL::Containers) Tj
 1 0 0 1 424.07 797 Tm
 (Programmer's Reference) Tj
+/F10 7 Tf
+1 0 0 1 76.0 771.6 Tm
+0.0000 Tw
+(      my $arg = shift; ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 763.2 Tm
+0.0000 Tw
+(      print "Data:", $arg->data\(\), "\\n"; ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 754.8 Tm
+0.0000 Tw
+(    \} ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 746.4 Tm
+0.0000 Tw
+(  \} ) Tj
+/F21 12 Tf
+1 0 0 1 52.0 725.4 Tm
+0.0000 Tw
+() Tj
+/F23 12 Tf
+0.0000 Tw
+(CLASS Class::STL::Containers::Vector) Tj
+/F21 12 Tf
+0.0000 Tw
+( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 780.0 Tm
+1 0 0 1 76.0 711.0 Tm
+0.0000 Tw
+(A vector allows for random access to its elements via the ) Tj
+/F22 10 Tf
+0.0000 Tw
+(at) Tj
+/F20 10 Tf
+0.0000 Tw
+( function. ) Tj
+/F21 10 Tf
+1 0 0 1 52.0 669.0 Tm
+0.0000 Tw
+(Extends ) Tj
+/F22 10 Tf
+0.0000 Tw
+(Class::STL::Containers::Abstract) Tj
+/F21 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 654.6 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(push_back) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 642.6 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(void push_back \( element [, ...] \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 630.6 Tm
+0.9215 Tw
+(The ) Tj
+/F22 10 Tf
+0.9215 Tw
+(push_back) Tj
+/F20 10 Tf
+0.9215 Tw
+( function requires one or more arguments consisting of elements. This will append) Tj
+1 0 0 1 100.0 618.6 Tm
+0.0000 Tw
+(the element\(s\) to the end of the ) Tj
+/F22 10 Tf
+0.0000 Tw
+(vector) Tj
+/F20 10 Tf
+0.0000 Tw
+(. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 592.2 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(pop_back) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 580.2 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(void pop_back \( \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 568.2 Tm
+0.0000 Tw
+(The ) Tj
+/F22 10 Tf
+0.0000 Tw
+(pop_back) Tj
+/F20 10 Tf
+0.0000 Tw
+( function requires no arguments. It will remove the element at the ) Tj
+/F22 10 Tf
+0.0000 Tw
+(top) Tj
+/F20 10 Tf
+0.0000 Tw
+( of the ) Tj
+/F22 10 Tf
+0.0000 Tw
+(vector) Tj
+/F20 10 Tf
+0.0000 Tw
+(. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 541.8 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(back) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 529.8 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -3081,7 +3209,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 768.0 Tm
+1 0 0 1 100.0 517.8 Tm
 0.9965 Tw
 (The ) Tj
 /F22 10 Tf
@@ -3096,7 +3224,7 @@ BT
 /F20 10 Tf
 0.9965 Tw
 ( of the) Tj
-1 0 0 1 100.0 756.0 Tm
+1 0 0 1 100.0 505.8 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -3106,7 +3234,7 @@ BT
 0.0000 Tw
 (. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 729.6 Tm
+1 0 0 1 76.0 479.4 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -3116,7 +3244,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 717.6 Tm
+1 0 0 1 100.0 467.4 Tm
 1.1271 Tw
 (The ) Tj
 /F22 10 Tf
@@ -3131,7 +3259,7 @@ BT
 /F20 10 Tf
 1.1271 Tw
 ( of the) Tj
-1 0 0 1 100.0 705.6 Tm
+1 0 0 1 100.0 455.4 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -3141,7 +3269,7 @@ BT
 0.0000 Tw
 (. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 679.2 Tm
+1 0 0 1 76.0 429.0 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -3151,7 +3279,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 667.2 Tm
+1 0 0 1 100.0 417.0 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -3161,7 +3289,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 655.2 Tm
+1 0 0 1 100.0 405.0 Tm
 0.8519 Tw
 (The ) Tj
 /F22 10 Tf
@@ -3176,7 +3304,7 @@ BT
 /F20 10 Tf
 0.8519 Tw
 ( argument. This function will return a reference to the element at) Tj
-1 0 0 1 100.0 643.2 Tm
+1 0 0 1 100.0 393.0 Tm
 0.0000 Tw
 (the location within the ) Tj
 /F22 10 Tf
@@ -3192,7 +3320,7 @@ BT
 0.0000 Tw
 (. ) Tj
 /F21 12 Tf
-1 0 0 1 52.0 601.2 Tm
+1 0 0 1 52.0 351.0 Tm
 0.0000 Tw
 () Tj
 /F23 12 Tf
@@ -3202,7 +3330,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 586.8 Tm
+1 0 0 1 76.0 336.6 Tm
 0.0000 Tw
 (A double-ended container. Elements can be ) Tj
 /F22 10 Tf
@@ -3218,7 +3346,7 @@ BT
 0.0000 Tw
 ( at both ends. ) Tj
 /F21 10 Tf
-1 0 0 1 52.0 544.8 Tm
+1 0 0 1 52.0 294.6 Tm
 0.0000 Tw
 (Extends ) Tj
 /F22 10 Tf
@@ -3228,7 +3356,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 530.4 Tm
+1 0 0 1 76.0 280.2 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -3238,7 +3366,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 518.4 Tm
+1 0 0 1 100.0 268.2 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -3248,7 +3376,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 506.4 Tm
+1 0 0 1 100.0 256.2 Tm
 0.3800 Tw
 (The ) Tj
 /F22 10 Tf
@@ -3257,7 +3385,7 @@ BT
 /F20 10 Tf
 0.3800 Tw
 ( function requires one or more arguments consisting of elements. This will insert the) Tj
-1 0 0 1 100.0 494.4 Tm
+1 0 0 1 100.0 244.2 Tm
 0.0000 Tw
 (element\(s\) to the front of the ) Tj
 /F22 10 Tf
@@ -3267,7 +3395,7 @@ BT
 0.0000 Tw
 (. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 468.0 Tm
+1 0 0 1 76.0 217.8 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -3277,7 +3405,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 456.0 Tm
+1 0 0 1 100.0 205.8 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -3287,7 +3415,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 444.0 Tm
+1 0 0 1 100.0 193.8 Tm
 0.0000 Tw
 (The ) Tj
 /F22 10 Tf
@@ -3309,7 +3437,7 @@ BT
 0.0000 Tw
 (. ) Tj
 /F21 12 Tf
-1 0 0 1 52.0 402.0 Tm
+1 0 0 1 52.0 151.8 Tm
 0.0000 Tw
 () Tj
 /F23 12 Tf
@@ -3319,7 +3447,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 387.6 Tm
+1 0 0 1 76.0 137.4 Tm
 0.9438 Tw
 (A queue is a FIFO \(first-in-first-out\) container. Elements can be ) Tj
 /F22 10 Tf
@@ -3334,198 +3462,14 @@ BT
 /F20 10 Tf
 0.9438 Tw
 ( from) Tj
-1 0 0 1 76.0 375.6 Tm
+1 0 0 1 76.0 125.4 Tm
 0.0000 Tw
 (the front. ) Tj
 /F21 10 Tf
-1 0 0 1 52.0 333.6 Tm
-0.0000 Tw
-(Extends ) Tj
-/F22 10 Tf
-0.0000 Tw
-(Class::STL::Containers::Abstract) Tj
-/F21 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 319.2 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(push) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 307.2 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(void push \( element [, ...] \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 295.2 Tm
-1.5700 Tw
-(The ) Tj
-/F22 10 Tf
-1.5700 Tw
-(push) Tj
-/F20 10 Tf
-1.5700 Tw
-( function requires one or more arguments consisting of elements. This will append the) Tj
-1 0 0 1 100.0 283.2 Tm
-0.0000 Tw
-(element\(s\) to the back of the ) Tj
-/F22 10 Tf
-0.0000 Tw
-(queue) Tj
-/F20 10 Tf
-0.0000 Tw
-(. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 256.8 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(pop) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 244.8 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(void pop \( \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 232.8 Tm
-0.1700 Tw
-(The ) Tj
-/F22 10 Tf
-0.1700 Tw
-(pop) Tj
-/F20 10 Tf
-0.1700 Tw
-( function requires no arguments. It will remove the element at the ) Tj
-/F22 10 Tf
-0.1700 Tw
-(front) Tj
-/F20 10 Tf
-0.1700 Tw
-( of the ) Tj
-/F22 10 Tf
-0.1700 Tw
-(queue) Tj
-/F20 10 Tf
-0.1700 Tw
-(. This is) Tj
-1 0 0 1 100.0 220.8 Tm
-0.0000 Tw
-(the earliest inserted element. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 194.4 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(back) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 182.4 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(element-ref back \( \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 170.4 Tm
-0.9965 Tw
-(The ) Tj
-/F22 10 Tf
-0.9965 Tw
-(back) Tj
-/F20 10 Tf
-0.9965 Tw
-( function requires no arguments. It returns a reference to the element at the ) Tj
-/F22 10 Tf
-0.9965 Tw
-(back) Tj
-/F20 10 Tf
-0.9965 Tw
-( of the) Tj
-1 0 0 1 100.0 158.4 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(queue) Tj
-/F20 10 Tf
-0.0000 Tw
-(. This is the element last inserted. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 132.0 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(front) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 120.0 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(element-ref front \( \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 108.0 Tm
-1.1271 Tw
-(The ) Tj
-/F22 10 Tf
-1.1271 Tw
-(front) Tj
-/F20 10 Tf
-1.1271 Tw
-( function requires no arguments. It returns a reference to the element at the ) Tj
-/F22 10 Tf
-1.1271 Tw
-(front) Tj
-/F20 10 Tf
-1.1271 Tw
-( of the) Tj
-1 0 0 1 100.0 96.0 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(queue) Tj
-/F20 10 Tf
-0.0000 Tw
-(. This is the earliest inserted element. ) Tj
-/F21 10 Tf
 1 0 0 1 52 37 Tm
 (8) Tj
-1 0 0 1 452.95 37 Tm
-(28 April 2006 15:04) Tj
+1 0 0 1 456.28 37 Tm
+(15 May 2006 14:06) Tj
 ET
 52 50 m
 543 50 l
@@ -3533,7 +3477,7 @@ S
 endstream
 endobj
 47 0 obj
-6645
+6030
 endobj
 48 0 obj
 <<
@@ -3541,6 +3485,7 @@ endobj
 /ColorSpace <</DefaultRGB 1 0 R>>
 /Font
 <<
+/F10 10 0 R
 /F20 14 0 R
 /F21 15 0 R
 /F22 16 0 R
@@ -3572,8 +3517,192 @@ BT
 (Programmer's Reference) Tj
 1 0 0 1 431.88 797 Tm
 (Class::STL::Containers) Tj
-/F21 12 Tf
+/F21 10 Tf
 1 0 0 1 52.0 780.0 Tm
+0.0000 Tw
+(Extends ) Tj
+/F22 10 Tf
+0.0000 Tw
+(Class::STL::Containers::Abstract) Tj
+/F21 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 765.6 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(push) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 753.6 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(void push \( element [, ...] \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 741.6 Tm
+1.5700 Tw
+(The ) Tj
+/F22 10 Tf
+1.5700 Tw
+(push) Tj
+/F20 10 Tf
+1.5700 Tw
+( function requires one or more arguments consisting of elements. This will append the) Tj
+1 0 0 1 100.0 729.6 Tm
+0.0000 Tw
+(element\(s\) to the back of the ) Tj
+/F22 10 Tf
+0.0000 Tw
+(queue) Tj
+/F20 10 Tf
+0.0000 Tw
+(. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 703.2 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(pop) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 691.2 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(void pop \( \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 679.2 Tm
+0.1700 Tw
+(The ) Tj
+/F22 10 Tf
+0.1700 Tw
+(pop) Tj
+/F20 10 Tf
+0.1700 Tw
+( function requires no arguments. It will remove the element at the ) Tj
+/F22 10 Tf
+0.1700 Tw
+(front) Tj
+/F20 10 Tf
+0.1700 Tw
+( of the ) Tj
+/F22 10 Tf
+0.1700 Tw
+(queue) Tj
+/F20 10 Tf
+0.1700 Tw
+(. This is) Tj
+1 0 0 1 100.0 667.2 Tm
+0.0000 Tw
+(the earliest inserted element. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 640.8 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(back) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 628.8 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(element-ref back \( \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 616.8 Tm
+0.9965 Tw
+(The ) Tj
+/F22 10 Tf
+0.9965 Tw
+(back) Tj
+/F20 10 Tf
+0.9965 Tw
+( function requires no arguments. It returns a reference to the element at the ) Tj
+/F22 10 Tf
+0.9965 Tw
+(back) Tj
+/F20 10 Tf
+0.9965 Tw
+( of the) Tj
+1 0 0 1 100.0 604.8 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(queue) Tj
+/F20 10 Tf
+0.0000 Tw
+(. This is the element last inserted. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 578.4 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(front) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 566.4 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(element-ref front \( \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 554.4 Tm
+1.1271 Tw
+(The ) Tj
+/F22 10 Tf
+1.1271 Tw
+(front) Tj
+/F20 10 Tf
+1.1271 Tw
+( function requires no arguments. It returns a reference to the element at the ) Tj
+/F22 10 Tf
+1.1271 Tw
+(front) Tj
+/F20 10 Tf
+1.1271 Tw
+( of the) Tj
+1 0 0 1 100.0 542.4 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(queue) Tj
+/F20 10 Tf
+0.0000 Tw
+(. This is the earliest inserted element. ) Tj
+/F21 12 Tf
+1 0 0 1 52.0 500.4 Tm
 0.0000 Tw
 () Tj
 /F23 12 Tf
@@ -3583,7 +3712,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 765.6 Tm
+1 0 0 1 76.0 486.0 Tm
 0.6588 Tw
 (A stack is a LIFO \(last-in-first-out\) container. Elements can be ) Tj
 /F22 10 Tf
@@ -3598,11 +3727,11 @@ BT
 /F20 10 Tf
 0.6588 Tw
 ( from the) Tj
-1 0 0 1 76.0 753.6 Tm
+1 0 0 1 76.0 474.0 Tm
 0.0000 Tw
 (top. ) Tj
 /F21 10 Tf
-1 0 0 1 52.0 711.6 Tm
+1 0 0 1 52.0 432.0 Tm
 0.0000 Tw
 (Extends ) Tj
 /F22 10 Tf
@@ -3612,7 +3741,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 697.2 Tm
+1 0 0 1 76.0 417.6 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -3622,7 +3751,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 685.2 Tm
+1 0 0 1 100.0 405.6 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -3632,7 +3761,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 673.2 Tm
+1 0 0 1 100.0 393.6 Tm
 1.5700 Tw
 (The ) Tj
 /F22 10 Tf
@@ -3641,7 +3770,7 @@ BT
 /F20 10 Tf
 1.5700 Tw
 ( function requires one or more arguments consisting of elements. This will append the) Tj
-1 0 0 1 100.0 661.2 Tm
+1 0 0 1 100.0 381.6 Tm
 0.0000 Tw
 (element\(s\) to the top of the ) Tj
 /F22 10 Tf
@@ -3651,7 +3780,7 @@ BT
 0.0000 Tw
 (. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 634.8 Tm
+1 0 0 1 76.0 355.2 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -3661,7 +3790,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 622.8 Tm
+1 0 0 1 100.0 343.2 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -3671,7 +3800,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 610.8 Tm
+1 0 0 1 100.0 331.2 Tm
 0.7572 Tw
 (The ) Tj
 /F22 10 Tf
@@ -3692,11 +3821,11 @@ BT
 /F20 10 Tf
 0.7572 Tw
 (. This is) Tj
-1 0 0 1 100.0 598.8 Tm
+1 0 0 1 100.0 319.2 Tm
 0.0000 Tw
 (the last inserted element. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 572.4 Tm
+1 0 0 1 76.0 292.8 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -3706,7 +3835,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 560.4 Tm
+1 0 0 1 100.0 280.8 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -3716,7 +3845,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 548.4 Tm
+1 0 0 1 100.0 268.8 Tm
 0.1533 Tw
 (The ) Tj
 /F22 10 Tf
@@ -3737,11 +3866,11 @@ BT
 /F20 10 Tf
 0.1533 Tw
 (.) Tj
-1 0 0 1 100.0 536.4 Tm
+1 0 0 1 100.0 256.8 Tm
 0.0000 Tw
 (This is the last inserted element. ) Tj
 /F21 12 Tf
-1 0 0 1 52.0 494.4 Tm
+1 0 0 1 52.0 214.8 Tm
 0.0000 Tw
 () Tj
 /F23 12 Tf
@@ -3751,7 +3880,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 480.0 Tm
+1 0 0 1 76.0 200.4 Tm
 0.4556 Tw
 (A tree is a hierarchical structure. Each element within a ) Tj
 /F22 10 Tf
@@ -3760,7 +3889,7 @@ BT
 /F20 10 Tf
 0.4556 Tw
 ( container can be either a simple element or) Tj
-1 0 0 1 76.0 468.0 Tm
+1 0 0 1 76.0 188.4 Tm
 2.0929 Tw
 (another container object. The overridden ) Tj
 /F22 10 Tf
@@ -3769,7 +3898,7 @@ BT
 /F20 10 Tf
 2.0929 Tw
 ( function will traverse the tree and return an array) Tj
-1 0 0 1 76.0 456.0 Tm
+1 0 0 1 76.0 176.4 Tm
 0.0000 Tw
 (consisting of all the ) Tj
 /F22 10 Tf
@@ -3779,7 +3908,7 @@ BT
 0.0000 Tw
 ( in the tree. ) Tj
 /F21 10 Tf
-1 0 0 1 52.0 414.0 Tm
+1 0 0 1 52.0 134.4 Tm
 0.0000 Tw
 (Extends ) Tj
 /F22 10 Tf
@@ -3789,7 +3918,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 399.6 Tm
+1 0 0 1 76.0 120.0 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -3799,7 +3928,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 387.6 Tm
+1 0 0 1 100.0 108.0 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -3809,7 +3938,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 375.6 Tm
+1 0 0 1 100.0 96.0 Tm
 2.0213 Tw
 (The overridden ) Tj
 /F22 10 Tf
@@ -3818,7 +3947,7 @@ BT
 /F20 10 Tf
 2.0213 Tw
 ( function will traverse the tree and return an array consisting of all the) Tj
-1 0 0 1 100.0 363.6 Tm
+1 0 0 1 100.0 84.0 Tm
 0.0000 Tw
 (element ) Tj
 /F22 10 Tf
@@ -3828,115 +3957,8 @@ BT
 0.0000 Tw
 ( in the tree container. ) Tj
 /F21 10 Tf
-1 0 0 1 52.0 321.6 Tm
-0.0000 Tw
-(Examples ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 305.4 Tm
-0.0000 Tw
-(  # Tree containers; construct two trees from  ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 297.0 Tm
-0.0000 Tw
-(  # previously construced containers: ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 288.6 Tm
-0.0000 Tw
-(  my $t1 = tree\($l1\); ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 280.2 Tm
-0.0000 Tw
-(  my $t2 = tree\($l2\); ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 263.4 Tm
-0.0000 Tw
-(  # Construct a third tree: ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 255.0 Tm
-0.0000 Tw
-(  my $tree = tree\(\);  ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 238.2 Tm
-0.0000 Tw
-(  # Add other tree containers as elements to this tree: ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 229.8 Tm
-0.0000 Tw
-(  $tree->push_back\($tree->factory\($t1\)\); ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 221.4 Tm
-0.0000 Tw
-(  $tree->push_back\($tree->factory\($t2\)\); ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 204.6 Tm
-0.0000 Tw
-(  # Search for element \('pink'\) in tree: ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 196.2 Tm
-0.0000 Tw
-(  if \(my $f = find_if\($tree->begin\(\), $tree->end\(\), bind1st\(equal_to\(\), 'pink'\)\) ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 187.8 Tm
-0.0000 Tw
-(    print "FOUND:", $f->data\(\), "\\n"; ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 179.4 Tm
-0.0000 Tw
-(  \} else \{ ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 171.0 Tm
-0.0000 Tw
-(    print "'pink' NOT FOUND", "\\n"; ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 162.6 Tm
-0.0000 Tw
-(  \} ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 145.8 Tm
-0.0000 Tw
-(  # Traverse tree returning all element nodes: ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 137.4 Tm
-0.0000 Tw
-(  my @tarr = $tree->to_array\(\);  ) Tj
-/F21 12 Tf
-1 0 0 1 52.0 116.4 Tm
-0.0000 Tw
-() Tj
-/F23 12 Tf
-0.0000 Tw
-(CLASS Class::STL::Containers::PriorityQueue) Tj
-/F21 12 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 102.0 Tm
-2.2150 Tw
-(A priority queue will maintain the order of the elements based on their priority, with highest priority) Tj
-1 0 0 1 76.0 90.0 Tm
-1.7800 Tw
-(elements at the top of the container. Elements contained in a priority queue must be of the type, or) Tj
-1 0 0 1 76.0 78.0 Tm
-0.1508 Tw
-(derived from, ) Tj
-/F22 10 Tf
-0.1508 Tw
-(Class::STL::Element::Priority) Tj
-/F20 10 Tf
-0.1508 Tw
-(. This element type contains the attribute ) Tj
-/F22 10 Tf
-0.1508 Tw
-(priority) Tj
-/F20 10 Tf
-0.1508 Tw
-(, and needs to) Tj
-1 0 0 1 76.0 66.0 Tm
-0.0000 Tw
-(have its value set whenever an object of this element type is constructed. ) Tj
-/F21 10 Tf
 1 0 0 1 52 37 Tm
-(28 April 2006 15:04) Tj
+(15 May 2006 14:06) Tj
 1 0 0 1 537.44 37 Tm
 (9) Tj
 ET
@@ -3946,7 +3968,7 @@ S
 endstream
 endobj
 51 0 obj
-6393
+6651
 endobj
 52 0 obj
 <<
@@ -3954,7 +3976,6 @@ endobj
 /ColorSpace <</DefaultRGB 1 0 R>>
 /Font
 <<
-/F10 10 0 R
 /F20 14 0 R
 /F21 15 0 R
 /F22 16 0 R
@@ -3989,6 +4010,113 @@ BT
 /F21 10 Tf
 1 0 0 1 52.0 780.0 Tm
 0.0000 Tw
+(Examples ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 763.8 Tm
+0.0000 Tw
+(  # Tree containers; construct two trees from  ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 755.4 Tm
+0.0000 Tw
+(  # previously construced containers: ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 747.0 Tm
+0.0000 Tw
+(  my $t1 = tree\($l1\); ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 738.6 Tm
+0.0000 Tw
+(  my $t2 = tree\($l2\); ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 721.8 Tm
+0.0000 Tw
+(  # Construct a third tree: ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 713.4 Tm
+0.0000 Tw
+(  my $tree = tree\(\);  ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 696.6 Tm
+0.0000 Tw
+(  # Add other tree containers as elements to this tree: ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 688.2 Tm
+0.0000 Tw
+(  $tree->push_back\($tree->factory\($t1\)\); ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 679.8 Tm
+0.0000 Tw
+(  $tree->push_back\($tree->factory\($t2\)\); ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 663.0 Tm
+0.0000 Tw
+(  # Search for element \('pink'\) in tree: ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 654.6 Tm
+0.0000 Tw
+(  if \(my $f = find_if\($tree->begin\(\), $tree->end\(\), bind1st\(equal_to\(\), 'pink'\)\) ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 646.2 Tm
+0.0000 Tw
+(    print "FOUND:", $f->data\(\), "\\n"; ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 637.8 Tm
+0.0000 Tw
+(  \} else \{ ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 629.4 Tm
+0.0000 Tw
+(    print "'pink' NOT FOUND", "\\n"; ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 621.0 Tm
+0.0000 Tw
+(  \} ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 604.2 Tm
+0.0000 Tw
+(  # Traverse tree returning all element nodes: ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 595.8 Tm
+0.0000 Tw
+(  my @tarr = $tree->to_array\(\);  ) Tj
+/F21 12 Tf
+1 0 0 1 52.0 574.8 Tm
+0.0000 Tw
+() Tj
+/F23 12 Tf
+0.0000 Tw
+(CLASS Class::STL::Containers::PriorityQueue) Tj
+/F21 12 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 560.4 Tm
+2.2150 Tw
+(A priority queue will maintain the order of the elements based on their priority, with highest priority) Tj
+1 0 0 1 76.0 548.4 Tm
+1.7800 Tw
+(elements at the top of the container. Elements contained in a priority queue must be of the type, or) Tj
+1 0 0 1 76.0 536.4 Tm
+0.1508 Tw
+(derived from, ) Tj
+/F22 10 Tf
+0.1508 Tw
+(Class::STL::Element::Priority) Tj
+/F20 10 Tf
+0.1508 Tw
+(. This element type contains the attribute ) Tj
+/F22 10 Tf
+0.1508 Tw
+(priority) Tj
+/F20 10 Tf
+0.1508 Tw
+(, and needs to) Tj
+1 0 0 1 76.0 524.4 Tm
+0.0000 Tw
+(have its value set whenever an object of this element type is constructed. ) Tj
+/F21 10 Tf
+1 0 0 1 52.0 482.4 Tm
+0.0000 Tw
 (Extends ) Tj
 /F22 10 Tf
 0.0000 Tw
@@ -3997,7 +4125,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F21 10 Tf
-1 0 0 1 52.0 750.0 Tm
+1 0 0 1 52.0 452.4 Tm
 0.0000 Tw
 (Element Type ) Tj
 /F22 10 Tf
@@ -4007,7 +4135,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 735.6 Tm
+1 0 0 1 76.0 438.0 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -4017,7 +4145,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 723.6 Tm
+1 0 0 1 100.0 426.0 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -4027,7 +4155,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 711.6 Tm
+1 0 0 1 100.0 414.0 Tm
 2.2457 Tw
 (The ) Tj
 /F22 10 Tf
@@ -4036,11 +4164,11 @@ BT
 /F20 10 Tf
 2.2457 Tw
 ( function requires one or more arguments consisting of elements. This will place the) Tj
-1 0 0 1 100.0 699.6 Tm
+1 0 0 1 100.0 402.0 Tm
 0.0000 Tw
 (element\(s\) in the queue according to their priority value. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 673.2 Tm
+1 0 0 1 76.0 375.6 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -4050,7 +4178,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 661.2 Tm
+1 0 0 1 100.0 363.6 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -4060,7 +4188,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 649.2 Tm
+1 0 0 1 100.0 351.6 Tm
 0.0000 Tw
 (The ) Tj
 /F22 10 Tf
@@ -4070,7 +4198,7 @@ BT
 0.0000 Tw
 ( function requires no arguments. It will remove the element with the highest priority. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 622.8 Tm
+1 0 0 1 76.0 325.2 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -4080,7 +4208,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 610.8 Tm
+1 0 0 1 100.0 313.2 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -4090,7 +4218,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 598.8 Tm
+1 0 0 1 100.0 301.2 Tm
 2.0933 Tw
 (The ) Tj
 /F22 10 Tf
@@ -4099,11 +4227,11 @@ BT
 /F20 10 Tf
 2.0933 Tw
 ( function requires no arguments. It returns a reference to the element with the highest) Tj
-1 0 0 1 100.0 586.8 Tm
+1 0 0 1 100.0 289.2 Tm
 0.0000 Tw
 (priority. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 560.4 Tm
+1 0 0 1 76.0 262.8 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -4113,7 +4241,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 548.4 Tm
+1 0 0 1 100.0 250.8 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -4123,7 +4251,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 536.4 Tm
+1 0 0 1 100.0 238.8 Tm
 1.1307 Tw
 (The ) Tj
 /F22 10 Tf
@@ -4132,11 +4260,11 @@ BT
 /F20 10 Tf
 1.1307 Tw
 ( function should be called whenever the priority value for an element has been order.) Tj
-1 0 0 1 100.0 524.4 Tm
+1 0 0 1 100.0 226.8 Tm
 0.0000 Tw
 (This will update the ordering of the elements if required. ) Tj
 /F21 12 Tf
-1 0 0 1 52.0 482.4 Tm
+1 0 0 1 52.0 184.8 Tm
 0.0000 Tw
 () Tj
 /F23 12 Tf
@@ -4146,15 +4274,15 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 468.0 Tm
+1 0 0 1 76.0 170.4 Tm
 0.0000 Tw
 (This module contains various algorithm functions. ) Tj
 /F21 10 Tf
-1 0 0 1 52.0 438.0 Tm
+1 0 0 1 52.0 140.4 Tm
 0.0000 Tw
 (Exports ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 426.0 Tm
+1 0 0 1 76.0 128.4 Tm
 3.3256 Tw
 () Tj
 /F23 10 Tf
@@ -4217,7 +4345,7 @@ BT
 /F20 10 Tf
 3.3256 Tw
 (,) Tj
-1 0 0 1 76.0 414.0 Tm
+1 0 0 1 76.0 116.4 Tm
 4.5117 Tw
 () Tj
 /F23 10 Tf
@@ -4262,7 +4390,7 @@ BT
 /F20 10 Tf
 4.5117 Tw
 (,) Tj
-1 0 0 1 76.0 402.0 Tm
+1 0 0 1 76.0 104.4 Tm
 0.0800 Tw
 () Tj
 /F23 10 Tf
@@ -4325,7 +4453,7 @@ BT
 /F20 10 Tf
 0.0800 Tw
 (,) Tj
-1 0 0 1 76.0 390.0 Tm
+1 0 0 1 76.0 92.4 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -4358,243 +4486,11 @@ BT
 /F20 10 Tf
 0.0000 Tw
 ( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 366.0 Tm
-0.0000 Tw
-(The ) Tj
-/F23 10 Tf
-0.0000 Tw
-(Algorithms) Tj
-/F20 10 Tf
-0.0000 Tw
-( package consists of various ) Tj
-/F22 10 Tf
-0.0000 Tw
-(static) Tj
-/F20 10 Tf
-0.0000 Tw
-( algorithm functions. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 354.0 Tm
-0 Tw
-(The ) Tj
-/F22 10 Tf
-0 Tw
-(unary-function) Tj
-/F20 10 Tf
-0 Tw
-( / ) Tj
-/F22 10 Tf
-0 Tw
-(binary-function) Tj
-/F20 10 Tf
-0 Tw
-( argument must be derived from) Tj
-1 0 0 1 76.0 342.0 Tm
-0 Tw
-() Tj
-/F22 10 Tf
-0 Tw
-(Class::STL::Utilities::FunctionObject::UnaryFunction) Tj
-/F20 10 Tf
-0 Tw
-( and) Tj
-1 0 0 1 76.0 330.0 Tm
-1.0917 Tw
-() Tj
-/F22 10 Tf
-1.0917 Tw
-(Class::STL::Utilities::FunctionObject::BinaryFunction) Tj
-/F20 10 Tf
-1.0917 Tw
-( respectively. Standard utility functions are provided) Tj
-1 0 0 1 76.0 318.0 Tm
-3.4718 Tw
-(in the ) Tj
-/F22 10 Tf
-3.4718 Tw
-(Class::STL::Utilities) Tj
-/F20 10 Tf
-3.4718 Tw
-( module. A function object contains the function ) Tj
-/F22 10 Tf
-3.4718 Tw
-(function_operator) Tj
-/F20 10 Tf
-3.4718 Tw
-(. This) Tj
-1 0 0 1 76.0 306.0 Tm
-2.6486 Tw
-() Tj
-/F22 10 Tf
-2.6486 Tw
-(function_operator) Tj
-/F20 10 Tf
-2.6486 Tw
-( function will, in turn, be called by the algorithm for each element traversed. The) Tj
-1 0 0 1 76.0 294.0 Tm
-0.0000 Tw
-(algorithm will pass the element reference as the argument to the ) Tj
-/F22 10 Tf
-0.0000 Tw
-(function_operator) Tj
-/F20 10 Tf
-0.0000 Tw
-( function.  ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 267.6 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(for_each) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 255.6 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(void for_each \( iterator-start, iterator-finish, unary-function \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 231.6 Tm
-4.0775 Tw
-(The ) Tj
-/F22 10 Tf
-4.0775 Tw
-(for_each) Tj
-/F20 10 Tf
-4.0775 Tw
-( function will traverse the container starting from ) Tj
-/F22 10 Tf
-4.0775 Tw
-(iterator-start) Tj
-/F20 10 Tf
-4.0775 Tw
-( and ending at) Tj
-1 0 0 1 100.0 219.6 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(iterator-finish) Tj
-/F20 10 Tf
-0.0000 Tw
-( and execute the ) Tj
-/F22 10 Tf
-0.0000 Tw
-(unary-function) Tj
-/F20 10 Tf
-0.0000 Tw
-( with the element passed in as the argument.   ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 193.2 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(transform) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 181.2 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(void transform \( iterator-start, iterator-finish, iterator-result, unary-function \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 169.2 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(void transform \( iterator-start, iterator-finish, iterator-start2, iterator-result, binary-function \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 145.2 Tm
-2.4071 Tw
-(The ) Tj
-/F22 10 Tf
-2.4071 Tw
-(transform) Tj
-/F20 10 Tf
-2.4071 Tw
-( functions has two forms. The first form will traverse the container starting from) Tj
-1 0 0 1 100.0 133.2 Tm
-0.5542 Tw
-() Tj
-/F22 10 Tf
-0.5542 Tw
-(iterator-start) Tj
-/F20 10 Tf
-0.5542 Tw
-( and ending at ) Tj
-/F22 10 Tf
-0.5542 Tw
-(iterator-finish) Tj
-/F20 10 Tf
-0.5542 Tw
-( and execute the ) Tj
-/F22 10 Tf
-0.5542 Tw
-(unary-function) Tj
-/F20 10 Tf
-0.5542 Tw
-( with the element passed) Tj
-1 0 0 1 100.0 121.2 Tm
-0.0000 Tw
-(in as the argument, producing ) Tj
-/F22 10 Tf
-0.0000 Tw
-(iterator-result) Tj
-/F20 10 Tf
-0.0000 Tw
-(.  ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 97.2 Tm
-0.5193 Tw
-(The second form will traverse two containers with the second one starting from ) Tj
-/F22 10 Tf
-0.5193 Tw
-(iterator-start2) Tj
-/F20 10 Tf
-0.5193 Tw
-(. The) Tj
-1 0 0 1 100.0 85.2 Tm
-1.4847 Tw
-() Tj
-/F22 10 Tf
-1.4847 Tw
-(binary-function) Tj
-/F20 10 Tf
-1.4847 Tw
-( will be called for each pair of elements. The resulting elements will be placed in) Tj
-1 0 0 1 100.0 73.2 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(iterator-result) Tj
-/F20 10 Tf
-0.0000 Tw
-(. ) Tj
 /F21 10 Tf
 1 0 0 1 52 37 Tm
 (10) Tj
-1 0 0 1 452.95 37 Tm
-(28 April 2006 15:04) Tj
+1 0 0 1 456.28 37 Tm
+(15 May 2006 14:06) Tj
 ET
 52 50 m
 543 50 l
@@ -4602,7 +4498,7 @@ S
 endstream
 endobj
 55 0 obj
-8907
+7425
 endobj
 56 0 obj
 <<
@@ -4610,6 +4506,7 @@ endobj
 /ColorSpace <</DefaultRGB 1 0 R>>
 /Font
 <<
+/F10 10 0 R
 /F20 14 0 R
 /F21 15 0 R
 /F22 16 0 R
@@ -4644,6 +4541,238 @@ BT
 /F20 10 Tf
 1 0 0 1 76.0 780.0 Tm
 0.0000 Tw
+(The ) Tj
+/F23 10 Tf
+0.0000 Tw
+(Algorithms) Tj
+/F20 10 Tf
+0.0000 Tw
+( package consists of various ) Tj
+/F22 10 Tf
+0.0000 Tw
+(static) Tj
+/F20 10 Tf
+0.0000 Tw
+( algorithm functions. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 768.0 Tm
+0 Tw
+(The ) Tj
+/F22 10 Tf
+0 Tw
+(unary-function) Tj
+/F20 10 Tf
+0 Tw
+( / ) Tj
+/F22 10 Tf
+0 Tw
+(binary-function) Tj
+/F20 10 Tf
+0 Tw
+( argument must be derived from) Tj
+1 0 0 1 76.0 756.0 Tm
+0 Tw
+() Tj
+/F22 10 Tf
+0 Tw
+(Class::STL::Utilities::FunctionObject::UnaryFunction) Tj
+/F20 10 Tf
+0 Tw
+( and) Tj
+1 0 0 1 76.0 744.0 Tm
+1.0917 Tw
+() Tj
+/F22 10 Tf
+1.0917 Tw
+(Class::STL::Utilities::FunctionObject::BinaryFunction) Tj
+/F20 10 Tf
+1.0917 Tw
+( respectively. Standard utility functions are provided) Tj
+1 0 0 1 76.0 732.0 Tm
+3.4718 Tw
+(in the ) Tj
+/F22 10 Tf
+3.4718 Tw
+(Class::STL::Utilities) Tj
+/F20 10 Tf
+3.4718 Tw
+( module. A function object contains the function ) Tj
+/F22 10 Tf
+3.4718 Tw
+(function_operator) Tj
+/F20 10 Tf
+3.4718 Tw
+(. This) Tj
+1 0 0 1 76.0 720.0 Tm
+2.6486 Tw
+() Tj
+/F22 10 Tf
+2.6486 Tw
+(function_operator) Tj
+/F20 10 Tf
+2.6486 Tw
+( function will, in turn, be called by the algorithm for each element traversed. The) Tj
+1 0 0 1 76.0 708.0 Tm
+0.0000 Tw
+(algorithm will pass the element reference as the argument to the ) Tj
+/F22 10 Tf
+0.0000 Tw
+(function_operator) Tj
+/F20 10 Tf
+0.0000 Tw
+( function.  ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 681.6 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(for_each) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 669.6 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(void for_each \( iterator-start, iterator-finish, unary-function \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 645.6 Tm
+4.0775 Tw
+(The ) Tj
+/F22 10 Tf
+4.0775 Tw
+(for_each) Tj
+/F20 10 Tf
+4.0775 Tw
+( function will traverse the container starting from ) Tj
+/F22 10 Tf
+4.0775 Tw
+(iterator-start) Tj
+/F20 10 Tf
+4.0775 Tw
+( and ending at) Tj
+1 0 0 1 100.0 633.6 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(iterator-finish) Tj
+/F20 10 Tf
+0.0000 Tw
+( and execute the ) Tj
+/F22 10 Tf
+0.0000 Tw
+(unary-function) Tj
+/F20 10 Tf
+0.0000 Tw
+( with the element passed in as the argument.   ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 607.2 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(transform) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 595.2 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(void transform \( iterator-start, iterator-finish, iterator-result, unary-function \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 583.2 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(void transform \( iterator-start, iterator-finish, iterator-start2, iterator-result, binary-function \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 559.2 Tm
+2.4071 Tw
+(The ) Tj
+/F22 10 Tf
+2.4071 Tw
+(transform) Tj
+/F20 10 Tf
+2.4071 Tw
+( functions has two forms. The first form will traverse the container starting from) Tj
+1 0 0 1 100.0 547.2 Tm
+0.5542 Tw
+() Tj
+/F22 10 Tf
+0.5542 Tw
+(iterator-start) Tj
+/F20 10 Tf
+0.5542 Tw
+( and ending at ) Tj
+/F22 10 Tf
+0.5542 Tw
+(iterator-finish) Tj
+/F20 10 Tf
+0.5542 Tw
+( and execute the ) Tj
+/F22 10 Tf
+0.5542 Tw
+(unary-function) Tj
+/F20 10 Tf
+0.5542 Tw
+( with the element passed) Tj
+1 0 0 1 100.0 535.2 Tm
+0.0000 Tw
+(in as the argument, producing ) Tj
+/F22 10 Tf
+0.0000 Tw
+(iterator-result) Tj
+/F20 10 Tf
+0.0000 Tw
+(.  ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 511.2 Tm
+0.5193 Tw
+(The second form will traverse two containers with the second one starting from ) Tj
+/F22 10 Tf
+0.5193 Tw
+(iterator-start2) Tj
+/F20 10 Tf
+0.5193 Tw
+(. The) Tj
+1 0 0 1 100.0 499.2 Tm
+1.4847 Tw
+() Tj
+/F22 10 Tf
+1.4847 Tw
+(binary-function) Tj
+/F20 10 Tf
+1.4847 Tw
+( will be called for each pair of elements. The resulting elements will be placed in) Tj
+1 0 0 1 100.0 487.2 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(iterator-result) Tj
+/F20 10 Tf
+0.0000 Tw
+(. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 460.8 Tm
+0.0000 Tw
 () Tj
 /F23 10 Tf
 0.0000 Tw
@@ -4652,7 +4781,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 768.0 Tm
+1 0 0 1 100.0 448.8 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -4662,7 +4791,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 741.6 Tm
+1 0 0 1 76.0 422.4 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -4672,7 +4801,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 729.6 Tm
+1 0 0 1 100.0 410.4 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -4682,7 +4811,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 705.6 Tm
+1 0 0 1 100.0 386.4 Tm
 4.4017 Tw
 (The ) Tj
 /F22 10 Tf
@@ -4697,7 +4826,7 @@ BT
 /F20 10 Tf
 4.4017 Tw
 ( and ending at) Tj
-1 0 0 1 100.0 693.6 Tm
+1 0 0 1 100.0 374.4 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -4713,7 +4842,7 @@ BT
 0.0000 Tw
 (.  ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 667.2 Tm
+1 0 0 1 76.0 348.0 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -4723,7 +4852,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 655.2 Tm
+1 0 0 1 100.0 336.0 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -4733,7 +4862,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 628.8 Tm
+1 0 0 1 76.0 309.6 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -4743,7 +4872,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 616.8 Tm
+1 0 0 1 100.0 297.6 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -4753,7 +4882,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 592.8 Tm
+1 0 0 1 100.0 273.6 Tm
 0 Tw
 (The ) Tj
 /F22 10 Tf
@@ -4768,7 +4897,7 @@ BT
 /F20 10 Tf
 0 Tw
 ( and ending at) Tj
-1 0 0 1 100.0 580.8 Tm
+1 0 0 1 100.0 261.6 Tm
 2.8153 Tw
 () Tj
 /F22 10 Tf
@@ -4783,7 +4912,7 @@ BT
 /F20 10 Tf
 2.8153 Tw
 ( pointing to the first element that evaluate to true by the) Tj
-1 0 0 1 100.0 568.8 Tm
+1 0 0 1 100.0 249.6 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -4793,7 +4922,7 @@ BT
 0.0000 Tw
 (. If no elements evaluates to true then `o' is returned. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 542.4 Tm
+1 0 0 1 76.0 223.2 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -4803,7 +4932,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 530.4 Tm
+1 0 0 1 100.0 211.2 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -4813,7 +4942,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 504.0 Tm
+1 0 0 1 76.0 184.8 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -4823,7 +4952,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 492.0 Tm
+1 0 0 1 100.0 172.8 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -4833,7 +4962,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 465.6 Tm
+1 0 0 1 76.0 146.4 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -4843,7 +4972,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 453.6 Tm
+1 0 0 1 100.0 134.4 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -4853,7 +4982,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 427.2 Tm
+1 0 0 1 76.0 108.0 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -4863,7 +4992,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 415.2 Tm
+1 0 0 1 100.0 96.0 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -4872,186 +5001,9 @@ BT
 /F20 10 Tf
 0.0000 Tw
 ( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 391.2 Tm
-3.6617 Tw
-(The ) Tj
-/F22 10 Tf
-3.6617 Tw
-(remove_if) Tj
-/F20 10 Tf
-3.6617 Tw
-( function will traverse the container starting from ) Tj
-/F22 10 Tf
-3.6617 Tw
-(iterator-start) Tj
-/F20 10 Tf
-3.6617 Tw
-( and ending at) Tj
-1 0 0 1 100.0 379.2 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(iterator-finish) Tj
-/F20 10 Tf
-0.0000 Tw
-( and remove the elements that evaluate to true by the ) Tj
-/F22 10 Tf
-0.0000 Tw
-(unary-function) Tj
-/F20 10 Tf
-0.0000 Tw
-(.   ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 352.8 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(remove_copy) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 340.8 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(void remove_copy \( iterator-start, iterator-finish, iterator-result, element-ref \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 314.4 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(remove_copy_if) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 302.4 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(void remove_copy_if \( iterator-start, iterator-finish, iterator-result, unary-function \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 276.0 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(replace) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 264.0 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(void replace \( iterator-start, iterator-finish, old-element-ref, new-element-ref \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 237.6 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(replace_if) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 225.6 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(void replace_if \( iterator-start, iterator-finish, unary-function, new-element-ref \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 199.2 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(replace_copy) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 187.2 Tm
-0.4800 Tw
-() Tj
-/F22 10 Tf
-0.4800 Tw
-(void replace_copy \( iterator-start, iterator-finish, iterator-result, old-element-ref, new-element-ref) Tj
-1 0 0 1 100.0 175.2 Tm
-0.0000 Tw
-(\);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 148.8 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(replace_copy_if) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 136.8 Tm
-0 Tw
-() Tj
-/F22 10 Tf
-0 Tw
-(void replace_copy_if \( iterator-start, iterator-finish, iterator-result, unary-function,) Tj
-1 0 0 1 100.0 124.8 Tm
-0.0000 Tw
-(new-element-ref \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 98.4 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(generate) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 86.4 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(void generate \( iterator-start, iterator-finish, generator-function \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
 /F21 10 Tf
 1 0 0 1 52 37 Tm
-(28 April 2006 15:04) Tj
+(15 May 2006 14:06) Tj
 1 0 0 1 531.88 37 Tm
 (11) Tj
 ET
@@ -5061,7 +5013,7 @@ S
 endstream
 endobj
 59 0 obj
-6423
+7504
 endobj
 60 0 obj
 <<
@@ -5101,32 +5053,43 @@ BT
 1 0 0 1 424.07 797 Tm
 (Programmer's Reference) Tj
 /F20 10 Tf
-1 0 0 1 76.0 780.0 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(generate_n) Tj
+1 0 0 1 100.0 780.0 Tm
+3.6617 Tw
+(The ) Tj
+/F22 10 Tf
+3.6617 Tw
+(remove_if) Tj
 /F20 10 Tf
-0.0000 Tw
-( ) Tj
+3.6617 Tw
+( function will traverse the container starting from ) Tj
+/F22 10 Tf
+3.6617 Tw
+(iterator-start) Tj
 /F20 10 Tf
+3.6617 Tw
+( and ending at) Tj
 1 0 0 1 100.0 768.0 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
 0.0000 Tw
-(void generate_n \( iterator-start, size, generator-function \);) Tj
+(iterator-finish) Tj
 /F20 10 Tf
 0.0000 Tw
-( ) Tj
+( and remove the elements that evaluate to true by the ) Tj
+/F22 10 Tf
+0.0000 Tw
+(unary-function) Tj
+/F20 10 Tf
+0.0000 Tw
+(.   ) Tj
 /F20 10 Tf
 1 0 0 1 76.0 741.6 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
 0.0000 Tw
-(fill) Tj
+(remove_copy) Tj
 /F20 10 Tf
 0.0000 Tw
 ( ) Tj
@@ -5136,7 +5099,7 @@ BT
 () Tj
 /F22 10 Tf
 0.0000 Tw
-(void fill \( iterator-start, iterator-finish, element-ref \);) Tj
+(void remove_copy \( iterator-start, iterator-finish, iterator-result, element-ref \);) Tj
 /F20 10 Tf
 0.0000 Tw
 ( ) Tj
@@ -5146,7 +5109,7 @@ BT
 () Tj
 /F23 10 Tf
 0.0000 Tw
-(fill_n) Tj
+(remove_copy_if) Tj
 /F20 10 Tf
 0.0000 Tw
 ( ) Tj
@@ -5156,7 +5119,7 @@ BT
 () Tj
 /F22 10 Tf
 0.0000 Tw
-(void fill_n \( iterator-start, size, element-ref \);) Tj
+(void remove_copy_if \( iterator-start, iterator-finish, iterator-result, unary-function \);) Tj
 /F20 10 Tf
 0.0000 Tw
 ( ) Tj
@@ -5166,7 +5129,7 @@ BT
 () Tj
 /F23 10 Tf
 0.0000 Tw
-(equal) Tj
+(replace) Tj
 /F20 10 Tf
 0.0000 Tw
 ( ) Tj
@@ -5176,7 +5139,7 @@ BT
 () Tj
 /F22 10 Tf
 0.0000 Tw
-(bool equal \( iterator-start, iterator-finish, iterator-result [, binary-function ] \);) Tj
+(void replace \( iterator-start, iterator-finish, old-element-ref, new-element-ref \);) Tj
 /F20 10 Tf
 0.0000 Tw
 ( ) Tj
@@ -5186,7 +5149,7 @@ BT
 () Tj
 /F23 10 Tf
 0.0000 Tw
-(reverse) Tj
+(replace_if) Tj
 /F20 10 Tf
 0.0000 Tw
 ( ) Tj
@@ -5196,7 +5159,7 @@ BT
 () Tj
 /F22 10 Tf
 0.0000 Tw
-(void reverse \( iterator-start, iterator-finish \);) Tj
+(void replace_if \( iterator-start, iterator-finish, unary-function, new-element-ref \);) Tj
 /F20 10 Tf
 0.0000 Tw
 ( ) Tj
@@ -5206,12 +5169,178 @@ BT
 () Tj
 /F23 10 Tf
 0.0000 Tw
-(reverse_copy) Tj
+(replace_copy) Tj
 /F20 10 Tf
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
 1 0 0 1 100.0 576.0 Tm
+0.4800 Tw
+() Tj
+/F22 10 Tf
+0.4800 Tw
+(void replace_copy \( iterator-start, iterator-finish, iterator-result, old-element-ref, new-element-ref) Tj
+1 0 0 1 100.0 564.0 Tm
+0.0000 Tw
+(\);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 537.6 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(replace_copy_if) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 525.6 Tm
+0 Tw
+() Tj
+/F22 10 Tf
+0 Tw
+(void replace_copy_if \( iterator-start, iterator-finish, iterator-result, unary-function,) Tj
+1 0 0 1 100.0 513.6 Tm
+0.0000 Tw
+(new-element-ref \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 487.2 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(generate) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 475.2 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(void generate \( iterator-start, iterator-finish, generator-function \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 448.8 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(generate_n) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 436.8 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(void generate_n \( iterator-start, size, generator-function \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 410.4 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(fill) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 398.4 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(void fill \( iterator-start, iterator-finish, element-ref \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 372.0 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(fill_n) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 360.0 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(void fill_n \( iterator-start, size, element-ref \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 333.6 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(equal) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 321.6 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(bool equal \( iterator-start, iterator-finish, iterator-result [, binary-function ] \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 295.2 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(reverse) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 283.2 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(void reverse \( iterator-start, iterator-finish \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 256.8 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(reverse_copy) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 244.8 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -5221,7 +5350,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 549.6 Tm
+1 0 0 1 76.0 218.4 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -5231,7 +5360,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 537.6 Tm
+1 0 0 1 100.0 206.4 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -5241,7 +5370,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 511.2 Tm
+1 0 0 1 76.0 180.0 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -5251,7 +5380,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 499.2 Tm
+1 0 0 1 100.0 168.0 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -5261,7 +5390,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 472.8 Tm
+1 0 0 1 76.0 141.6 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -5271,7 +5400,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 460.8 Tm
+1 0 0 1 100.0 129.6 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -5281,7 +5410,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 434.4 Tm
+1 0 0 1 76.0 103.2 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -5291,7 +5420,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 422.4 Tm
+1 0 0 1 100.0 91.2 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -5301,7 +5430,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 396.0 Tm
+1 0 0 1 76.0 64.8 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -5310,150 +5439,11 @@ BT
 /F20 10 Tf
 0.0000 Tw
 ( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 384.0 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(iterator min_element \( iterator-start, iterator-mid [, binary-function ] \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 357.6 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(max_element) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 345.6 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(iterator max_element \( iterator-start, iterator-mid [, binary-function ] \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 319.2 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(unique) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 307.2 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(iterator unique \( iterator-start, iterator-finish, [, binary-function ] \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 280.8 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(unique_copy) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 268.8 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(iterator unique_copy \( iterator-start, iterator-finish, iterator-result [, binary-function ] \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 242.4 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(adjacent_find) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 230.4 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(iterator ajacent_find \( iterator-start, iterator-finish, [, binary-predicate ] \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F21 10 Tf
-1 0 0 1 52.0 188.4 Tm
-0.0000 Tw
-(Examples ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 172.2 Tm
-0.0000 Tw
-(  use Class::STL::Containers; ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 163.8 Tm
-0.0000 Tw
-(  use Class::STL::Algorithms; ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 155.4 Tm
-0.0000 Tw
-(  use Class::STL::Utilities; ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 138.6 Tm
-0.0000 Tw
-(  # Display all elements in list container '$list'  ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 130.2 Tm
-0.0000 Tw
-(  # using unary-function 'myprint' and algorithm 'for_each': ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 121.8 Tm
-0.0000 Tw
-(  for_each\($list->begin\(\), $list->end\(\), ptr_fun\('::myprint'\)\); ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 113.4 Tm
-0.0000 Tw
-(  sub myprint \{ print "Data:", @_, "\\n"; \} ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 96.6 Tm
-0.0000 Tw
-(  # Algorithms -- remove_if\(\) ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 88.2 Tm
-0.0000 Tw
-(  # Remove element equal to back\(\) -- ie remove last element: ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 79.8 Tm
-0.0000 Tw
-(  remove_if\($list->begin\(\), $list->end\(\), bind1st\(equal_to\(\), $list->back\(\)\)\); ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 63.0 Tm
-0.0000 Tw
-(  # Remove all elements that match regular expression '^fi': ) Tj
-/F10 7 Tf
 /F21 10 Tf
 1 0 0 1 52 37 Tm
 (12) Tj
-1 0 0 1 452.95 37 Tm
-(28 April 2006 15:04) Tj
+1 0 0 1 456.28 37 Tm
+(15 May 2006 14:06) Tj
 ET
 52 50 m
 543 50 l
@@ -5461,7 +5451,7 @@ S
 endstream
 endobj
 63 0 obj
-5847
+6012
 endobj
 64 0 obj
 <<
@@ -5469,7 +5459,6 @@ endobj
 /ColorSpace <</DefaultRGB 1 0 R>>
 /Font
 <<
-/F10 10 0 R
 /F20 14 0 R
 /F21 15 0 R
 /F22 16 0 R
@@ -5501,36 +5490,174 @@ BT
 (Programmer's Reference) Tj
 1 0 0 1 431.88 797 Tm
 (Class::STL::Containers) Tj
+/F20 10 Tf
+1 0 0 1 100.0 780.0 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(iterator min_element \( iterator-start, iterator-mid [, binary-function ] \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 753.6 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(max_element) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 741.6 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(iterator max_element \( iterator-start, iterator-mid [, binary-function ] \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 715.2 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(unique) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 703.2 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(iterator unique \( iterator-start, iterator-finish, [, binary-function ] \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 676.8 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(unique_copy) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 664.8 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(iterator unique_copy \( iterator-start, iterator-finish, iterator-result [, binary-function ] \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 638.4 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(adjacent_find) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 626.4 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(iterator ajacent_find \( iterator-start, iterator-finish, [, binary-predicate ] \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F21 10 Tf
+1 0 0 1 52.0 584.4 Tm
+0.0000 Tw
+(Examples ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 771.6 Tm
+1 0 0 1 76.0 568.2 Tm
+0.0000 Tw
+(  use Class::STL::Containers; ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 559.8 Tm
+0.0000 Tw
+(  use Class::STL::Algorithms; ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 551.4 Tm
+0.0000 Tw
+(  use Class::STL::Utilities; ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 534.6 Tm
+0.0000 Tw
+(  # Display all elements in list container '$list'  ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 526.2 Tm
+0.0000 Tw
+(  # using unary-function 'myprint' and algorithm 'for_each': ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 517.8 Tm
+0.0000 Tw
+(  for_each\($list->begin\(\), $list->end\(\), ptr_fun\('::myprint'\)\); ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 509.4 Tm
+0.0000 Tw
+(  sub myprint \{ print "Data:", @_, "\\n"; \} ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 492.6 Tm
+0.0000 Tw
+(  # Algorithms -- remove_if\(\) ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 484.2 Tm
+0.0000 Tw
+(  # Remove element equal to back\(\) -- ie remove last element: ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 475.8 Tm
+0.0000 Tw
+(  remove_if\($list->begin\(\), $list->end\(\), bind1st\(equal_to\(\), $list->back\(\)\)\); ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 459.0 Tm
+0.0000 Tw
+(  # Remove all elements that match regular expression '^fi': ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 450.6 Tm
 0.0000 Tw
 (  remove_if\($v->begin\(\), $v->end\(\), bind2nd\(matches\(\), '^fi'\)\); ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 754.8 Tm
+1 0 0 1 76.0 433.8 Tm
 0.0000 Tw
 (  # Search for element \('pink'\) in tree: ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 746.4 Tm
+1 0 0 1 76.0 425.4 Tm
 0.0000 Tw
 (  if \(my $f = $tree->find_if\($tree->begin\(\), $tree->end\(\), bind1st\(equal_to\(\), "pink"\)\)\) \{ ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 738.0 Tm
+1 0 0 1 76.0 417.0 Tm
 0.0000 Tw
 (    print "FOUND:", $f->p_element\(\)->data\(\), "\\n"; ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 729.6 Tm
+1 0 0 1 76.0 408.6 Tm
 0.0000 Tw
 (  \} else \{ ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 721.2 Tm
+1 0 0 1 76.0 400.2 Tm
 0.0000 Tw
 (    print "'pink' NOT FOUND", "\\n"; ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 712.8 Tm
+1 0 0 1 76.0 391.8 Tm
 0.0000 Tw
 (  \} ) Tj
 /F21 12 Tf
-1 0 0 1 52.0 691.8 Tm
+1 0 0 1 52.0 370.8 Tm
 0.0000 Tw
 () Tj
 /F23 12 Tf
@@ -5540,11 +5667,11 @@ BT
 0.0000 Tw
 ( ) Tj
 /F21 10 Tf
-1 0 0 1 52.0 655.8 Tm
+1 0 0 1 52.0 334.8 Tm
 0.0000 Tw
 (Exports ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 643.8 Tm
+1 0 0 1 76.0 322.8 Tm
 3.7375 Tw
 () Tj
 /F23 10 Tf
@@ -5601,7 +5728,7 @@ BT
 /F20 10 Tf
 3.7375 Tw
 (,) Tj
-1 0 0 1 76.0 631.8 Tm
+1 0 0 1 76.0 310.8 Tm
 4.5914 Tw
 () Tj
 /F23 10 Tf
@@ -5652,7 +5779,7 @@ BT
 /F20 10 Tf
 4.5914 Tw
 (,) Tj
-1 0 0 1 76.0 619.8 Tm
+1 0 0 1 76.0 298.8 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -5680,13 +5807,13 @@ BT
 0.0000 Tw
 (. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 595.8 Tm
+1 0 0 1 76.0 274.8 Tm
 0.6738 Tw
 (This module contains various utility function objects. Each object will be constructed automatically when) Tj
-1 0 0 1 76.0 583.8 Tm
+1 0 0 1 76.0 262.8 Tm
 3.4713 Tw
 (the function name \(eg. `equal_to'\) is used. Each of the function objects are derived from either) Tj
-1 0 0 1 76.0 571.8 Tm
+1 0 0 1 76.0 250.8 Tm
 0 Tw
 () Tj
 /F22 10 Tf
@@ -5695,7 +5822,7 @@ BT
 /F20 10 Tf
 0 Tw
 ( or) Tj
-1 0 0 1 76.0 559.8 Tm
+1 0 0 1 76.0 238.8 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -5705,7 +5832,7 @@ BT
 0.0000 Tw
 (.  ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 533.4 Tm
+1 0 0 1 76.0 212.4 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -5715,7 +5842,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 521.4 Tm
+1 0 0 1 100.0 200.4 Tm
 1.0708 Tw
 () Tj
 /F23 10 Tf
@@ -5730,7 +5857,7 @@ BT
 /F20 10 Tf
 1.0708 Tw
 ( between its argument and) Tj
-1 0 0 1 100.0 509.4 Tm
+1 0 0 1 100.0 188.4 Tm
 0.0000 Tw
 (the object ) Tj
 /F22 10 Tf
@@ -5746,7 +5873,7 @@ BT
 0.0000 Tw
 ( function is used for the comparison. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 483.0 Tm
+1 0 0 1 76.0 162.0 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -5756,7 +5883,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 471.0 Tm
+1 0 0 1 100.0 150.0 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -5772,7 +5899,7 @@ BT
 0.0000 Tw
 (. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 456.6 Tm
+1 0 0 1 76.0 135.6 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -5782,7 +5909,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 444.6 Tm
+1 0 0 1 100.0 123.6 Tm
 0.1417 Tw
 () Tj
 /F23 10 Tf
@@ -5797,7 +5924,7 @@ BT
 /F20 10 Tf
 0.1417 Tw
 ( comparison between its) Tj
-1 0 0 1 100.0 432.6 Tm
+1 0 0 1 100.0 111.6 Tm
 0.0000 Tw
 (argument and the object ) Tj
 /F22 10 Tf
@@ -5813,7 +5940,7 @@ BT
 0.0000 Tw
 ( function is used for the comparison. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 406.2 Tm
+1 0 0 1 76.0 85.2 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -5822,234 +5949,9 @@ BT
 /F20 10 Tf
 0.0000 Tw
 ( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 394.2 Tm
-0.9750 Tw
-() Tj
-/F23 10 Tf
-0.9750 Tw
-(Binary predicate) Tj
-/F20 10 Tf
-0.9750 Tw
-(. This function-object will return the result of ) Tj
-/F22 10 Tf
-0.9750 Tw
-(greater-than-or-equal) Tj
-/F20 10 Tf
-0.9750 Tw
-( comparison) Tj
-1 0 0 1 100.0 382.2 Tm
-0.3644 Tw
-(between its argument and the object ) Tj
-/F22 10 Tf
-0.3644 Tw
-(arg) Tj
-/F20 10 Tf
-0.3644 Tw
-( attribute`s value. The element`s ) Tj
-/F22 10 Tf
-0.3644 Tw
-(ge) Tj
-/F20 10 Tf
-0.3644 Tw
-( function is used for the) Tj
-1 0 0 1 100.0 370.2 Tm
-0.0000 Tw
-(comparison. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 343.8 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(less) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 331.8 Tm
-1.2767 Tw
-() Tj
-/F23 10 Tf
-1.2767 Tw
-(Binary predicate) Tj
-/F20 10 Tf
-1.2767 Tw
-(. This function-object will return the result of ) Tj
-/F22 10 Tf
-1.2767 Tw
-(less-than) Tj
-/F20 10 Tf
-1.2767 Tw
-( comparison between its) Tj
-1 0 0 1 100.0 319.8 Tm
-0.0000 Tw
-(argument and the object ) Tj
-/F22 10 Tf
-0.0000 Tw
-(arg) Tj
-/F20 10 Tf
-0.0000 Tw
-( attribute`s value. The element`s ) Tj
-/F22 10 Tf
-0.0000 Tw
-(lt) Tj
-/F20 10 Tf
-0.0000 Tw
-( function is used for the comparison. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 293.4 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(less_equal) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 281.4 Tm
-2.3650 Tw
-() Tj
-/F23 10 Tf
-2.3650 Tw
-(Binary predicate) Tj
-/F20 10 Tf
-2.3650 Tw
-(. This function-object will return the result of ) Tj
-/F22 10 Tf
-2.3650 Tw
-(less-than-or-equal) Tj
-/F20 10 Tf
-2.3650 Tw
-( comparison) Tj
-1 0 0 1 100.0 269.4 Tm
-0.5731 Tw
-(between its argument and the object ) Tj
-/F22 10 Tf
-0.5731 Tw
-(arg) Tj
-/F20 10 Tf
-0.5731 Tw
-( attribute`s value. The element`s ) Tj
-/F22 10 Tf
-0.5731 Tw
-(le) Tj
-/F20 10 Tf
-0.5731 Tw
-( function is used for the) Tj
-1 0 0 1 100.0 257.4 Tm
-0.0000 Tw
-(comparison. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 231.0 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(compare) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 219.0 Tm
-1.6250 Tw
-() Tj
-/F23 10 Tf
-1.6250 Tw
-(Binary predicate) Tj
-/F20 10 Tf
-1.6250 Tw
-(. This function-object will return the result of ) Tj
-/F22 10 Tf
-1.6250 Tw
-(compare) Tj
-/F20 10 Tf
-1.6250 Tw
-( comparison between its) Tj
-1 0 0 1 100.0 207.0 Tm
-3.6729 Tw
-(argument and the object ) Tj
-/F22 10 Tf
-3.6729 Tw
-(arg) Tj
-/F20 10 Tf
-3.6729 Tw
-( attribute`s value. The element`s ) Tj
-/F22 10 Tf
-3.6729 Tw
-(cmp) Tj
-/F20 10 Tf
-3.6729 Tw
-( function is used for the) Tj
-1 0 0 1 100.0 195.0 Tm
-0.0000 Tw
-(comparison. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 168.6 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(matches) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 156.6 Tm
-0.3607 Tw
-() Tj
-/F23 10 Tf
-0.3607 Tw
-(Binary predicate) Tj
-/F20 10 Tf
-0.3607 Tw
-(. This function-object will return the result \(true or false\) of the regular expression) Tj
-1 0 0 1 100.0 144.6 Tm
-0.0031 Tw
-(comparison between its first argument and its second argument which contains a regular expression) Tj
-1 0 0 1 100.0 132.6 Tm
-0.0000 Tw
-(string.  ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 106.2 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(matches_ic) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 94.2 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(Binary predicate) Tj
-/F20 10 Tf
-0.0000 Tw
-(. Case-insensitive version of the ) Tj
-/F22 10 Tf
-0.0000 Tw
-(matches) Tj
-/F20 10 Tf
-0.0000 Tw
-( function. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 67.8 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(bind1st) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
 /F21 10 Tf
 1 0 0 1 52 37 Tm
-(28 April 2006 15:04) Tj
+(15 May 2006 14:06) Tj
 1 0 0 1 531.88 37 Tm
 (13) Tj
 ET
@@ -6059,7 +5961,7 @@ S
 endstream
 endobj
 67 0 obj
-8300
+7420
 endobj
 68 0 obj
 <<
@@ -6101,6 +6003,231 @@ BT
 (Programmer's Reference) Tj
 /F20 10 Tf
 1 0 0 1 100.0 780.0 Tm
+0.9750 Tw
+() Tj
+/F23 10 Tf
+0.9750 Tw
+(Binary predicate) Tj
+/F20 10 Tf
+0.9750 Tw
+(. This function-object will return the result of ) Tj
+/F22 10 Tf
+0.9750 Tw
+(greater-than-or-equal) Tj
+/F20 10 Tf
+0.9750 Tw
+( comparison) Tj
+1 0 0 1 100.0 768.0 Tm
+0.3644 Tw
+(between its argument and the object ) Tj
+/F22 10 Tf
+0.3644 Tw
+(arg) Tj
+/F20 10 Tf
+0.3644 Tw
+( attribute`s value. The element`s ) Tj
+/F22 10 Tf
+0.3644 Tw
+(ge) Tj
+/F20 10 Tf
+0.3644 Tw
+( function is used for the) Tj
+1 0 0 1 100.0 756.0 Tm
+0.0000 Tw
+(comparison. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 729.6 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(less) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 717.6 Tm
+1.2767 Tw
+() Tj
+/F23 10 Tf
+1.2767 Tw
+(Binary predicate) Tj
+/F20 10 Tf
+1.2767 Tw
+(. This function-object will return the result of ) Tj
+/F22 10 Tf
+1.2767 Tw
+(less-than) Tj
+/F20 10 Tf
+1.2767 Tw
+( comparison between its) Tj
+1 0 0 1 100.0 705.6 Tm
+0.0000 Tw
+(argument and the object ) Tj
+/F22 10 Tf
+0.0000 Tw
+(arg) Tj
+/F20 10 Tf
+0.0000 Tw
+( attribute`s value. The element`s ) Tj
+/F22 10 Tf
+0.0000 Tw
+(lt) Tj
+/F20 10 Tf
+0.0000 Tw
+( function is used for the comparison. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 679.2 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(less_equal) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 667.2 Tm
+2.3650 Tw
+() Tj
+/F23 10 Tf
+2.3650 Tw
+(Binary predicate) Tj
+/F20 10 Tf
+2.3650 Tw
+(. This function-object will return the result of ) Tj
+/F22 10 Tf
+2.3650 Tw
+(less-than-or-equal) Tj
+/F20 10 Tf
+2.3650 Tw
+( comparison) Tj
+1 0 0 1 100.0 655.2 Tm
+0.5731 Tw
+(between its argument and the object ) Tj
+/F22 10 Tf
+0.5731 Tw
+(arg) Tj
+/F20 10 Tf
+0.5731 Tw
+( attribute`s value. The element`s ) Tj
+/F22 10 Tf
+0.5731 Tw
+(le) Tj
+/F20 10 Tf
+0.5731 Tw
+( function is used for the) Tj
+1 0 0 1 100.0 643.2 Tm
+0.0000 Tw
+(comparison. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 616.8 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(compare) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 604.8 Tm
+1.6250 Tw
+() Tj
+/F23 10 Tf
+1.6250 Tw
+(Binary predicate) Tj
+/F20 10 Tf
+1.6250 Tw
+(. This function-object will return the result of ) Tj
+/F22 10 Tf
+1.6250 Tw
+(compare) Tj
+/F20 10 Tf
+1.6250 Tw
+( comparison between its) Tj
+1 0 0 1 100.0 592.8 Tm
+3.6729 Tw
+(argument and the object ) Tj
+/F22 10 Tf
+3.6729 Tw
+(arg) Tj
+/F20 10 Tf
+3.6729 Tw
+( attribute`s value. The element`s ) Tj
+/F22 10 Tf
+3.6729 Tw
+(cmp) Tj
+/F20 10 Tf
+3.6729 Tw
+( function is used for the) Tj
+1 0 0 1 100.0 580.8 Tm
+0.0000 Tw
+(comparison. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 554.4 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(matches) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 542.4 Tm
+0.3607 Tw
+() Tj
+/F23 10 Tf
+0.3607 Tw
+(Binary predicate) Tj
+/F20 10 Tf
+0.3607 Tw
+(. This function-object will return the result \(true or false\) of the regular expression) Tj
+1 0 0 1 100.0 530.4 Tm
+0.0031 Tw
+(comparison between its first argument and its second argument which contains a regular expression) Tj
+1 0 0 1 100.0 518.4 Tm
+0.0000 Tw
+(string.  ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 492.0 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(matches_ic) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 480.0 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(Binary predicate) Tj
+/F20 10 Tf
+0.0000 Tw
+(. Case-insensitive version of the ) Tj
+/F22 10 Tf
+0.0000 Tw
+(matches) Tj
+/F20 10 Tf
+0.0000 Tw
+( function. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 453.6 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(bind1st) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 441.6 Tm
 0.3967 Tw
 () Tj
 /F23 10 Tf
@@ -6115,7 +6242,7 @@ BT
 /F20 10 Tf
 0.3967 Tw
 ( and a) Tj
-1 0 0 1 100.0 768.0 Tm
+1 0 0 1 100.0 429.6 Tm
 3.4873 Tw
 (element or value argument. It will produce a ) Tj
 /F22 10 Tf
@@ -6128,7 +6255,7 @@ BT
 3.4873 Tw
 (function_operator) Tj
 /F20 10 Tf
-1 0 0 1 100.0 756.0 Tm
+1 0 0 1 100.0 417.6 Tm
 0.0000 Tw
 (member will call the ) Tj
 /F22 10 Tf
@@ -6144,7 +6271,7 @@ BT
 0.0000 Tw
 ( as the first argument. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 729.6 Tm
+1 0 0 1 76.0 391.2 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6154,7 +6281,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 717.6 Tm
+1 0 0 1 100.0 379.2 Tm
 0.3967 Tw
 () Tj
 /F23 10 Tf
@@ -6169,7 +6296,7 @@ BT
 /F20 10 Tf
 0.3967 Tw
 ( and a) Tj
-1 0 0 1 100.0 705.6 Tm
+1 0 0 1 100.0 367.2 Tm
 3.4873 Tw
 (element or value argument. It will produce a ) Tj
 /F22 10 Tf
@@ -6182,7 +6309,7 @@ BT
 3.4873 Tw
 (function_operator) Tj
 /F20 10 Tf
-1 0 0 1 100.0 693.6 Tm
+1 0 0 1 100.0 355.2 Tm
 0.0000 Tw
 (member will call the ) Tj
 /F22 10 Tf
@@ -6198,7 +6325,7 @@ BT
 0.0000 Tw
 ( as the second argument. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 667.2 Tm
+1 0 0 1 76.0 328.8 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6208,10 +6335,10 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 655.2 Tm
+1 0 0 1 100.0 316.8 Tm
 1.0957 Tw
 (This function requires one argument consisting of the class member function name \(string\). It will) Tj
-1 0 0 1 100.0 643.2 Tm
+1 0 0 1 100.0 304.8 Tm
 0.1207 Tw
 (construct an object whose ) Tj
 /F22 10 Tf
@@ -6220,18 +6347,18 @@ BT
 /F20 10 Tf
 0.1207 Tw
 ( member will require an element object to be passed as) Tj
-1 0 0 1 100.0 631.2 Tm
+1 0 0 1 100.0 292.8 Tm
 3.1993 Tw
 (the first argument. It will call the elements`s member function as specified by the ) Tj
 /F22 10 Tf
 3.1993 Tw
 (mem_fun) Tj
 /F20 10 Tf
-1 0 0 1 100.0 619.2 Tm
+1 0 0 1 100.0 280.8 Tm
 0.0000 Tw
 (argument. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 592.8 Tm
+1 0 0 1 76.0 254.4 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6241,7 +6368,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 580.8 Tm
+1 0 0 1 100.0 242.4 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6251,7 +6378,7 @@ BT
 0.0000 Tw
 (. This function requires one argument consisting of a global function name \(string\). ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 554.4 Tm
+1 0 0 1 76.0 216.0 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6261,7 +6388,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 542.4 Tm
+1 0 0 1 100.0 204.0 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6271,7 +6398,7 @@ BT
 0.0000 Tw
 (. This function requires one argument consisting of global function name \(string\). ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 516.0 Tm
+1 0 0 1 76.0 177.6 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6281,7 +6408,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 504.0 Tm
+1 0 0 1 100.0 165.6 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6291,7 +6418,7 @@ BT
 0.0000 Tw
 (.  ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 477.6 Tm
+1 0 0 1 76.0 139.2 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6301,7 +6428,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 465.6 Tm
+1 0 0 1 100.0 127.2 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6311,7 +6438,7 @@ BT
 0.0000 Tw
 (.  ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 439.2 Tm
+1 0 0 1 76.0 100.8 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6321,7 +6448,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 427.2 Tm
+1 0 0 1 100.0 88.8 Tm
 2.1000 Tw
 () Tj
 /F23 10 Tf
@@ -6336,7 +6463,7 @@ BT
 /F20 10 Tf
 2.1000 Tw
 ( between its two element) Tj
-1 0 0 1 100.0 415.2 Tm
+1 0 0 1 100.0 76.8 Tm
 0.4660 Tw
 (arguments. The element`s ) Tj
 /F22 10 Tf
@@ -6345,180 +6472,14 @@ BT
 /F20 10 Tf
 0.4660 Tw
 ( function is used for the calculation. It will return a newly construced) Tj
-1 0 0 1 100.0 403.2 Tm
+1 0 0 1 100.0 64.8 Tm
 0.0000 Tw
 (element object containing the result. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 376.8 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(divides) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 364.8 Tm
-2.1423 Tw
-() Tj
-/F23 10 Tf
-2.1423 Tw
-(Binary function) Tj
-/F20 10 Tf
-2.1423 Tw
-(. This function-object will return the result of ) Tj
-/F22 10 Tf
-2.1423 Tw
-(division) Tj
-/F20 10 Tf
-2.1423 Tw
-( between its two element) Tj
-1 0 0 1 100.0 352.8 Tm
-0.8733 Tw
-(arguments. The element`s ) Tj
-/F22 10 Tf
-0.8733 Tw
-(div) Tj
-/F20 10 Tf
-0.8733 Tw
-( function is used for the calculation. It will return a newly construced) Tj
-1 0 0 1 100.0 340.8 Tm
-0.0000 Tw
-(element object containing the result. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 314.4 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(plus) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 302.4 Tm
-3.2962 Tw
-() Tj
-/F23 10 Tf
-3.2962 Tw
-(Binary function) Tj
-/F20 10 Tf
-3.2962 Tw
-(. This function-object will return the result of ) Tj
-/F22 10 Tf
-3.2962 Tw
-(plus) Tj
-/F20 10 Tf
-3.2962 Tw
-( between its two element) Tj
-1 0 0 1 100.0 290.4 Tm
-0.6133 Tw
-(arguments. The element`s ) Tj
-/F22 10 Tf
-0.6133 Tw
-(add) Tj
-/F20 10 Tf
-0.6133 Tw
-( function is used for the calculation. It will return a newly construced) Tj
-1 0 0 1 100.0 278.4 Tm
-0.0000 Tw
-(element object containing the result. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 252.0 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(minus) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 240.0 Tm
-1.9708 Tw
-() Tj
-/F23 10 Tf
-1.9708 Tw
-(Binary function) Tj
-/F20 10 Tf
-1.9708 Tw
-(. This function-object will return the result of ) Tj
-/F22 10 Tf
-1.9708 Tw
-(subtract) Tj
-/F20 10 Tf
-1.9708 Tw
-( between its two element) Tj
-1 0 0 1 100.0 228.0 Tm
-3.0000 Tw
-(arguments. The element`s ) Tj
-/F22 10 Tf
-3.0000 Tw
-(subtract) Tj
-/F20 10 Tf
-3.0000 Tw
-( function is used for the calculation. It will return a newly) Tj
-1 0 0 1 100.0 216.0 Tm
-0.0000 Tw
-(construced element object containing the result. ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 189.6 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(modulus) Tj
-/F20 10 Tf
-0.0000 Tw
-(. ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 177.6 Tm
-1.8000 Tw
-() Tj
-/F23 10 Tf
-1.8000 Tw
-(Binary function) Tj
-/F20 10 Tf
-1.8000 Tw
-(. This function-object will return the result of ) Tj
-/F22 10 Tf
-1.8000 Tw
-(modulus) Tj
-/F20 10 Tf
-1.8000 Tw
-( between its two element) Tj
-1 0 0 1 100.0 165.6 Tm
-0.4287 Tw
-(arguments. The element`s ) Tj
-/F22 10 Tf
-0.4287 Tw
-(mod) Tj
-/F20 10 Tf
-0.4287 Tw
-( function is used for the calculation. It will return a newly construced) Tj
-1 0 0 1 100.0 153.6 Tm
-0.0000 Tw
-(element object containing the result. ) Tj
-/F21 12 Tf
-1 0 0 1 52.0 111.6 Tm
-0.0000 Tw
-() Tj
-/F23 12 Tf
-0.0000 Tw
-(CLASS Class::STL::Iterators) Tj
-/F21 12 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 97.2 Tm
-0.0000 Tw
-(This module contains the iterator classes.  ) Tj
 /F21 10 Tf
 1 0 0 1 52 37 Tm
 (14) Tj
-1 0 0 1 452.95 37 Tm
-(28 April 2006 15:04) Tj
+1 0 0 1 456.28 37 Tm
+(15 May 2006 14:06) Tj
 ET
 52 50 m
 543 50 l
@@ -6526,7 +6487,7 @@ S
 endstream
 endobj
 71 0 obj
-6978
+7650
 endobj
 72 0 obj
 <<
@@ -6565,12 +6526,178 @@ BT
 (Programmer's Reference) Tj
 1 0 0 1 431.88 797 Tm
 (Class::STL::Containers) Tj
+/F20 10 Tf
+1 0 0 1 76.0 780.0 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(divides) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 768.0 Tm
+2.1423 Tw
+() Tj
+/F23 10 Tf
+2.1423 Tw
+(Binary function) Tj
+/F20 10 Tf
+2.1423 Tw
+(. This function-object will return the result of ) Tj
+/F22 10 Tf
+2.1423 Tw
+(division) Tj
+/F20 10 Tf
+2.1423 Tw
+( between its two element) Tj
+1 0 0 1 100.0 756.0 Tm
+0.8733 Tw
+(arguments. The element`s ) Tj
+/F22 10 Tf
+0.8733 Tw
+(div) Tj
+/F20 10 Tf
+0.8733 Tw
+( function is used for the calculation. It will return a newly construced) Tj
+1 0 0 1 100.0 744.0 Tm
+0.0000 Tw
+(element object containing the result. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 717.6 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(plus) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 705.6 Tm
+3.2962 Tw
+() Tj
+/F23 10 Tf
+3.2962 Tw
+(Binary function) Tj
+/F20 10 Tf
+3.2962 Tw
+(. This function-object will return the result of ) Tj
+/F22 10 Tf
+3.2962 Tw
+(plus) Tj
+/F20 10 Tf
+3.2962 Tw
+( between its two element) Tj
+1 0 0 1 100.0 693.6 Tm
+0.6133 Tw
+(arguments. The element`s ) Tj
+/F22 10 Tf
+0.6133 Tw
+(add) Tj
+/F20 10 Tf
+0.6133 Tw
+( function is used for the calculation. It will return a newly construced) Tj
+1 0 0 1 100.0 681.6 Tm
+0.0000 Tw
+(element object containing the result. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 655.2 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(minus) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 643.2 Tm
+1.9708 Tw
+() Tj
+/F23 10 Tf
+1.9708 Tw
+(Binary function) Tj
+/F20 10 Tf
+1.9708 Tw
+(. This function-object will return the result of ) Tj
+/F22 10 Tf
+1.9708 Tw
+(subtract) Tj
+/F20 10 Tf
+1.9708 Tw
+( between its two element) Tj
+1 0 0 1 100.0 631.2 Tm
+3.0000 Tw
+(arguments. The element`s ) Tj
+/F22 10 Tf
+3.0000 Tw
+(subtract) Tj
+/F20 10 Tf
+3.0000 Tw
+( function is used for the calculation. It will return a newly) Tj
+1 0 0 1 100.0 619.2 Tm
+0.0000 Tw
+(construced element object containing the result. ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 592.8 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(modulus) Tj
+/F20 10 Tf
+0.0000 Tw
+(. ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 580.8 Tm
+1.8000 Tw
+() Tj
+/F23 10 Tf
+1.8000 Tw
+(Binary function) Tj
+/F20 10 Tf
+1.8000 Tw
+(. This function-object will return the result of ) Tj
+/F22 10 Tf
+1.8000 Tw
+(modulus) Tj
+/F20 10 Tf
+1.8000 Tw
+( between its two element) Tj
+1 0 0 1 100.0 568.8 Tm
+0.4287 Tw
+(arguments. The element`s ) Tj
+/F22 10 Tf
+0.4287 Tw
+(mod) Tj
+/F20 10 Tf
+0.4287 Tw
+( function is used for the calculation. It will return a newly construced) Tj
+1 0 0 1 100.0 556.8 Tm
+0.0000 Tw
+(element object containing the result. ) Tj
+/F21 12 Tf
+1 0 0 1 52.0 514.8 Tm
+0.0000 Tw
+() Tj
+/F23 12 Tf
+0.0000 Tw
+(CLASS Class::STL::Iterators) Tj
+/F21 12 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 500.4 Tm
+0.0000 Tw
+(This module contains the iterator classes.  ) Tj
 /F21 10 Tf
-1 0 0 1 52.0 780.0 Tm
+1 0 0 1 52.0 470.4 Tm
 0.0000 Tw
 (Exports ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 768.0 Tm
+1 0 0 1 76.0 458.4 Tm
 0.3492 Tw
 () Tj
 /F23 10 Tf
@@ -6657,7 +6784,7 @@ BT
 /F20 10 Tf
 0.3492 Tw
 (,) Tj
-1 0 0 1 76.0 756.0 Tm
+1 0 0 1 76.0 446.4 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6691,7 +6818,7 @@ BT
 0.0000 Tw
 (. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 729.6 Tm
+1 0 0 1 76.0 420.0 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6701,7 +6828,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 715.2 Tm
+1 0 0 1 76.0 405.6 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6711,11 +6838,11 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 703.2 Tm
+1 0 0 1 100.0 393.6 Tm
 0.0000 Tw
 (Returns a reference to the container that is associated with the iterator. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 676.8 Tm
+1 0 0 1 76.0 367.2 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6725,11 +6852,11 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 664.8 Tm
+1 0 0 1 100.0 355.2 Tm
 0.0000 Tw
 (This function will return a reference to the element pointed to by the iterator. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 638.4 Tm
+1 0 0 1 76.0 328.8 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6739,7 +6866,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 626.4 Tm
+1 0 0 1 100.0 316.8 Tm
 0.5400 Tw
 () Tj
 /F21 10 Tf
@@ -6754,7 +6881,7 @@ BT
 /F20 10 Tf
 0.5400 Tw
 ( between two iterators. Both iterators must be) Tj
-1 0 0 1 100.0 614.4 Tm
+1 0 0 1 100.0 304.8 Tm
 0.0000 Tw
 (from the same container. ) Tj
 /F22 10 Tf
@@ -6770,7 +6897,7 @@ BT
 0.0000 Tw
 (. ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 602.4 Tm
+1 0 0 1 100.0 292.8 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -6780,7 +6907,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 576.0 Tm
+1 0 0 1 76.0 266.4 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6790,7 +6917,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 564.0 Tm
+1 0 0 1 100.0 254.4 Tm
 0.0000 Tw
 () Tj
 /F21 10 Tf
@@ -6800,7 +6927,7 @@ BT
 0.0000 Tw
 (. Moves the iterator forward, or backwards if size is negative. ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 540.0 Tm
+1 0 0 1 100.0 230.4 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -6810,7 +6937,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 513.6 Tm
+1 0 0 1 76.0 204.0 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6820,7 +6947,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 501.6 Tm
+1 0 0 1 100.0 192.0 Tm
 0.0000 Tw
 () Tj
 /F21 10 Tf
@@ -6830,7 +6957,7 @@ BT
 0.0000 Tw
 (.  ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 477.6 Tm
+1 0 0 1 100.0 168.0 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -6840,7 +6967,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 451.2 Tm
+1 0 0 1 76.0 141.6 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6850,7 +6977,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 439.2 Tm
+1 0 0 1 100.0 129.6 Tm
 0.0000 Tw
 () Tj
 /F21 10 Tf
@@ -6860,7 +6987,7 @@ BT
 0.0000 Tw
 (.  ) Tj
 /F20 10 Tf
-1 0 0 1 100.0 415.2 Tm
+1 0 0 1 100.0 105.6 Tm
 0.0000 Tw
 () Tj
 /F22 10 Tf
@@ -6870,7 +6997,7 @@ BT
 0.0000 Tw
 ( ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 388.8 Tm
+1 0 0 1 76.0 79.2 Tm
 0.0000 Tw
 () Tj
 /F23 10 Tf
@@ -6879,182 +7006,9 @@ BT
 /F20 10 Tf
 0.0000 Tw
 ( ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 376.8 Tm
-0.0000 Tw
-() Tj
-/F21 10 Tf
-0.0000 Tw
-(Static function) Tj
-/F20 10 Tf
-0.0000 Tw
-(.  ) Tj
-/F20 10 Tf
-1 0 0 1 100.0 352.8 Tm
-0.0000 Tw
-() Tj
-/F22 10 Tf
-0.0000 Tw
-(iterator back_inserter \( container \);) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 326.4 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(first) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 312.0 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(next) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 297.6 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(last) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 283.2 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(prev) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 268.8 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(at_end) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 254.4 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(eq) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 240.0 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(ne) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 225.6 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(lt) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 211.2 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(le) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 196.8 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(gt) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 182.4 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(ge) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F20 10 Tf
-1 0 0 1 76.0 168.0 Tm
-0.0000 Tw
-() Tj
-/F23 10 Tf
-0.0000 Tw
-(cmp) Tj
-/F20 10 Tf
-0.0000 Tw
-( ) Tj
-/F21 10 Tf
-1 0 0 1 52.0 138.0 Tm
-0.0000 Tw
-(Examples ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 121.8 Tm
-0.0000 Tw
-(  # Using overoaded inrement operator: ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 113.4 Tm
-0.0000 Tw
-(  for \(my $i = $p->begin\(\); !$i->at_end\(\); $i++\) ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 105.0 Tm
-0.0000 Tw
-(  \{ ) Tj
-/F10 7 Tf
-1 0 0 1 124.0 96.6 Tm
-0.0000 Tw
-(MyPrint->new\(\)->function_operator\($i->p_element\(\)\); ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 88.2 Tm
-0.0000 Tw
-(  \} ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 71.4 Tm
-0.0000 Tw
-(  # Using overoaded decrement operator: ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 63.0 Tm
-0.0000 Tw
-(  for \(my $i = $p->end\(\); !$i->at_end\(\); --$i\) ) Tj
-/F10 7 Tf
 /F21 10 Tf
 1 0 0 1 52 37 Tm
-(28 April 2006 15:04) Tj
+(15 May 2006 14:06) Tj
 1 0 0 1 531.88 37 Tm
 (15) Tj
 ET
@@ -7064,7 +7018,7 @@ S
 endstream
 endobj
 75 0 obj
-6528
+7065
 endobj
 76 0 obj
 <<
@@ -7072,7 +7026,6 @@ endobj
 /ColorSpace <</DefaultRGB 1 0 R>>
 /Font
 <<
-/F10 10 0 R
 /F20 14 0 R
 /F21 15 0 R
 /F22 16 0 R
@@ -7104,52 +7057,224 @@ BT
 (Class::STL::Containers) Tj
 1 0 0 1 424.07 797 Tm
 (Programmer's Reference) Tj
+/F20 10 Tf
+1 0 0 1 100.0 780.0 Tm
+0.0000 Tw
+() Tj
+/F21 10 Tf
+0.0000 Tw
+(Static function) Tj
+/F20 10 Tf
+0.0000 Tw
+(.  ) Tj
+/F20 10 Tf
+1 0 0 1 100.0 756.0 Tm
+0.0000 Tw
+() Tj
+/F22 10 Tf
+0.0000 Tw
+(iterator back_inserter \( container \);) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 729.6 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(first) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 715.2 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(next) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 700.8 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(last) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 686.4 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(prev) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 672.0 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(at_end) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 657.6 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(eq) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 643.2 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(ne) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 628.8 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(lt) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 614.4 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(le) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 600.0 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(gt) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 585.6 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(ge) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F20 10 Tf
+1 0 0 1 76.0 571.2 Tm
+0.0000 Tw
+() Tj
+/F23 10 Tf
+0.0000 Tw
+(cmp) Tj
+/F20 10 Tf
+0.0000 Tw
+( ) Tj
+/F21 10 Tf
+1 0 0 1 52.0 541.2 Tm
+0.0000 Tw
+(Examples ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 771.6 Tm
+1 0 0 1 76.0 525.0 Tm
+0.0000 Tw
+(  # Using overoaded inrement operator: ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 516.6 Tm
+0.0000 Tw
+(  for \(my $i = $p->begin\(\); !$i->at_end\(\); $i++\) ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 508.2 Tm
 0.0000 Tw
 (  \{ ) Tj
 /F10 7 Tf
-1 0 0 1 124.0 763.2 Tm
+1 0 0 1 124.0 499.8 Tm
 0.0000 Tw
 (MyPrint->new\(\)->function_operator\($i->p_element\(\)\); ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 754.8 Tm
+1 0 0 1 76.0 491.4 Tm
 0.0000 Tw
 (  \} ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 738.0 Tm
+1 0 0 1 76.0 474.6 Tm
 0.0000 Tw
-(  # Reverse iterator: ) Tj
+(  # Using overoaded decrement operator: ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 729.6 Tm
+1 0 0 1 76.0 466.2 Tm
 0.0000 Tw
-(  my $ri = reverse_iterator\($p->iter\(\)\)->first\(\); ) Tj
+(  for \(my $i = $p->end\(\); !$i->at_end\(\); --$i\) ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 721.2 Tm
-0.0000 Tw
-(  while \(!$ri->at_end\(\)\) ) Tj
-/F10 7 Tf
-1 0 0 1 76.0 712.8 Tm
+1 0 0 1 76.0 457.8 Tm
 0.0000 Tw
 (  \{ ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 704.4 Tm
+1 0 0 1 124.0 449.4 Tm
+0.0000 Tw
+(MyPrint->new\(\)->function_operator\($i->p_element\(\)\); ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 441.0 Tm
+0.0000 Tw
+(  \} ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 424.2 Tm
+0.0000 Tw
+(  # Reverse iterator: ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 415.8 Tm
+0.0000 Tw
+(  my $ri = reverse_iterator\($p->iter\(\)\)->first\(\); ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 407.4 Tm
+0.0000 Tw
+(  while \(!$ri->at_end\(\)\) ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 399.0 Tm
+0.0000 Tw
+(  \{ ) Tj
+/F10 7 Tf
+1 0 0 1 76.0 390.6 Tm
 0.0000 Tw
 (    MyPrint->new\(\)->function_operator\($ri->p_element\(\)\); ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 696.0 Tm
+1 0 0 1 76.0 382.2 Tm
 0.0000 Tw
 (    $ri->next\(\); ) Tj
 /F10 7 Tf
-1 0 0 1 76.0 687.6 Tm
+1 0 0 1 76.0 373.8 Tm
 0.0000 Tw
 (  \} ) Tj
 /F21 12 Tf
-1 0 0 1 52.0 666.6 Tm
+1 0 0 1 52.0 352.8 Tm
 0.0000 Tw
 (SEE ALSO ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 652.2 Tm
+1 0 0 1 76.0 338.4 Tm
 0.0000 Tw
 (Sourceforge Project Page: ) Tj
 /F10 10 Tf
@@ -7159,60 +7284,60 @@ BT
 0.0000 Tw
 ( ) Tj
 /F21 12 Tf
-1 0 0 1 52.0 610.2 Tm
+1 0 0 1 52.0 296.4 Tm
 0.0000 Tw
 (AUTHOR ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 595.8 Tm
+1 0 0 1 76.0 282.0 Tm
 0.0000 Tw
 (m gaffiero, <gaffie@users.sourceforge.net<gt> ) Tj
 /F21 12 Tf
-1 0 0 1 52.0 565.8 Tm
+1 0 0 1 52.0 252.0 Tm
 0.0000 Tw
 (COPYRIGHT AND LICENSE ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 551.4 Tm
+1 0 0 1 76.0 237.6 Tm
 0.0000 Tw
 (Copyright \(C\) 2006 by Mario Gaffiero ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 527.4 Tm
+1 0 0 1 76.0 213.6 Tm
 0.0000 Tw
 (This file is part of Class::STL::Containers\(TM\). ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 503.4 Tm
+1 0 0 1 76.0 189.6 Tm
 1.3987 Tw
 (Class::STL::Containers is free software; you can redistribute it and/or modify it under the terms of the) Tj
-1 0 0 1 76.0 491.4 Tm
+1 0 0 1 76.0 177.6 Tm
 1.9900 Tw
 (GNU General Public License as published by the Free Software Foundation; either version 2 of the) Tj
-1 0 0 1 76.0 479.4 Tm
+1 0 0 1 76.0 165.6 Tm
 0.0000 Tw
 (License, or \(at your option\) any later version. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 455.4 Tm
+1 0 0 1 76.0 141.6 Tm
 0.7471 Tw
 (Class::STL::Containers is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;) Tj
-1 0 0 1 76.0 443.4 Tm
+1 0 0 1 76.0 129.6 Tm
 0.0175 Tw
 (without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.) Tj
-1 0 0 1 76.0 431.4 Tm
+1 0 0 1 76.0 117.6 Tm
 0.0000 Tw
 ( See the GNU General Public License for more details. ) Tj
 /F20 10 Tf
-1 0 0 1 76.0 407.4 Tm
+1 0 0 1 76.0 93.6 Tm
 0.3464 Tw
 (You should have received a copy of the GNU General Public License along with Class::STL::Containers;) Tj
-1 0 0 1 76.0 395.4 Tm
+1 0 0 1 76.0 81.6 Tm
 0.8065 Tw
 (if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301) Tj
-1 0 0 1 76.0 383.4 Tm
+1 0 0 1 76.0 69.6 Tm
 0.0000 Tw
 (USA ) Tj
 /F21 10 Tf
 1 0 0 1 52 37 Tm
 (16) Tj
-1 0 0 1 452.95 37 Tm
-(28 April 2006 15:04) Tj
+1 0 0 1 456.28 37 Tm
+(15 May 2006 14:06) Tj
 ET
 52 50 m
 543 50 l
@@ -7220,7 +7345,7 @@ S
 endstream
 endobj
 79 0 obj
-2753
+4972
 endobj
 80 0 obj
 <<
@@ -7231,6 +7356,8 @@ endobj
 /F10 10 0 R
 /F20 14 0 R
 /F21 15 0 R
+/F22 16 0 R
+/F23 17 0 R
 >>
 >>
 endobj
@@ -7477,7 +7604,7 @@ BT
 1 0 0 1 100 470 Tm
 (Class swap\(\) Function) Tj
 1 0 0 1 513.44 470 Tm
-(3) Tj
+(4) Tj
 ET
 q
 0.95 g
@@ -7486,7 +7613,7 @@ f
 Q
 BT
 1 0 0 1 100 458 Tm
-(Class::STL::ClassMembers::DataMember) Tj
+(Class members\(\) Function) Tj
 1 0 0 1 513.44 458 Tm
 (4) Tj
 ET
@@ -7497,7 +7624,7 @@ f
 Q
 BT
 1 0 0 1 100 446 Tm
-(Class::STL::ClassMembers::FunctionMember::New) Tj
+(Class members_local\(\) Function) Tj
 1 0 0 1 513.44 446 Tm
 (4) Tj
 ET
@@ -7508,7 +7635,7 @@ f
 Q
 BT
 1 0 0 1 100 434 Tm
-(Example) Tj
+(Class::STL::ClassMembers::DataMember) Tj
 1 0 0 1 513.44 434 Tm
 (4) Tj
 ET
@@ -7518,8 +7645,8 @@ q
 f
 Q
 BT
-1 0 0 1 76 422 Tm
-(CLASS Class::STL::Containers) Tj
+1 0 0 1 100 422 Tm
+(Class::STL::ClassMembers::Constructor) Tj
 1 0 0 1 513.44 422 Tm
 (4) Tj
 ET
@@ -7530,7 +7657,7 @@ f
 Q
 BT
 1 0 0 1 100 410 Tm
-(Exports) Tj
+(Class::STL::ClassMembers::SingletonConstructor) Tj
 1 0 0 1 513.44 410 Tm
 (4) Tj
 ET
@@ -7540,8 +7667,8 @@ q
 f
 Q
 BT
-1 0 0 1 76 398 Tm
-(CLASS Class::STL::Containers::Abstract) Tj
+1 0 0 1 100 398 Tm
+(Example) Tj
 1 0 0 1 513.44 398 Tm
 (4) Tj
 ET
@@ -7551,8 +7678,8 @@ q
 f
 Q
 BT
-1 0 0 1 100 386 Tm
-(Extends Class::STL::Element) Tj
+1 0 0 1 76 386 Tm
+(CLASS Class::STL::Containers) Tj
 1 0 0 1 513.44 386 Tm
 (4) Tj
 ET
@@ -7562,8 +7689,8 @@ q
 f
 Q
 BT
-1 0 0 1 124 374 Tm
-(new) Tj
+1 0 0 1 100 374 Tm
+(Exports) Tj
 1 0 0 1 513.44 374 Tm
 (4) Tj
 ET
@@ -7573,8 +7700,8 @@ q
 f
 Q
 BT
-1 0 0 1 124 362 Tm
-(clone) Tj
+1 0 0 1 76 362 Tm
+(CLASS Class::STL::Containers::Abstract) Tj
 1 0 0 1 513.44 362 Tm
 (5) Tj
 ET
@@ -7584,8 +7711,8 @@ q
 f
 Q
 BT
-1 0 0 1 124 350 Tm
-(factory) Tj
+1 0 0 1 100 350 Tm
+(Extends Class::STL::Element) Tj
 1 0 0 1 513.44 350 Tm
 (5) Tj
 ET
@@ -7596,7 +7723,7 @@ f
 Q
 BT
 1 0 0 1 124 338 Tm
-(erase) Tj
+(new) Tj
 1 0 0 1 513.44 338 Tm
 (5) Tj
 ET
@@ -7607,7 +7734,7 @@ f
 Q
 BT
 1 0 0 1 124 326 Tm
-(insert) Tj
+(clone) Tj
 1 0 0 1 513.44 326 Tm
 (5) Tj
 ET
@@ -7618,7 +7745,7 @@ f
 Q
 BT
 1 0 0 1 124 314 Tm
-(pop) Tj
+(factory) Tj
 1 0 0 1 513.44 314 Tm
 (5) Tj
 ET
@@ -7629,7 +7756,7 @@ f
 Q
 BT
 1 0 0 1 124 302 Tm
-(push) Tj
+(erase) Tj
 1 0 0 1 513.44 302 Tm
 (5) Tj
 ET
@@ -7640,7 +7767,7 @@ f
 Q
 BT
 1 0 0 1 124 290 Tm
-(clear) Tj
+(insert) Tj
 1 0 0 1 513.44 290 Tm
 (5) Tj
 ET
@@ -7651,9 +7778,9 @@ f
 Q
 BT
 1 0 0 1 124 278 Tm
-(begin) Tj
+(pop) Tj
 1 0 0 1 513.44 278 Tm
-(5) Tj
+(6) Tj
 ET
 q
 0.95 g
@@ -7662,9 +7789,9 @@ f
 Q
 BT
 1 0 0 1 124 266 Tm
-(end) Tj
+(push) Tj
 1 0 0 1 513.44 266 Tm
-(5) Tj
+(6) Tj
 ET
 q
 1 g
@@ -7673,7 +7800,7 @@ f
 Q
 BT
 1 0 0 1 124 254 Tm
-(rbegin) Tj
+(clear) Tj
 1 0 0 1 513.44 254 Tm
 (6) Tj
 ET
@@ -7684,7 +7811,7 @@ f
 Q
 BT
 1 0 0 1 124 242 Tm
-(rend) Tj
+(begin) Tj
 1 0 0 1 513.44 242 Tm
 (6) Tj
 ET
@@ -7695,7 +7822,7 @@ f
 Q
 BT
 1 0 0 1 124 230 Tm
-(size) Tj
+(end) Tj
 1 0 0 1 513.44 230 Tm
 (6) Tj
 ET
@@ -7706,7 +7833,7 @@ f
 Q
 BT
 1 0 0 1 124 218 Tm
-(empty) Tj
+(rbegin) Tj
 1 0 0 1 513.44 218 Tm
 (6) Tj
 ET
@@ -7717,7 +7844,7 @@ f
 Q
 BT
 1 0 0 1 124 206 Tm
-(to_array) Tj
+(rend) Tj
 1 0 0 1 513.44 206 Tm
 (6) Tj
 ET
@@ -7728,7 +7855,7 @@ f
 Q
 BT
 1 0 0 1 124 194 Tm
-(eq) Tj
+(size) Tj
 1 0 0 1 513.44 194 Tm
 (6) Tj
 ET
@@ -7739,7 +7866,7 @@ f
 Q
 BT
 1 0 0 1 124 182 Tm
-(ne) Tj
+(empty) Tj
 1 0 0 1 513.44 182 Tm
 (6) Tj
 ET
@@ -7750,7 +7877,7 @@ f
 Q
 BT
 1 0 0 1 124 170 Tm
-(operator +, operator +=) Tj
+(to_array) Tj
 1 0 0 1 513.44 170 Tm
 (6) Tj
 ET
@@ -7761,7 +7888,7 @@ f
 Q
 BT
 1 0 0 1 124 158 Tm
-(operator == ) Tj
+(eq) Tj
 1 0 0 1 513.44 158 Tm
 (6) Tj
 ET
@@ -7772,9 +7899,9 @@ f
 Q
 BT
 1 0 0 1 124 146 Tm
-(operator != ) Tj
+(ne) Tj
 1 0 0 1 513.44 146 Tm
-(6) Tj
+(7) Tj
 ET
 q
 1 g
@@ -7782,10 +7909,10 @@ q
 f
 Q
 BT
-1 0 0 1 76 134 Tm
-(CLASS Class::STL::Containers::List) Tj
+1 0 0 1 124 134 Tm
+(operator +, operator +=) Tj
 1 0 0 1 513.44 134 Tm
-(6) Tj
+(7) Tj
 ET
 q
 0.95 g
@@ -7793,8 +7920,8 @@ q
 f
 Q
 BT
-1 0 0 1 100 122 Tm
-(Extends Class::STL::Containers::Deque) Tj
+1 0 0 1 124 122 Tm
+(operator == ) Tj
 1 0 0 1 513.44 122 Tm
 (7) Tj
 ET
@@ -7805,7 +7932,7 @@ f
 Q
 BT
 1 0 0 1 124 110 Tm
-(reverse) Tj
+(operator != ) Tj
 1 0 0 1 513.44 110 Tm
 (7) Tj
 ET
@@ -7815,8 +7942,8 @@ q
 f
 Q
 BT
-1 0 0 1 124 98 Tm
-(sort) Tj
+1 0 0 1 76 98 Tm
+(CLASS Class::STL::Containers::List) Tj
 1 0 0 1 513.44 98 Tm
 (7) Tj
 ET
@@ -7827,7 +7954,7 @@ f
 Q
 BT
 1 0 0 1 100 86 Tm
-(Example) Tj
+(Extends Class::STL::Containers::Deque) Tj
 1 0 0 1 513.44 86 Tm
 (7) Tj
 ET
@@ -7837,13 +7964,13 @@ q
 f
 Q
 BT
-1 0 0 1 76 74 Tm
-(CLASS Class::STL::Containers::Vector) Tj
+1 0 0 1 124 74 Tm
+(reverse) Tj
 1 0 0 1 513.44 74 Tm
 (7) Tj
 /F21 10 Tf
 1 0 0 1 52 37 Tm
-(28 April 2006 15:04) Tj
+(15 May 2006 14:06) Tj
 1 0 0 1 540.22 37 Tm
 (i) Tj
 ET
@@ -7853,7 +7980,7 @@ S
 endstream
 endobj
 83 0 obj
-5798
+5846
 endobj
 84 0 obj
 <<
@@ -7898,8 +8025,8 @@ q
 f
 Q
 BT
-1 0 0 1 100 770 Tm
-(Extends Class::STL::Containers::Abstract) Tj
+1 0 0 1 124 770 Tm
+(sort) Tj
 1 0 0 1 513.44 770 Tm
 (7) Tj
 ET
@@ -7909,8 +8036,8 @@ q
 f
 Q
 BT
-1 0 0 1 124 758 Tm
-(push_back) Tj
+1 0 0 1 100 758 Tm
+(Example) Tj
 1 0 0 1 513.44 758 Tm
 (7) Tj
 ET
@@ -7920,10 +8047,10 @@ q
 f
 Q
 BT
-1 0 0 1 124 746 Tm
-(pop_back) Tj
+1 0 0 1 76 746 Tm
+(CLASS Class::STL::Containers::Vector) Tj
 1 0 0 1 513.44 746 Tm
-(7) Tj
+(8) Tj
 ET
 q
 0.95 g
@@ -7931,10 +8058,10 @@ q
 f
 Q
 BT
-1 0 0 1 124 734 Tm
-(back) Tj
+1 0 0 1 100 734 Tm
+(Extends Class::STL::Containers::Abstract) Tj
 1 0 0 1 513.44 734 Tm
-(7) Tj
+(8) Tj
 ET
 q
 1 g
@@ -7943,7 +8070,7 @@ f
 Q
 BT
 1 0 0 1 124 722 Tm
-(front) Tj
+(push_back) Tj
 1 0 0 1 513.44 722 Tm
 (8) Tj
 ET
@@ -7954,7 +8081,7 @@ f
 Q
 BT
 1 0 0 1 124 710 Tm
-(at) Tj
+(pop_back) Tj
 1 0 0 1 513.44 710 Tm
 (8) Tj
 ET
@@ -7964,8 +8091,8 @@ q
 f
 Q
 BT
-1 0 0 1 76 698 Tm
-(CLASS Class::STL::Containers::Deque) Tj
+1 0 0 1 124 698 Tm
+(back) Tj
 1 0 0 1 513.44 698 Tm
 (8) Tj
 ET
@@ -7975,8 +8102,8 @@ q
 f
 Q
 BT
-1 0 0 1 100 686 Tm
-(Extends Class::STL::Containers::Vector) Tj
+1 0 0 1 124 686 Tm
+(front) Tj
 1 0 0 1 513.44 686 Tm
 (8) Tj
 ET
@@ -7987,7 +8114,7 @@ f
 Q
 BT
 1 0 0 1 124 674 Tm
-(push_front) Tj
+(at) Tj
 1 0 0 1 513.44 674 Tm
 (8) Tj
 ET
@@ -7997,8 +8124,8 @@ q
 f
 Q
 BT
-1 0 0 1 124 662 Tm
-(pop_front) Tj
+1 0 0 1 76 662 Tm
+(CLASS Class::STL::Containers::Deque) Tj
 1 0 0 1 513.44 662 Tm
 (8) Tj
 ET
@@ -8008,8 +8135,8 @@ q
 f
 Q
 BT
-1 0 0 1 76 650 Tm
-(CLASS Class::STL::Containers::Queue) Tj
+1 0 0 1 100 650 Tm
+(Extends Class::STL::Containers::Vector) Tj
 1 0 0 1 513.44 650 Tm
 (8) Tj
 ET
@@ -8019,8 +8146,8 @@ q
 f
 Q
 BT
-1 0 0 1 100 638 Tm
-(Extends Class::STL::Containers::Abstract) Tj
+1 0 0 1 124 638 Tm
+(push_front) Tj
 1 0 0 1 513.44 638 Tm
 (8) Tj
 ET
@@ -8031,7 +8158,7 @@ f
 Q
 BT
 1 0 0 1 124 626 Tm
-(push) Tj
+(pop_front) Tj
 1 0 0 1 513.44 626 Tm
 (8) Tj
 ET
@@ -8041,8 +8168,8 @@ q
 f
 Q
 BT
-1 0 0 1 124 614 Tm
-(pop) Tj
+1 0 0 1 76 614 Tm
+(CLASS Class::STL::Containers::Queue) Tj
 1 0 0 1 513.44 614 Tm
 (8) Tj
 ET
@@ -8052,10 +8179,10 @@ q
 f
 Q
 BT
-1 0 0 1 124 602 Tm
-(back) Tj
+1 0 0 1 100 602 Tm
+(Extends Class::STL::Containers::Abstract) Tj
 1 0 0 1 513.44 602 Tm
-(8) Tj
+(9) Tj
 ET
 q
 0.95 g
@@ -8064,9 +8191,9 @@ f
 Q
 BT
 1 0 0 1 124 590 Tm
-(front) Tj
+(push) Tj
 1 0 0 1 513.44 590 Tm
-(8) Tj
+(9) Tj
 ET
 q
 1 g
@@ -8074,8 +8201,8 @@ q
 f
 Q
 BT
-1 0 0 1 76 578 Tm
-(CLASS Class::STL::Containers::Stack) Tj
+1 0 0 1 124 578 Tm
+(pop) Tj
 1 0 0 1 513.44 578 Tm
 (9) Tj
 ET
@@ -8085,8 +8212,8 @@ q
 f
 Q
 BT
-1 0 0 1 100 566 Tm
-(Extends Class::STL::Containers::Abstract) Tj
+1 0 0 1 124 566 Tm
+(back) Tj
 1 0 0 1 513.44 566 Tm
 (9) Tj
 ET
@@ -8097,7 +8224,7 @@ f
 Q
 BT
 1 0 0 1 124 554 Tm
-(push) Tj
+(front) Tj
 1 0 0 1 513.44 554 Tm
 (9) Tj
 ET
@@ -8107,8 +8234,8 @@ q
 f
 Q
 BT
-1 0 0 1 124 542 Tm
-(pop) Tj
+1 0 0 1 76 542 Tm
+(CLASS Class::STL::Containers::Stack) Tj
 1 0 0 1 513.44 542 Tm
 (9) Tj
 ET
@@ -8118,8 +8245,8 @@ q
 f
 Q
 BT
-1 0 0 1 124 530 Tm
-(top) Tj
+1 0 0 1 100 530 Tm
+(Extends Class::STL::Containers::Abstract) Tj
 1 0 0 1 513.44 530 Tm
 (9) Tj
 ET
@@ -8129,8 +8256,8 @@ q
 f
 Q
 BT
-1 0 0 1 76 518 Tm
-(CLASS Class::STL::Containers::Tree) Tj
+1 0 0 1 124 518 Tm
+(push) Tj
 1 0 0 1 513.44 518 Tm
 (9) Tj
 ET
@@ -8140,8 +8267,8 @@ q
 f
 Q
 BT
-1 0 0 1 100 506 Tm
-(Extends Class::STL::Containers::Deque) Tj
+1 0 0 1 124 506 Tm
+(pop) Tj
 1 0 0 1 513.44 506 Tm
 (9) Tj
 ET
@@ -8152,7 +8279,7 @@ f
 Q
 BT
 1 0 0 1 124 494 Tm
-(to_array) Tj
+(top) Tj
 1 0 0 1 513.44 494 Tm
 (9) Tj
 ET
@@ -8162,8 +8289,8 @@ q
 f
 Q
 BT
-1 0 0 1 100 482 Tm
-(Examples) Tj
+1 0 0 1 76 482 Tm
+(CLASS Class::STL::Containers::Tree) Tj
 1 0 0 1 513.44 482 Tm
 (9) Tj
 ET
@@ -8173,8 +8300,8 @@ q
 f
 Q
 BT
-1 0 0 1 76 470 Tm
-(CLASS Class::STL::Containers::PriorityQueue) Tj
+1 0 0 1 100 470 Tm
+(Extends Class::STL::Containers::Deque) Tj
 1 0 0 1 513.44 470 Tm
 (9) Tj
 ET
@@ -8184,10 +8311,10 @@ q
 f
 Q
 BT
-1 0 0 1 100 458 Tm
-(Extends Class::STL::Containers::Vector) Tj
-1 0 0 1 507.88 458 Tm
-(10) Tj
+1 0 0 1 124 458 Tm
+(to_array) Tj
+1 0 0 1 513.44 458 Tm
+(9) Tj
 ET
 q
 0.95 g
@@ -8196,7 +8323,7 @@ f
 Q
 BT
 1 0 0 1 100 446 Tm
-(Element Type Class::STL::Element::Priority) Tj
+(Examples) Tj
 1 0 0 1 507.88 446 Tm
 (10) Tj
 ET
@@ -8206,8 +8333,8 @@ q
 f
 Q
 BT
-1 0 0 1 124 434 Tm
-(push) Tj
+1 0 0 1 76 434 Tm
+(CLASS Class::STL::Containers::PriorityQueue) Tj
 1 0 0 1 507.88 434 Tm
 (10) Tj
 ET
@@ -8217,8 +8344,8 @@ q
 f
 Q
 BT
-1 0 0 1 124 422 Tm
-(pop) Tj
+1 0 0 1 100 422 Tm
+(Extends Class::STL::Containers::Vector) Tj
 1 0 0 1 507.88 422 Tm
 (10) Tj
 ET
@@ -8228,8 +8355,8 @@ q
 f
 Q
 BT
-1 0 0 1 124 410 Tm
-(top) Tj
+1 0 0 1 100 410 Tm
+(Element Type Class::STL::Element::Priority) Tj
 1 0 0 1 507.88 410 Tm
 (10) Tj
 ET
@@ -8240,7 +8367,7 @@ f
 Q
 BT
 1 0 0 1 124 398 Tm
-(refresh) Tj
+(push) Tj
 1 0 0 1 507.88 398 Tm
 (10) Tj
 ET
@@ -8250,8 +8377,8 @@ q
 f
 Q
 BT
-1 0 0 1 76 386 Tm
-(CLASS Class::STL::Algorithms) Tj
+1 0 0 1 124 386 Tm
+(pop) Tj
 1 0 0 1 507.88 386 Tm
 (10) Tj
 ET
@@ -8261,8 +8388,8 @@ q
 f
 Q
 BT
-1 0 0 1 100 374 Tm
-(Exports) Tj
+1 0 0 1 124 374 Tm
+(top) Tj
 1 0 0 1 507.88 374 Tm
 (10) Tj
 ET
@@ -8273,7 +8400,7 @@ f
 Q
 BT
 1 0 0 1 124 362 Tm
-(for_each) Tj
+(refresh) Tj
 1 0 0 1 507.88 362 Tm
 (10) Tj
 ET
@@ -8283,8 +8410,8 @@ q
 f
 Q
 BT
-1 0 0 1 124 350 Tm
-(transform) Tj
+1 0 0 1 76 350 Tm
+(CLASS Class::STL::Algorithms) Tj
 1 0 0 1 507.88 350 Tm
 (10) Tj
 ET
@@ -8294,10 +8421,10 @@ q
 f
 Q
 BT
-1 0 0 1 124 338 Tm
-(count) Tj
+1 0 0 1 100 338 Tm
+(Exports) Tj
 1 0 0 1 507.88 338 Tm
-(11) Tj
+(10) Tj
 ET
 q
 0.95 g
@@ -8306,7 +8433,7 @@ f
 Q
 BT
 1 0 0 1 124 326 Tm
-(count_if) Tj
+(for_each) Tj
 1 0 0 1 507.88 326 Tm
 (11) Tj
 ET
@@ -8317,7 +8444,7 @@ f
 Q
 BT
 1 0 0 1 124 314 Tm
-(find) Tj
+(transform) Tj
 1 0 0 1 507.88 314 Tm
 (11) Tj
 ET
@@ -8328,7 +8455,7 @@ f
 Q
 BT
 1 0 0 1 124 302 Tm
-(find_if) Tj
+(count) Tj
 1 0 0 1 507.88 302 Tm
 (11) Tj
 ET
@@ -8339,7 +8466,7 @@ f
 Q
 BT
 1 0 0 1 124 290 Tm
-(copy) Tj
+(count_if) Tj
 1 0 0 1 507.88 290 Tm
 (11) Tj
 ET
@@ -8350,7 +8477,7 @@ f
 Q
 BT
 1 0 0 1 124 278 Tm
-(copy_backward) Tj
+(find) Tj
 1 0 0 1 507.88 278 Tm
 (11) Tj
 ET
@@ -8361,7 +8488,7 @@ f
 Q
 BT
 1 0 0 1 124 266 Tm
-(remove) Tj
+(find_if) Tj
 1 0 0 1 507.88 266 Tm
 (11) Tj
 ET
@@ -8372,7 +8499,7 @@ f
 Q
 BT
 1 0 0 1 124 254 Tm
-(remove_if) Tj
+(copy) Tj
 1 0 0 1 507.88 254 Tm
 (11) Tj
 ET
@@ -8383,7 +8510,7 @@ f
 Q
 BT
 1 0 0 1 124 242 Tm
-(remove_copy) Tj
+(copy_backward) Tj
 1 0 0 1 507.88 242 Tm
 (11) Tj
 ET
@@ -8394,7 +8521,7 @@ f
 Q
 BT
 1 0 0 1 124 230 Tm
-(remove_copy_if) Tj
+(remove) Tj
 1 0 0 1 507.88 230 Tm
 (11) Tj
 ET
@@ -8405,7 +8532,7 @@ f
 Q
 BT
 1 0 0 1 124 218 Tm
-(replace) Tj
+(remove_if) Tj
 1 0 0 1 507.88 218 Tm
 (11) Tj
 ET
@@ -8416,9 +8543,9 @@ f
 Q
 BT
 1 0 0 1 124 206 Tm
-(replace_if) Tj
+(remove_copy) Tj
 1 0 0 1 507.88 206 Tm
-(11) Tj
+(12) Tj
 ET
 q
 1 g
@@ -8427,9 +8554,9 @@ f
 Q
 BT
 1 0 0 1 124 194 Tm
-(replace_copy) Tj
+(remove_copy_if) Tj
 1 0 0 1 507.88 194 Tm
-(11) Tj
+(12) Tj
 ET
 q
 0.95 g
@@ -8438,9 +8565,9 @@ f
 Q
 BT
 1 0 0 1 124 182 Tm
-(replace_copy_if) Tj
+(replace) Tj
 1 0 0 1 507.88 182 Tm
-(11) Tj
+(12) Tj
 ET
 q
 1 g
@@ -8449,9 +8576,9 @@ f
 Q
 BT
 1 0 0 1 124 170 Tm
-(generate) Tj
+(replace_if) Tj
 1 0 0 1 507.88 170 Tm
-(11) Tj
+(12) Tj
 ET
 q
 0.95 g
@@ -8460,7 +8587,7 @@ f
 Q
 BT
 1 0 0 1 124 158 Tm
-(generate_n) Tj
+(replace_copy) Tj
 1 0 0 1 507.88 158 Tm
 (12) Tj
 ET
@@ -8471,7 +8598,7 @@ f
 Q
 BT
 1 0 0 1 124 146 Tm
-(fill) Tj
+(replace_copy_if) Tj
 1 0 0 1 507.88 146 Tm
 (12) Tj
 ET
@@ -8482,7 +8609,7 @@ f
 Q
 BT
 1 0 0 1 124 134 Tm
-(fill_n) Tj
+(generate) Tj
 1 0 0 1 507.88 134 Tm
 (12) Tj
 ET
@@ -8493,7 +8620,7 @@ f
 Q
 BT
 1 0 0 1 124 122 Tm
-(equal) Tj
+(generate_n) Tj
 1 0 0 1 507.88 122 Tm
 (12) Tj
 ET
@@ -8504,7 +8631,7 @@ f
 Q
 BT
 1 0 0 1 124 110 Tm
-(reverse) Tj
+(fill) Tj
 1 0 0 1 507.88 110 Tm
 (12) Tj
 ET
@@ -8515,7 +8642,7 @@ f
 Q
 BT
 1 0 0 1 124 98 Tm
-(reverse_copy) Tj
+(fill_n) Tj
 1 0 0 1 507.88 98 Tm
 (12) Tj
 ET
@@ -8526,7 +8653,7 @@ f
 Q
 BT
 1 0 0 1 124 86 Tm
-(rotate) Tj
+(equal) Tj
 1 0 0 1 507.88 86 Tm
 (12) Tj
 ET
@@ -8537,14 +8664,14 @@ f
 Q
 BT
 1 0 0 1 124 74 Tm
-(rotate_copy) Tj
+(reverse) Tj
 1 0 0 1 507.88 74 Tm
 (12) Tj
 /F21 10 Tf
 1 0 0 1 52 37 Tm
 (ii) Tj
-1 0 0 1 452.95 37 Tm
-(28 April 2006 15:04) Tj
+1 0 0 1 456.28 37 Tm
+(15 May 2006 14:06) Tj
 ET
 52 50 m
 543 50 l
@@ -8552,7 +8679,7 @@ S
 endstream
 endobj
 87 0 obj
-6321
+6335
 endobj
 88 0 obj
 <<
@@ -8598,7 +8725,7 @@ f
 Q
 BT
 1 0 0 1 124 770 Tm
-(partition) Tj
+(reverse_copy) Tj
 1 0 0 1 507.88 770 Tm
 (12) Tj
 ET
@@ -8609,7 +8736,7 @@ f
 Q
 BT
 1 0 0 1 124 758 Tm
-(stable_partition) Tj
+(rotate) Tj
 1 0 0 1 507.88 758 Tm
 (12) Tj
 ET
@@ -8620,7 +8747,7 @@ f
 Q
 BT
 1 0 0 1 124 746 Tm
-(min_element) Tj
+(rotate_copy) Tj
 1 0 0 1 507.88 746 Tm
 (12) Tj
 ET
@@ -8631,7 +8758,7 @@ f
 Q
 BT
 1 0 0 1 124 734 Tm
-(max_element) Tj
+(partition) Tj
 1 0 0 1 507.88 734 Tm
 (12) Tj
 ET
@@ -8642,7 +8769,7 @@ f
 Q
 BT
 1 0 0 1 124 722 Tm
-(unique) Tj
+(stable_partition) Tj
 1 0 0 1 507.88 722 Tm
 (12) Tj
 ET
@@ -8653,7 +8780,7 @@ f
 Q
 BT
 1 0 0 1 124 710 Tm
-(unique_copy) Tj
+(min_element) Tj
 1 0 0 1 507.88 710 Tm
 (12) Tj
 ET
@@ -8664,9 +8791,9 @@ f
 Q
 BT
 1 0 0 1 124 698 Tm
-(adjacent_find) Tj
+(max_element) Tj
 1 0 0 1 507.88 698 Tm
-(12) Tj
+(13) Tj
 ET
 q
 1 g
@@ -8674,10 +8801,10 @@ q
 f
 Q
 BT
-1 0 0 1 100 686 Tm
-(Examples) Tj
+1 0 0 1 124 686 Tm
+(unique) Tj
 1 0 0 1 507.88 686 Tm
-(12) Tj
+(13) Tj
 ET
 q
 0.95 g
@@ -8685,8 +8812,8 @@ q
 f
 Q
 BT
-1 0 0 1 76 674 Tm
-(CLASS Class::STL::Utilities) Tj
+1 0 0 1 124 674 Tm
+(unique_copy) Tj
 1 0 0 1 507.88 674 Tm
 (13) Tj
 ET
@@ -8696,8 +8823,8 @@ q
 f
 Q
 BT
-1 0 0 1 100 662 Tm
-(Exports) Tj
+1 0 0 1 124 662 Tm
+(adjacent_find) Tj
 1 0 0 1 507.88 662 Tm
 (13) Tj
 ET
@@ -8707,8 +8834,8 @@ q
 f
 Q
 BT
-1 0 0 1 124 650 Tm
-(equal_to) Tj
+1 0 0 1 100 650 Tm
+(Examples) Tj
 1 0 0 1 507.88 650 Tm
 (13) Tj
 ET
@@ -8718,8 +8845,8 @@ q
 f
 Q
 BT
-1 0 0 1 124 638 Tm
-(not_equal_to) Tj
+1 0 0 1 76 638 Tm
+(CLASS Class::STL::Utilities) Tj
 1 0 0 1 507.88 638 Tm
 (13) Tj
 ET
@@ -8729,8 +8856,8 @@ q
 f
 Q
 BT
-1 0 0 1 124 626 Tm
-(greater) Tj
+1 0 0 1 100 626 Tm
+(Exports) Tj
 1 0 0 1 507.88 626 Tm
 (13) Tj
 ET
@@ -8741,7 +8868,7 @@ f
 Q
 BT
 1 0 0 1 124 614 Tm
-(greater_equal) Tj
+(equal_to) Tj
 1 0 0 1 507.88 614 Tm
 (13) Tj
 ET
@@ -8752,7 +8879,7 @@ f
 Q
 BT
 1 0 0 1 124 602 Tm
-(less) Tj
+(not_equal_to) Tj
 1 0 0 1 507.88 602 Tm
 (13) Tj
 ET
@@ -8763,7 +8890,7 @@ f
 Q
 BT
 1 0 0 1 124 590 Tm
-(less_equal) Tj
+(greater) Tj
 1 0 0 1 507.88 590 Tm
 (13) Tj
 ET
@@ -8774,7 +8901,7 @@ f
 Q
 BT
 1 0 0 1 124 578 Tm
-(compare) Tj
+(greater_equal) Tj
 1 0 0 1 507.88 578 Tm
 (13) Tj
 ET
@@ -8785,9 +8912,9 @@ f
 Q
 BT
 1 0 0 1 124 566 Tm
-(matches) Tj
+(less) Tj
 1 0 0 1 507.88 566 Tm
-(13) Tj
+(14) Tj
 ET
 q
 0.95 g
@@ -8796,9 +8923,9 @@ f
 Q
 BT
 1 0 0 1 124 554 Tm
-(matches_ic) Tj
+(less_equal) Tj
 1 0 0 1 507.88 554 Tm
-(13) Tj
+(14) Tj
 ET
 q
 1 g
@@ -8807,9 +8934,9 @@ f
 Q
 BT
 1 0 0 1 124 542 Tm
-(bind1st) Tj
+(compare) Tj
 1 0 0 1 507.88 542 Tm
-(13) Tj
+(14) Tj
 ET
 q
 0.95 g
@@ -8818,7 +8945,7 @@ f
 Q
 BT
 1 0 0 1 124 530 Tm
-(bind2nd) Tj
+(matches) Tj
 1 0 0 1 507.88 530 Tm
 (14) Tj
 ET
@@ -8829,7 +8956,7 @@ f
 Q
 BT
 1 0 0 1 124 518 Tm
-(mem_fun) Tj
+(matches_ic) Tj
 1 0 0 1 507.88 518 Tm
 (14) Tj
 ET
@@ -8840,7 +8967,7 @@ f
 Q
 BT
 1 0 0 1 124 506 Tm
-(ptr_fun) Tj
+(bind1st) Tj
 1 0 0 1 507.88 506 Tm
 (14) Tj
 ET
@@ -8851,7 +8978,7 @@ f
 Q
 BT
 1 0 0 1 124 494 Tm
-(ptr_fun_binary) Tj
+(bind2nd) Tj
 1 0 0 1 507.88 494 Tm
 (14) Tj
 ET
@@ -8862,7 +8989,7 @@ f
 Q
 BT
 1 0 0 1 124 482 Tm
-(logical_and) Tj
+(mem_fun) Tj
 1 0 0 1 507.88 482 Tm
 (14) Tj
 ET
@@ -8873,7 +9000,7 @@ f
 Q
 BT
 1 0 0 1 124 470 Tm
-(logical_or) Tj
+(ptr_fun) Tj
 1 0 0 1 507.88 470 Tm
 (14) Tj
 ET
@@ -8884,7 +9011,7 @@ f
 Q
 BT
 1 0 0 1 124 458 Tm
-(multiplies) Tj
+(ptr_fun_binary) Tj
 1 0 0 1 507.88 458 Tm
 (14) Tj
 ET
@@ -8895,7 +9022,7 @@ f
 Q
 BT
 1 0 0 1 124 446 Tm
-(divides) Tj
+(logical_and) Tj
 1 0 0 1 507.88 446 Tm
 (14) Tj
 ET
@@ -8906,7 +9033,7 @@ f
 Q
 BT
 1 0 0 1 124 434 Tm
-(plus) Tj
+(logical_or) Tj
 1 0 0 1 507.88 434 Tm
 (14) Tj
 ET
@@ -8917,7 +9044,7 @@ f
 Q
 BT
 1 0 0 1 124 422 Tm
-(minus) Tj
+(multiplies) Tj
 1 0 0 1 507.88 422 Tm
 (14) Tj
 ET
@@ -8928,9 +9055,9 @@ f
 Q
 BT
 1 0 0 1 124 410 Tm
-(modulus.) Tj
+(divides) Tj
 1 0 0 1 507.88 410 Tm
-(14) Tj
+(15) Tj
 ET
 q
 1 g
@@ -8938,10 +9065,10 @@ q
 f
 Q
 BT
-1 0 0 1 76 398 Tm
-(CLASS Class::STL::Iterators) Tj
+1 0 0 1 124 398 Tm
+(plus) Tj
 1 0 0 1 507.88 398 Tm
-(14) Tj
+(15) Tj
 ET
 q
 0.95 g
@@ -8949,8 +9076,8 @@ q
 f
 Q
 BT
-1 0 0 1 100 386 Tm
-(Exports) Tj
+1 0 0 1 124 386 Tm
+(minus) Tj
 1 0 0 1 507.88 386 Tm
 (15) Tj
 ET
@@ -8961,7 +9088,7 @@ f
 Q
 BT
 1 0 0 1 124 374 Tm
-(new) Tj
+(modulus.) Tj
 1 0 0 1 507.88 374 Tm
 (15) Tj
 ET
@@ -8971,8 +9098,8 @@ q
 f
 Q
 BT
-1 0 0 1 124 362 Tm
-(p_container) Tj
+1 0 0 1 76 362 Tm
+(CLASS Class::STL::Iterators) Tj
 1 0 0 1 507.88 362 Tm
 (15) Tj
 ET
@@ -8982,8 +9109,8 @@ q
 f
 Q
 BT
-1 0 0 1 124 350 Tm
-(p_element) Tj
+1 0 0 1 100 350 Tm
+(Exports) Tj
 1 0 0 1 507.88 350 Tm
 (15) Tj
 ET
@@ -8994,7 +9121,7 @@ f
 Q
 BT
 1 0 0 1 124 338 Tm
-(distance) Tj
+(new) Tj
 1 0 0 1 507.88 338 Tm
 (15) Tj
 ET
@@ -9005,7 +9132,7 @@ f
 Q
 BT
 1 0 0 1 124 326 Tm
-(advance) Tj
+(p_container) Tj
 1 0 0 1 507.88 326 Tm
 (15) Tj
 ET
@@ -9016,7 +9143,7 @@ f
 Q
 BT
 1 0 0 1 124 314 Tm
-(inserter) Tj
+(p_element) Tj
 1 0 0 1 507.88 314 Tm
 (15) Tj
 ET
@@ -9027,7 +9154,7 @@ f
 Q
 BT
 1 0 0 1 124 302 Tm
-(front_inserter) Tj
+(distance) Tj
 1 0 0 1 507.88 302 Tm
 (15) Tj
 ET
@@ -9038,7 +9165,7 @@ f
 Q
 BT
 1 0 0 1 124 290 Tm
-(back_inserter) Tj
+(advance) Tj
 1 0 0 1 507.88 290 Tm
 (15) Tj
 ET
@@ -9049,7 +9176,7 @@ f
 Q
 BT
 1 0 0 1 124 278 Tm
-(first) Tj
+(inserter) Tj
 1 0 0 1 507.88 278 Tm
 (15) Tj
 ET
@@ -9060,7 +9187,7 @@ f
 Q
 BT
 1 0 0 1 124 266 Tm
-(next) Tj
+(front_inserter) Tj
 1 0 0 1 507.88 266 Tm
 (15) Tj
 ET
@@ -9071,7 +9198,7 @@ f
 Q
 BT
 1 0 0 1 124 254 Tm
-(last) Tj
+(back_inserter) Tj
 1 0 0 1 507.88 254 Tm
 (15) Tj
 ET
@@ -9082,9 +9209,9 @@ f
 Q
 BT
 1 0 0 1 124 242 Tm
-(prev) Tj
+(first) Tj
 1 0 0 1 507.88 242 Tm
-(15) Tj
+(16) Tj
 ET
 q
 1 g
@@ -9093,9 +9220,9 @@ f
 Q
 BT
 1 0 0 1 124 230 Tm
-(at_end) Tj
+(next) Tj
 1 0 0 1 507.88 230 Tm
-(15) Tj
+(16) Tj
 ET
 q
 0.95 g
@@ -9104,9 +9231,9 @@ f
 Q
 BT
 1 0 0 1 124 218 Tm
-(eq) Tj
+(last) Tj
 1 0 0 1 507.88 218 Tm
-(15) Tj
+(16) Tj
 ET
 q
 1 g
@@ -9115,9 +9242,9 @@ f
 Q
 BT
 1 0 0 1 124 206 Tm
-(ne) Tj
+(prev) Tj
 1 0 0 1 507.88 206 Tm
-(15) Tj
+(16) Tj
 ET
 q
 0.95 g
@@ -9126,9 +9253,9 @@ f
 Q
 BT
 1 0 0 1 124 194 Tm
-(lt) Tj
+(at_end) Tj
 1 0 0 1 507.88 194 Tm
-(15) Tj
+(16) Tj
 ET
 q
 1 g
@@ -9137,9 +9264,9 @@ f
 Q
 BT
 1 0 0 1 124 182 Tm
-(le) Tj
+(eq) Tj
 1 0 0 1 507.88 182 Tm
-(15) Tj
+(16) Tj
 ET
 q
 0.95 g
@@ -9148,9 +9275,9 @@ f
 Q
 BT
 1 0 0 1 124 170 Tm
-(gt) Tj
+(ne) Tj
 1 0 0 1 507.88 170 Tm
-(15) Tj
+(16) Tj
 ET
 q
 1 g
@@ -9159,9 +9286,9 @@ f
 Q
 BT
 1 0 0 1 124 158 Tm
-(ge) Tj
+(lt) Tj
 1 0 0 1 507.88 158 Tm
-(15) Tj
+(16) Tj
 ET
 q
 0.95 g
@@ -9170,9 +9297,9 @@ f
 Q
 BT
 1 0 0 1 124 146 Tm
-(cmp) Tj
+(le) Tj
 1 0 0 1 507.88 146 Tm
-(15) Tj
+(16) Tj
 ET
 q
 1 g
@@ -9180,10 +9307,10 @@ q
 f
 Q
 BT
-1 0 0 1 100 134 Tm
-(Examples) Tj
+1 0 0 1 124 134 Tm
+(gt) Tj
 1 0 0 1 507.88 134 Tm
-(15) Tj
+(16) Tj
 ET
 q
 0.95 g
@@ -9191,8 +9318,8 @@ q
 f
 Q
 BT
-1 0 0 1 76 122 Tm
-(SEE ALSO) Tj
+1 0 0 1 124 122 Tm
+(ge) Tj
 1 0 0 1 507.88 122 Tm
 (16) Tj
 ET
@@ -9202,8 +9329,8 @@ q
 f
 Q
 BT
-1 0 0 1 76 110 Tm
-(AUTHOR) Tj
+1 0 0 1 124 110 Tm
+(cmp) Tj
 1 0 0 1 507.88 110 Tm
 (16) Tj
 ET
@@ -9213,13 +9340,35 @@ q
 f
 Q
 BT
-1 0 0 1 76 98 Tm
-(COPYRIGHT AND LICENSE) Tj
+1 0 0 1 100 98 Tm
+(Examples) Tj
 1 0 0 1 507.88 98 Tm
+(16) Tj
+ET
+q
+1 g
+52 83 491 12 re
+f
+Q
+BT
+1 0 0 1 76 86 Tm
+(SEE ALSO) Tj
+1 0 0 1 507.88 86 Tm
+(16) Tj
+ET
+q
+0.95 g
+52 71 491 12 re
+f
+Q
+BT
+1 0 0 1 76 74 Tm
+(AUTHOR) Tj
+1 0 0 1 507.88 74 Tm
 (16) Tj
 /F21 10 Tf
 1 0 0 1 52 37 Tm
-(28 April 2006 15:04) Tj
+(15 May 2006 14:06) Tj
 1 0 0 1 534.66 37 Tm
 (iii) Tj
 ET
@@ -9229,7 +9378,7 @@ S
 endstream
 endobj
 91 0 obj
-5852
+6032
 endobj
 92 0 obj
 <<
@@ -9266,11 +9415,23 @@ BT
 (Class::STL::Containers) Tj
 1 0 0 1 458.55 797 Tm
 (Table of Contents) Tj
+/F20 10 Tf
+ET
+q
+1 g
+52 767 491 12 re
+f
+Q
+BT
+1 0 0 1 76 770 Tm
+(COPYRIGHT AND LICENSE) Tj
+1 0 0 1 507.88 770 Tm
+(16) Tj
 /F21 10 Tf
 1 0 0 1 52 37 Tm
 (iv) Tj
-1 0 0 1 452.95 37 Tm
-(28 April 2006 15:04) Tj
+1 0 0 1 456.28 37 Tm
+(15 May 2006 14:06) Tj
 ET
 52 50 m
 543 50 l
@@ -9278,7 +9439,7 @@ S
 endstream
 endobj
 95 0 obj
-263
+380
 endobj
 96 0 obj
 <<
@@ -9286,6 +9447,7 @@ endobj
 /ColorSpace <</DefaultRGB 1 0 R>>
 /Font
 <<
+/F20 14 0 R
 /F21 15 0 R
 >>
 >>
@@ -9337,7 +9499,7 @@ T* (gaffie@users.sourceforge.net) Tj
 1 0 0 1 194.69 371 Tm
 (Class::STL::Containers) Tj
 /F21 9 Tf
-T* (0.18) Tj
+T* (0.26) Tj
 ET
 endstream
 endobj
@@ -9374,7 +9536,7 @@ BT
 (Class::STL::Containers) Tj
 /F21 10 Tf
 1 0 0 1 52 37 Tm
-(28 April 2006 15:04) Tj
+(15 May 2006 14:06) Tj
 1 0 0 1 543 37 Tm
 () Tj
 ET
@@ -9384,7 +9546,7 @@ S
 endstream
 endobj
 103 0 obj
-263
+261
 endobj
 104 0 obj
 <<
@@ -9409,8 +9571,8 @@ endobj
 /Parent 106 0 R
 /Dest [85 0 R /Fit]
 /First 108 0 R
-/Last 276 0 R
-/Count 169 
+/Last 279 0 R
+/Count 172 
 /Title (Table of Contents)
 >>
 endobj
@@ -9555,17 +9717,17 @@ endobj
 /Parent 107 0 R
 /Dest [29 0 R /FitH 351.6]
 /Previous 110 0 R
-/Next 131 0 R
+/Next 134 0 R
 /First 124 0 R
-/Last 130 0 R
-/Count 7 
+/Last 133 0 R
+/Count 10 
 /Title (CLASS Class::STL::ClassMembers)
 >>
 endobj
 124 0 obj
 <<
 /Parent 123 0 R
-/Dest [29 0 R /FitH 248.4]
+/Dest [29 0 R /FitH 212.4]
 /Next 125 0 R
 /Title (Data Member Accessor Get/Put Function)
 >>
@@ -9573,7 +9735,7 @@ endobj
 125 0 obj
 <<
 /Parent 123 0 R
-/Dest [29 0 R /FitH 174]
+/Dest [29 0 R /FitH 138]
 /Previous 124 0 R
 /Next 126 0 R
 /Title (Class members_init\(\) Function)
@@ -9582,7 +9744,7 @@ endobj
 126 0 obj
 <<
 /Parent 123 0 R
-/Dest [29 0 R /FitH 123.6]
+/Dest [29 0 R /FitH 87.6000000000002]
 /Previous 125 0 R
 /Next 127 0 R
 /Title (Class clone\(\) Function)
@@ -9591,7 +9753,7 @@ endobj
 127 0 obj
 <<
 /Parent 123 0 R
-/Dest [29 0 R /FitH 85.2000000000002]
+/Dest [33 0 R /FitH 765.6]
 /Previous 126 0 R
 /Next 128 0 R
 /Title (Class swap\(\) Function)
@@ -9600,1371 +9762,1398 @@ endobj
 128 0 obj
 <<
 /Parent 123 0 R
-/Dest [33 0 R /FitH 753.6]
+/Dest [33 0 R /FitH 715.2]
 /Previous 127 0 R
 /Next 129 0 R
-/Title (Class::STL::ClassMembers::DataMember)
+/Title (Class members\(\) Function)
 >>
 endobj
 129 0 obj
 <<
 /Parent 123 0 R
-/Dest [33 0 R /FitH 667.2]
+/Dest [33 0 R /FitH 652.8]
 /Previous 128 0 R
 /Next 130 0 R
-/Title (Class::STL::ClassMembers::FunctionMember::New)
+/Title (Class members_local\(\) Function)
 >>
 endobj
 130 0 obj
 <<
 /Parent 123 0 R
-/Dest [33 0 R /FitH 601.2]
+/Dest [33 0 R /FitH 602.4]
 /Previous 129 0 R
-/Title (Example)
+/Next 131 0 R
+/Title (Class::STL::ClassMembers::DataMember)
 >>
 endobj
 131 0 obj
 <<
-/Parent 107 0 R
-/Dest [33 0 R /FitH 432]
-/Previous 123 0 R
-/Next 133 0 R
-/First 132 0 R
-/Last 132 0 R
-/Count 1 
-/Title (CLASS Class::STL::Containers)
+/Parent 123 0 R
+/Dest [33 0 R /FitH 516]
+/Previous 130 0 R
+/Next 132 0 R
+/Title (Class::STL::ClassMembers::Constructor)
 >>
 endobj
 132 0 obj
 <<
-/Parent 131 0 R
-/Dest [33 0 R /FitH 393.6]
-/Title (Exports)
+/Parent 123 0 R
+/Dest [33 0 R /FitH 417.6]
+/Previous 131 0 R
+/Next 133 0 R
+/Title (Class::STL::ClassMembers::SingletonConstructor)
 >>
 endobj
 133 0 obj
 <<
-/Parent 107 0 R
-/Dest [33 0 R /FitH 342]
-/Previous 131 0 R
-/Next 155 0 R
-/First 134 0 R
-/Last 134 0 R
-/Count 21 
-/Title (CLASS Class::STL::Containers::Abstract)
+/Parent 123 0 R
+/Dest [33 0 R /FitH 351.6]
+/Previous 132 0 R
+/Title (Example)
 >>
 endobj
 134 0 obj
 <<
-/Parent 133 0 R
-/Dest [33 0 R /FitH 283.200000000001]
+/Parent 107 0 R
+/Dest [33 0 R /FitH 182.4]
+/Previous 123 0 R
+/Next 136 0 R
 /First 135 0 R
-/Last 154 0 R
-/Count 20 
-/Title (Extends Class::STL::Element)
+/Last 135 0 R
+/Count 1 
+/Title (CLASS Class::STL::Containers)
 >>
 endobj
 135 0 obj
 <<
 /Parent 134 0 R
-/Dest [33 0 R /FitH 268.800000000001]
-/Next 136 0 R
-/Title (new)
+/Dest [33 0 R /FitH 144]
+/Title (Exports)
 >>
 endobj
 136 0 obj
 <<
-/Parent 134 0 R
-/Dest [37 0 R /FitH 693.6]
-/Previous 135 0 R
-/Next 137 0 R
-/Title (clone)
+/Parent 107 0 R
+/Dest [37 0 R /FitH 794.4]
+/Previous 134 0 R
+/Next 158 0 R
+/First 137 0 R
+/Last 137 0 R
+/Count 21 
+/Title (CLASS Class::STL::Containers::Abstract)
 >>
 endobj
 137 0 obj
 <<
-/Parent 134 0 R
-/Dest [37 0 R /FitH 655.2]
-/Previous 136 0 R
-/Next 138 0 R
-/Title (factory)
+/Parent 136 0 R
+/Dest [37 0 R /FitH 735.6]
+/First 138 0 R
+/Last 157 0 R
+/Count 20 
+/Title (Extends Class::STL::Element)
 >>
 endobj
 138 0 obj
 <<
-/Parent 134 0 R
-/Dest [37 0 R /FitH 568.8]
-/Previous 137 0 R
+/Parent 137 0 R
+/Dest [37 0 R /FitH 721.2]
 /Next 139 0 R
-/Title (erase)
+/Title (new)
 >>
 endobj
 139 0 obj
 <<
-/Parent 134 0 R
-/Dest [37 0 R /FitH 494.4]
+/Parent 137 0 R
+/Dest [37 0 R /FitH 394.8]
 /Previous 138 0 R
 /Next 140 0 R
-/Title (insert)
+/Title (clone)
 >>
 endobj
 140 0 obj
 <<
-/Parent 134 0 R
-/Dest [37 0 R /FitH 312]
+/Parent 137 0 R
+/Dest [37 0 R /FitH 356.4]
 /Previous 139 0 R
 /Next 141 0 R
-/Title (pop)
+/Title (factory)
 >>
 endobj
 141 0 obj
 <<
-/Parent 134 0 R
-/Dest [37 0 R /FitH 261.6]
+/Parent 137 0 R
+/Dest [37 0 R /FitH 270]
 /Previous 140 0 R
 /Next 142 0 R
-/Title (push)
+/Title (erase)
 >>
 endobj
 142 0 obj
 <<
-/Parent 134 0 R
-/Dest [37 0 R /FitH 199.2]
+/Parent 137 0 R
+/Dest [37 0 R /FitH 195.6]
 /Previous 141 0 R
 /Next 143 0 R
-/Title (clear)
+/Title (insert)
 >>
 endobj
 143 0 obj
 <<
-/Parent 134 0 R
-/Dest [37 0 R /FitH 148.8]
+/Parent 137 0 R
+/Dest [41 0 R /FitH 741.6]
 /Previous 142 0 R
 /Next 144 0 R
-/Title (begin)
+/Title (pop)
 >>
 endobj
 144 0 obj
 <<
-/Parent 134 0 R
-/Dest [37 0 R /FitH 86.4000000000001]
+/Parent 137 0 R
+/Dest [41 0 R /FitH 691.2]
 /Previous 143 0 R
 /Next 145 0 R
-/Title (end)
+/Title (push)
 >>
 endobj
 145 0 obj
 <<
-/Parent 134 0 R
-/Dest [41 0 R /FitH 729.6]
+/Parent 137 0 R
+/Dest [41 0 R /FitH 628.8]
 /Previous 144 0 R
 /Next 146 0 R
-/Title (rbegin)
+/Title (clear)
 >>
 endobj
 146 0 obj
 <<
-/Parent 134 0 R
-/Dest [41 0 R /FitH 667.2]
+/Parent 137 0 R
+/Dest [41 0 R /FitH 578.4]
 /Previous 145 0 R
 /Next 147 0 R
-/Title (rend)
+/Title (begin)
 >>
 endobj
 147 0 obj
 <<
-/Parent 134 0 R
-/Dest [41 0 R /FitH 604.8]
+/Parent 137 0 R
+/Dest [41 0 R /FitH 516]
 /Previous 146 0 R
 /Next 148 0 R
-/Title (size)
+/Title (end)
 >>
 endobj
 148 0 obj
 <<
-/Parent 134 0 R
-/Dest [41 0 R /FitH 542.4]
+/Parent 137 0 R
+/Dest [41 0 R /FitH 441.6]
 /Previous 147 0 R
 /Next 149 0 R
-/Title (empty)
+/Title (rbegin)
 >>
 endobj
 149 0 obj
 <<
-/Parent 134 0 R
-/Dest [41 0 R /FitH 480]
+/Parent 137 0 R
+/Dest [41 0 R /FitH 379.2]
 /Previous 148 0 R
 /Next 150 0 R
-/Title (to_array)
+/Title (rend)
 >>
 endobj
 150 0 obj
 <<
-/Parent 134 0 R
-/Dest [41 0 R /FitH 429.6]
+/Parent 137 0 R
+/Dest [41 0 R /FitH 316.8]
 /Previous 149 0 R
 /Next 151 0 R
-/Title (eq)
+/Title (size)
 >>
 endobj
 151 0 obj
 <<
-/Parent 134 0 R
-/Dest [41 0 R /FitH 343.2]
+/Parent 137 0 R
+/Dest [41 0 R /FitH 254.4]
 /Previous 150 0 R
 /Next 152 0 R
-/Title (ne)
+/Title (empty)
 >>
 endobj
 152 0 obj
 <<
-/Parent 134 0 R
-/Dest [41 0 R /FitH 292.8]
+/Parent 137 0 R
+/Dest [41 0 R /FitH 192]
 /Previous 151 0 R
 /Next 153 0 R
-/Title (operator +, operator +=)
+/Title (to_array)
 >>
 endobj
 153 0 obj
 <<
-/Parent 134 0 R
-/Dest [41 0 R /FitH 254.4]
+/Parent 137 0 R
+/Dest [41 0 R /FitH 141.6]
 /Previous 152 0 R
 /Next 154 0 R
-/Title (operator == )
+/Title (eq)
 >>
 endobj
 154 0 obj
 <<
-/Parent 134 0 R
-/Dest [41 0 R /FitH 216]
+/Parent 137 0 R
+/Dest [45 0 R /FitH 792]
 /Previous 153 0 R
-/Title (operator != )
+/Next 155 0 R
+/Title (ne)
 >>
 endobj
 155 0 obj
 <<
-/Parent 107 0 R
-/Dest [41 0 R /FitH 164.4]
-/Previous 133 0 R
-/Next 160 0 R
-/First 156 0 R
-/Last 159 0 R
-/Count 4 
-/Title (CLASS Class::STL::Containers::List)
+/Parent 137 0 R
+/Dest [45 0 R /FitH 741.6]
+/Previous 154 0 R
+/Next 156 0 R
+/Title (operator +, operator +=)
 >>
 endobj
 156 0 obj
 <<
-/Parent 155 0 R
-/Dest [45 0 R /FitH 792]
-/Next 159 0 R
-/First 157 0 R
-/Last 158 0 R
-/Count 2 
-/Title (Extends Class::STL::Containers::Deque)
+/Parent 137 0 R
+/Dest [45 0 R /FitH 703.2]
+/Previous 155 0 R
+/Next 157 0 R
+/Title (operator == )
 >>
 endobj
 157 0 obj
 <<
-/Parent 156 0 R
-/Dest [45 0 R /FitH 777.6]
-/Next 158 0 R
-/Title (reverse)
+/Parent 137 0 R
+/Dest [45 0 R /FitH 664.8]
+/Previous 156 0 R
+/Title (operator != )
 >>
 endobj
 158 0 obj
 <<
-/Parent 156 0 R
-/Dest [45 0 R /FitH 727.2]
-/Previous 157 0 R
-/Title (sort)
+/Parent 107 0 R
+/Dest [45 0 R /FitH 613.2]
+/Previous 136 0 R
+/Next 163 0 R
+/First 159 0 R
+/Last 162 0 R
+/Count 4 
+/Title (CLASS Class::STL::Containers::List)
 >>
 endobj
 159 0 obj
 <<
-/Parent 155 0 R
-/Dest [45 0 R /FitH 649.2]
-/Previous 156 0 R
-/Title (Example)
+/Parent 158 0 R
+/Dest [45 0 R /FitH 542.4]
+/Next 162 0 R
+/First 160 0 R
+/Last 161 0 R
+/Count 2 
+/Title (Extends Class::STL::Containers::Deque)
 >>
 endobj
 160 0 obj
 <<
-/Parent 107 0 R
-/Dest [45 0 R /FitH 278.400000000001]
-/Previous 155 0 R
-/Next 167 0 R
-/First 161 0 R
-/Last 161 0 R
-/Count 6 
-/Title (CLASS Class::STL::Containers::Vector)
+/Parent 159 0 R
+/Dest [45 0 R /FitH 528]
+/Next 161 0 R
+/Title (reverse)
 >>
 endobj
 161 0 obj
 <<
-/Parent 160 0 R
-/Dest [45 0 R /FitH 219.600000000001]
-/First 162 0 R
-/Last 166 0 R
-/Count 5 
-/Title (Extends Class::STL::Containers::Abstract)
+/Parent 159 0 R
+/Dest [45 0 R /FitH 477.6]
+/Previous 160 0 R
+/Title (sort)
 >>
 endobj
 162 0 obj
 <<
-/Parent 161 0 R
-/Dest [45 0 R /FitH 205.200000000001]
-/Next 163 0 R
-/Title (push_back)
+/Parent 158 0 R
+/Dest [45 0 R /FitH 399.6]
+/Previous 159 0 R
+/Title (Example)
 >>
 endobj
 163 0 obj
 <<
-/Parent 161 0 R
-/Dest [45 0 R /FitH 142.800000000001]
-/Previous 162 0 R
-/Next 164 0 R
-/Title (pop_back)
+/Parent 107 0 R
+/Dest [49 0 R /FitH 739.8]
+/Previous 158 0 R
+/Next 170 0 R
+/First 164 0 R
+/Last 164 0 R
+/Count 6 
+/Title (CLASS Class::STL::Containers::Vector)
 >>
 endobj
 164 0 obj
 <<
-/Parent 161 0 R
-/Dest [45 0 R /FitH 92.4000000000009]
-/Previous 163 0 R
-/Next 165 0 R
-/Title (back)
+/Parent 163 0 R
+/Dest [49 0 R /FitH 681]
+/First 165 0 R
+/Last 169 0 R
+/Count 5 
+/Title (Extends Class::STL::Containers::Abstract)
 >>
 endobj
 165 0 obj
 <<
-/Parent 161 0 R
-/Dest [49 0 R /FitH 741.6]
-/Previous 164 0 R
+/Parent 164 0 R
+/Dest [49 0 R /FitH 666.6]
 /Next 166 0 R
-/Title (front)
+/Title (push_back)
 >>
 endobj
 166 0 obj
 <<
-/Parent 161 0 R
-/Dest [49 0 R /FitH 691.2]
+/Parent 164 0 R
+/Dest [49 0 R /FitH 604.2]
 /Previous 165 0 R
-/Title (at)
+/Next 167 0 R
+/Title (pop_back)
 >>
 endobj
 167 0 obj
 <<
-/Parent 107 0 R
-/Dest [49 0 R /FitH 615.6]
-/Previous 160 0 R
-/Next 171 0 R
-/First 168 0 R
-/Last 168 0 R
-/Count 3 
-/Title (CLASS Class::STL::Containers::Deque)
+/Parent 164 0 R
+/Dest [49 0 R /FitH 553.8]
+/Previous 166 0 R
+/Next 168 0 R
+/Title (back)
 >>
 endobj
 168 0 obj
 <<
-/Parent 167 0 R
-/Dest [49 0 R /FitH 556.8]
-/First 169 0 R
-/Last 170 0 R
-/Count 2 
-/Title (Extends Class::STL::Containers::Vector)
+/Parent 164 0 R
+/Dest [49 0 R /FitH 491.4]
+/Previous 167 0 R
+/Next 169 0 R
+/Title (front)
 >>
 endobj
 169 0 obj
 <<
-/Parent 168 0 R
-/Dest [49 0 R /FitH 542.4]
-/Next 170 0 R
-/Title (push_front)
+/Parent 164 0 R
+/Dest [49 0 R /FitH 441]
+/Previous 168 0 R
+/Title (at)
 >>
 endobj
 170 0 obj
 <<
-/Parent 168 0 R
-/Dest [49 0 R /FitH 480]
-/Previous 169 0 R
-/Title (pop_front)
+/Parent 107 0 R
+/Dest [49 0 R /FitH 365.4]
+/Previous 163 0 R
+/Next 174 0 R
+/First 171 0 R
+/Last 171 0 R
+/Count 3 
+/Title (CLASS Class::STL::Containers::Deque)
 >>
 endobj
 171 0 obj
 <<
-/Parent 107 0 R
-/Dest [49 0 R /FitH 416.4]
-/Previous 167 0 R
-/Next 177 0 R
+/Parent 170 0 R
+/Dest [49 0 R /FitH 306.6]
 /First 172 0 R
-/Last 172 0 R
-/Count 5 
-/Title (CLASS Class::STL::Containers::Queue)
+/Last 173 0 R
+/Count 2 
+/Title (Extends Class::STL::Containers::Vector)
 >>
 endobj
 172 0 obj
 <<
 /Parent 171 0 R
-/Dest [49 0 R /FitH 345.6]
-/First 173 0 R
-/Last 176 0 R
-/Count 4 
-/Title (Extends Class::STL::Containers::Abstract)
+/Dest [49 0 R /FitH 292.2]
+/Next 173 0 R
+/Title (push_front)
 >>
 endobj
 173 0 obj
 <<
-/Parent 172 0 R
-/Dest [49 0 R /FitH 331.2]
-/Next 174 0 R
-/Title (push)
+/Parent 171 0 R
+/Dest [49 0 R /FitH 229.8]
+/Previous 172 0 R
+/Title (pop_front)
 >>
 endobj
 174 0 obj
 <<
-/Parent 172 0 R
-/Dest [49 0 R /FitH 268.8]
-/Previous 173 0 R
-/Next 175 0 R
-/Title (pop)
+/Parent 107 0 R
+/Dest [49 0 R /FitH 166.2]
+/Previous 170 0 R
+/Next 180 0 R
+/First 175 0 R
+/Last 175 0 R
+/Count 5 
+/Title (CLASS Class::STL::Containers::Queue)
 >>
 endobj
 175 0 obj
 <<
-/Parent 172 0 R
-/Dest [49 0 R /FitH 206.4]
-/Previous 174 0 R
-/Next 176 0 R
-/Title (back)
+/Parent 174 0 R
+/Dest [53 0 R /FitH 792]
+/First 176 0 R
+/Last 179 0 R
+/Count 4 
+/Title (Extends Class::STL::Containers::Abstract)
 >>
 endobj
 176 0 obj
 <<
-/Parent 172 0 R
-/Dest [49 0 R /FitH 144]
-/Previous 175 0 R
-/Title (front)
+/Parent 175 0 R
+/Dest [53 0 R /FitH 777.6]
+/Next 177 0 R
+/Title (push)
 >>
 endobj
 177 0 obj
 <<
-/Parent 107 0 R
-/Dest [53 0 R /FitH 794.4]
-/Previous 171 0 R
-/Next 182 0 R
-/First 178 0 R
-/Last 178 0 R
-/Count 4 
-/Title (CLASS Class::STL::Containers::Stack)
+/Parent 175 0 R
+/Dest [53 0 R /FitH 715.2]
+/Previous 176 0 R
+/Next 178 0 R
+/Title (pop)
 >>
 endobj
 178 0 obj
 <<
-/Parent 177 0 R
-/Dest [53 0 R /FitH 723.6]
-/First 179 0 R
-/Last 181 0 R
-/Count 3 
-/Title (Extends Class::STL::Containers::Abstract)
+/Parent 175 0 R
+/Dest [53 0 R /FitH 652.8]
+/Previous 177 0 R
+/Next 179 0 R
+/Title (back)
 >>
 endobj
 179 0 obj
 <<
-/Parent 178 0 R
-/Dest [53 0 R /FitH 709.2]
-/Next 180 0 R
-/Title (push)
+/Parent 175 0 R
+/Dest [53 0 R /FitH 590.4]
+/Previous 178 0 R
+/Title (front)
 >>
 endobj
 180 0 obj
 <<
-/Parent 178 0 R
-/Dest [53 0 R /FitH 646.8]
-/Previous 179 0 R
-/Next 181 0 R
-/Title (pop)
+/Parent 107 0 R
+/Dest [53 0 R /FitH 514.8]
+/Previous 174 0 R
+/Next 185 0 R
+/First 181 0 R
+/Last 181 0 R
+/Count 4 
+/Title (CLASS Class::STL::Containers::Stack)
 >>
 endobj
 181 0 obj
 <<
-/Parent 178 0 R
-/Dest [53 0 R /FitH 584.4]
-/Previous 180 0 R
-/Title (top)
+/Parent 180 0 R
+/Dest [53 0 R /FitH 444]
+/First 182 0 R
+/Last 184 0 R
+/Count 3 
+/Title (Extends Class::STL::Containers::Abstract)
 >>
 endobj
 182 0 obj
 <<
-/Parent 107 0 R
-/Dest [53 0 R /FitH 508.8]
-/Previous 177 0 R
-/Next 186 0 R
-/First 183 0 R
-/Last 185 0 R
-/Count 3 
-/Title (CLASS Class::STL::Containers::Tree)
+/Parent 181 0 R
+/Dest [53 0 R /FitH 429.6]
+/Next 183 0 R
+/Title (push)
 >>
 endobj
 183 0 obj
 <<
-/Parent 182 0 R
-/Dest [53 0 R /FitH 426]
-/Next 185 0 R
-/First 184 0 R
-/Last 184 0 R
-/Count 1 
-/Title (Extends Class::STL::Containers::Deque)
+/Parent 181 0 R
+/Dest [53 0 R /FitH 367.2]
+/Previous 182 0 R
+/Next 184 0 R
+/Title (pop)
 >>
 endobj
 184 0 obj
 <<
-/Parent 183 0 R
-/Dest [53 0 R /FitH 411.6]
-/Title (to_array)
+/Parent 181 0 R
+/Dest [53 0 R /FitH 304.8]
+/Previous 183 0 R
+/Title (top)
 >>
 endobj
 185 0 obj
 <<
-/Parent 182 0 R
-/Dest [53 0 R /FitH 333.6]
-/Previous 183 0 R
-/Title (Examples)
+/Parent 107 0 R
+/Dest [53 0 R /FitH 229.2]
+/Previous 180 0 R
+/Next 189 0 R
+/First 186 0 R
+/Last 188 0 R
+/Count 3 
+/Title (CLASS Class::STL::Containers::Tree)
 >>
 endobj
 186 0 obj
 <<
-/Parent 107 0 R
-/Dest [53 0 R /FitH 130.8]
-/Previous 182 0 R
-/Next 193 0 R
+/Parent 185 0 R
+/Dest [53 0 R /FitH 146.4]
+/Next 188 0 R
 /First 187 0 R
-/Last 188 0 R
-/Count 6 
-/Title (CLASS Class::STL::Containers::PriorityQueue)
+/Last 187 0 R
+/Count 1 
+/Title (Extends Class::STL::Containers::Deque)
 >>
 endobj
 187 0 obj
 <<
 /Parent 186 0 R
-/Dest [57 0 R /FitH 792]
-/Next 188 0 R
-/Title (Extends Class::STL::Containers::Vector)
+/Dest [53 0 R /FitH 132]
+/Title (to_array)
 >>
 endobj
 188 0 obj
 <<
-/Parent 186 0 R
-/Dest [57 0 R /FitH 762]
-/Previous 187 0 R
-/First 189 0 R
-/Last 192 0 R
-/Count 4 
-/Title (Element Type Class::STL::Element::Priority)
+/Parent 185 0 R
+/Dest [57 0 R /FitH 792]
+/Previous 186 0 R
+/Title (Examples)
 >>
 endobj
 189 0 obj
 <<
-/Parent 188 0 R
-/Dest [57 0 R /FitH 747.6]
-/Next 190 0 R
-/Title (push)
+/Parent 107 0 R
+/Dest [57 0 R /FitH 589.2]
+/Previous 185 0 R
+/Next 196 0 R
+/First 190 0 R
+/Last 191 0 R
+/Count 6 
+/Title (CLASS Class::STL::Containers::PriorityQueue)
 >>
 endobj
 190 0 obj
 <<
-/Parent 188 0 R
-/Dest [57 0 R /FitH 685.2]
-/Previous 189 0 R
+/Parent 189 0 R
+/Dest [57 0 R /FitH 494.4]
 /Next 191 0 R
-/Title (pop)
+/Title (Extends Class::STL::Containers::Vector)
 >>
 endobj
 191 0 obj
 <<
-/Parent 188 0 R
-/Dest [57 0 R /FitH 634.8]
+/Parent 189 0 R
+/Dest [57 0 R /FitH 464.4]
 /Previous 190 0 R
-/Next 192 0 R
-/Title (top)
+/First 192 0 R
+/Last 195 0 R
+/Count 4 
+/Title (Element Type Class::STL::Element::Priority)
 >>
 endobj
 192 0 obj
 <<
-/Parent 188 0 R
-/Dest [57 0 R /FitH 572.4]
-/Previous 191 0 R
-/Title (refresh)
+/Parent 191 0 R
+/Dest [57 0 R /FitH 450]
+/Next 193 0 R
+/Title (push)
 >>
 endobj
 193 0 obj
 <<
-/Parent 107 0 R
-/Dest [57 0 R /FitH 496.8]
-/Previous 186 0 R
-/Next 228 0 R
-/First 194 0 R
-/Last 227 0 R
-/Count 34 
-/Title (CLASS Class::STL::Algorithms)
+/Parent 191 0 R
+/Dest [57 0 R /FitH 387.6]
+/Previous 192 0 R
+/Next 194 0 R
+/Title (pop)
 >>
 endobj
 194 0 obj
 <<
-/Parent 193 0 R
-/Dest [57 0 R /FitH 450]
-/Next 227 0 R
-/First 195 0 R
-/Last 226 0 R
-/Count 32 
-/Title (Exports)
+/Parent 191 0 R
+/Dest [57 0 R /FitH 337.200000000001]
+/Previous 193 0 R
+/Next 195 0 R
+/Title (top)
 >>
 endobj
 195 0 obj
 <<
-/Parent 194 0 R
-/Dest [57 0 R /FitH 279.6]
-/Next 196 0 R
-/Title (for_each)
+/Parent 191 0 R
+/Dest [57 0 R /FitH 274.800000000001]
+/Previous 194 0 R
+/Title (refresh)
 >>
 endobj
 196 0 obj
 <<
-/Parent 194 0 R
-/Dest [57 0 R /FitH 205.2]
-/Previous 195 0 R
-/Next 197 0 R
-/Title (transform)
+/Parent 107 0 R
+/Dest [57 0 R /FitH 199.200000000001]
+/Previous 189 0 R
+/Next 231 0 R
+/First 197 0 R
+/Last 230 0 R
+/Count 34 
+/Title (CLASS Class::STL::Algorithms)
 >>
 endobj
 197 0 obj
 <<
-/Parent 194 0 R
-/Dest [61 0 R /FitH 792]
-/Previous 196 0 R
-/Next 198 0 R
-/Title (count)
+/Parent 196 0 R
+/Dest [57 0 R /FitH 152.400000000001]
+/Next 230 0 R
+/First 198 0 R
+/Last 229 0 R
+/Count 32 
+/Title (Exports)
 >>
 endobj
 198 0 obj
 <<
-/Parent 194 0 R
-/Dest [61 0 R /FitH 753.6]
-/Previous 197 0 R
+/Parent 197 0 R
+/Dest [61 0 R /FitH 693.6]
 /Next 199 0 R
-/Title (count_if)
+/Title (for_each)
 >>
 endobj
 199 0 obj
 <<
-/Parent 194 0 R
-/Dest [61 0 R /FitH 679.2]
+/Parent 197 0 R
+/Dest [61 0 R /FitH 619.2]
 /Previous 198 0 R
 /Next 200 0 R
-/Title (find)
+/Title (transform)
 >>
 endobj
 200 0 obj
 <<
-/Parent 194 0 R
-/Dest [61 0 R /FitH 640.8]
+/Parent 197 0 R
+/Dest [61 0 R /FitH 472.8]
 /Previous 199 0 R
 /Next 201 0 R
-/Title (find_if)
+/Title (count)
 >>
 endobj
 201 0 obj
 <<
-/Parent 194 0 R
-/Dest [61 0 R /FitH 554.4]
+/Parent 197 0 R
+/Dest [61 0 R /FitH 434.4]
 /Previous 200 0 R
 /Next 202 0 R
-/Title (copy)
+/Title (count_if)
 >>
 endobj
 202 0 obj
 <<
-/Parent 194 0 R
-/Dest [61 0 R /FitH 516]
+/Parent 197 0 R
+/Dest [61 0 R /FitH 360]
 /Previous 201 0 R
 /Next 203 0 R
-/Title (copy_backward)
+/Title (find)
 >>
 endobj
 203 0 obj
 <<
-/Parent 194 0 R
-/Dest [61 0 R /FitH 477.6]
+/Parent 197 0 R
+/Dest [61 0 R /FitH 321.6]
 /Previous 202 0 R
 /Next 204 0 R
-/Title (remove)
+/Title (find_if)
 >>
 endobj
 204 0 obj
 <<
-/Parent 194 0 R
-/Dest [61 0 R /FitH 439.2]
+/Parent 197 0 R
+/Dest [61 0 R /FitH 235.2]
 /Previous 203 0 R
 /Next 205 0 R
-/Title (remove_if)
+/Title (copy)
 >>
 endobj
 205 0 obj
 <<
-/Parent 194 0 R
-/Dest [61 0 R /FitH 364.8]
+/Parent 197 0 R
+/Dest [61 0 R /FitH 196.8]
 /Previous 204 0 R
 /Next 206 0 R
-/Title (remove_copy)
+/Title (copy_backward)
 >>
 endobj
 206 0 obj
 <<
-/Parent 194 0 R
-/Dest [61 0 R /FitH 326.4]
+/Parent 197 0 R
+/Dest [61 0 R /FitH 158.4]
 /Previous 205 0 R
 /Next 207 0 R
-/Title (remove_copy_if)
+/Title (remove)
 >>
 endobj
 207 0 obj
 <<
-/Parent 194 0 R
-/Dest [61 0 R /FitH 288]
+/Parent 197 0 R
+/Dest [61 0 R /FitH 120]
 /Previous 206 0 R
 /Next 208 0 R
-/Title (replace)
+/Title (remove_if)
 >>
 endobj
 208 0 obj
 <<
-/Parent 194 0 R
-/Dest [61 0 R /FitH 249.6]
+/Parent 197 0 R
+/Dest [65 0 R /FitH 753.6]
 /Previous 207 0 R
 /Next 209 0 R
-/Title (replace_if)
+/Title (remove_copy)
 >>
 endobj
 209 0 obj
 <<
-/Parent 194 0 R
-/Dest [61 0 R /FitH 211.2]
+/Parent 197 0 R
+/Dest [65 0 R /FitH 715.2]
 /Previous 208 0 R
 /Next 210 0 R
-/Title (replace_copy)
+/Title (remove_copy_if)
 >>
 endobj
 210 0 obj
 <<
-/Parent 194 0 R
-/Dest [61 0 R /FitH 160.8]
+/Parent 197 0 R
+/Dest [65 0 R /FitH 676.8]
 /Previous 209 0 R
 /Next 211 0 R
-/Title (replace_copy_if)
+/Title (replace)
 >>
 endobj
 211 0 obj
 <<
-/Parent 194 0 R
-/Dest [61 0 R /FitH 110.4]
+/Parent 197 0 R
+/Dest [65 0 R /FitH 638.4]
 /Previous 210 0 R
 /Next 212 0 R
-/Title (generate)
+/Title (replace_if)
 >>
 endobj
 212 0 obj
 <<
-/Parent 194 0 R
-/Dest [65 0 R /FitH 792]
+/Parent 197 0 R
+/Dest [65 0 R /FitH 600]
 /Previous 211 0 R
 /Next 213 0 R
-/Title (generate_n)
+/Title (replace_copy)
 >>
 endobj
 213 0 obj
 <<
-/Parent 194 0 R
-/Dest [65 0 R /FitH 753.6]
+/Parent 197 0 R
+/Dest [65 0 R /FitH 549.6]
 /Previous 212 0 R
 /Next 214 0 R
-/Title (fill)
+/Title (replace_copy_if)
 >>
 endobj
 214 0 obj
 <<
-/Parent 194 0 R
-/Dest [65 0 R /FitH 715.2]
+/Parent 197 0 R
+/Dest [65 0 R /FitH 499.2]
 /Previous 213 0 R
 /Next 215 0 R
-/Title (fill_n)
+/Title (generate)
 >>
 endobj
 215 0 obj
 <<
-/Parent 194 0 R
-/Dest [65 0 R /FitH 676.8]
+/Parent 197 0 R
+/Dest [65 0 R /FitH 460.8]
 /Previous 214 0 R
 /Next 216 0 R
-/Title (equal)
+/Title (generate_n)
 >>
 endobj
 216 0 obj
 <<
-/Parent 194 0 R
-/Dest [65 0 R /FitH 638.4]
+/Parent 197 0 R
+/Dest [65 0 R /FitH 422.4]
 /Previous 215 0 R
 /Next 217 0 R
-/Title (reverse)
+/Title (fill)
 >>
 endobj
 217 0 obj
 <<
-/Parent 194 0 R
-/Dest [65 0 R /FitH 600]
+/Parent 197 0 R
+/Dest [65 0 R /FitH 384]
 /Previous 216 0 R
 /Next 218 0 R
-/Title (reverse_copy)
+/Title (fill_n)
 >>
 endobj
 218 0 obj
 <<
-/Parent 194 0 R
-/Dest [65 0 R /FitH 561.6]
+/Parent 197 0 R
+/Dest [65 0 R /FitH 345.6]
 /Previous 217 0 R
 /Next 219 0 R
-/Title (rotate)
+/Title (equal)
 >>
 endobj
 219 0 obj
 <<
-/Parent 194 0 R
-/Dest [65 0 R /FitH 523.2]
+/Parent 197 0 R
+/Dest [65 0 R /FitH 307.2]
 /Previous 218 0 R
 /Next 220 0 R
-/Title (rotate_copy)
+/Title (reverse)
 >>
 endobj
 220 0 obj
 <<
-/Parent 194 0 R
-/Dest [65 0 R /FitH 484.8]
+/Parent 197 0 R
+/Dest [65 0 R /FitH 268.8]
 /Previous 219 0 R
 /Next 221 0 R
-/Title (partition)
+/Title (reverse_copy)
 >>
 endobj
 221 0 obj
 <<
-/Parent 194 0 R
-/Dest [65 0 R /FitH 446.4]
+/Parent 197 0 R
+/Dest [65 0 R /FitH 230.4]
 /Previous 220 0 R
 /Next 222 0 R
-/Title (stable_partition)
+/Title (rotate)
 >>
 endobj
 222 0 obj
 <<
-/Parent 194 0 R
-/Dest [65 0 R /FitH 408]
+/Parent 197 0 R
+/Dest [65 0 R /FitH 192]
 /Previous 221 0 R
 /Next 223 0 R
-/Title (min_element)
+/Title (rotate_copy)
 >>
 endobj
 223 0 obj
 <<
-/Parent 194 0 R
-/Dest [65 0 R /FitH 369.6]
+/Parent 197 0 R
+/Dest [65 0 R /FitH 153.6]
 /Previous 222 0 R
 /Next 224 0 R
-/Title (max_element)
+/Title (partition)
 >>
 endobj
 224 0 obj
 <<
-/Parent 194 0 R
-/Dest [65 0 R /FitH 331.2]
+/Parent 197 0 R
+/Dest [65 0 R /FitH 115.2]
 /Previous 223 0 R
 /Next 225 0 R
-/Title (unique)
+/Title (stable_partition)
 >>
 endobj
 225 0 obj
 <<
-/Parent 194 0 R
-/Dest [65 0 R /FitH 292.8]
+/Parent 197 0 R
+/Dest [65 0 R /FitH 76.8000000000003]
 /Previous 224 0 R
 /Next 226 0 R
-/Title (unique_copy)
+/Title (min_element)
 >>
 endobj
 226 0 obj
 <<
-/Parent 194 0 R
-/Dest [65 0 R /FitH 254.4]
+/Parent 197 0 R
+/Dest [69 0 R /FitH 765.6]
 /Previous 225 0 R
-/Title (adjacent_find)
+/Next 227 0 R
+/Title (max_element)
 >>
 endobj
 227 0 obj
 <<
-/Parent 193 0 R
-/Dest [65 0 R /FitH 200.4]
-/Previous 194 0 R
-/Title (Examples)
+/Parent 197 0 R
+/Dest [69 0 R /FitH 727.2]
+/Previous 226 0 R
+/Next 228 0 R
+/Title (unique)
 >>
 endobj
 228 0 obj
 <<
-/Parent 107 0 R
-/Dest [69 0 R /FitH 706.2]
-/Previous 193 0 R
-/Next 251 0 R
-/First 229 0 R
-/Last 229 0 R
-/Count 22 
-/Title (CLASS Class::STL::Utilities)
+/Parent 197 0 R
+/Dest [69 0 R /FitH 688.8]
+/Previous 227 0 R
+/Next 229 0 R
+/Title (unique_copy)
 >>
 endobj
 229 0 obj
 <<
-/Parent 228 0 R
-/Dest [69 0 R /FitH 667.8]
-/First 230 0 R
-/Last 250 0 R
-/Count 21 
-/Title (Exports)
+/Parent 197 0 R
+/Dest [69 0 R /FitH 650.4]
+/Previous 228 0 R
+/Title (adjacent_find)
 >>
 endobj
 230 0 obj
 <<
-/Parent 229 0 R
-/Dest [69 0 R /FitH 545.4]
-/Next 231 0 R
-/Title (equal_to)
+/Parent 196 0 R
+/Dest [69 0 R /FitH 596.4]
+/Previous 197 0 R
+/Title (Examples)
 >>
 endobj
 231 0 obj
 <<
-/Parent 229 0 R
-/Dest [69 0 R /FitH 495]
-/Previous 230 0 R
-/Next 232 0 R
-/Title (not_equal_to)
+/Parent 107 0 R
+/Dest [69 0 R /FitH 385.200000000001]
+/Previous 196 0 R
+/Next 254 0 R
+/First 232 0 R
+/Last 232 0 R
+/Count 22 
+/Title (CLASS Class::STL::Utilities)
 >>
 endobj
 232 0 obj
 <<
-/Parent 229 0 R
-/Dest [69 0 R /FitH 468.6]
-/Previous 231 0 R
-/Next 233 0 R
-/Title (greater)
+/Parent 231 0 R
+/Dest [69 0 R /FitH 346.800000000001]
+/First 233 0 R
+/Last 253 0 R
+/Count 21 
+/Title (Exports)
 >>
 endobj
 233 0 obj
 <<
-/Parent 229 0 R
-/Dest [69 0 R /FitH 418.2]
-/Previous 232 0 R
+/Parent 232 0 R
+/Dest [69 0 R /FitH 224.400000000001]
 /Next 234 0 R
-/Title (greater_equal)
+/Title (equal_to)
 >>
 endobj
 234 0 obj
 <<
-/Parent 229 0 R
-/Dest [69 0 R /FitH 355.8]
+/Parent 232 0 R
+/Dest [69 0 R /FitH 174.000000000001]
 /Previous 233 0 R
 /Next 235 0 R
-/Title (less)
+/Title (not_equal_to)
 >>
 endobj
 235 0 obj
 <<
-/Parent 229 0 R
-/Dest [69 0 R /FitH 305.4]
+/Parent 232 0 R
+/Dest [69 0 R /FitH 147.600000000001]
 /Previous 234 0 R
 /Next 236 0 R
-/Title (less_equal)
+/Title (greater)
 >>
 endobj
 236 0 obj
 <<
-/Parent 229 0 R
-/Dest [69 0 R /FitH 243]
+/Parent 232 0 R
+/Dest [69 0 R /FitH 97.2000000000006]
 /Previous 235 0 R
 /Next 237 0 R
-/Title (compare)
+/Title (greater_equal)
 >>
 endobj
 237 0 obj
 <<
-/Parent 229 0 R
-/Dest [69 0 R /FitH 180.6]
+/Parent 232 0 R
+/Dest [73 0 R /FitH 741.6]
 /Previous 236 0 R
 /Next 238 0 R
-/Title (matches)
+/Title (less)
 >>
 endobj
 238 0 obj
 <<
-/Parent 229 0 R
-/Dest [69 0 R /FitH 118.2]
+/Parent 232 0 R
+/Dest [73 0 R /FitH 691.2]
 /Previous 237 0 R
 /Next 239 0 R
-/Title (matches_ic)
+/Title (less_equal)
 >>
 endobj
 239 0 obj
 <<
-/Parent 229 0 R
-/Dest [69 0 R /FitH 79.8000000000003]
+/Parent 232 0 R
+/Dest [73 0 R /FitH 628.8]
 /Previous 238 0 R
 /Next 240 0 R
-/Title (bind1st)
+/Title (compare)
 >>
 endobj
 240 0 obj
 <<
-/Parent 229 0 R
-/Dest [73 0 R /FitH 741.6]
+/Parent 232 0 R
+/Dest [73 0 R /FitH 566.4]
 /Previous 239 0 R
 /Next 241 0 R
-/Title (bind2nd)
+/Title (matches)
 >>
 endobj
 241 0 obj
 <<
-/Parent 229 0 R
-/Dest [73 0 R /FitH 679.2]
+/Parent 232 0 R
+/Dest [73 0 R /FitH 504]
 /Previous 240 0 R
 /Next 242 0 R
-/Title (mem_fun)
+/Title (matches_ic)
 >>
 endobj
 242 0 obj
 <<
-/Parent 229 0 R
-/Dest [73 0 R /FitH 604.8]
+/Parent 232 0 R
+/Dest [73 0 R /FitH 465.6]
 /Previous 241 0 R
 /Next 243 0 R
-/Title (ptr_fun)
+/Title (bind1st)
 >>
 endobj
 243 0 obj
 <<
-/Parent 229 0 R
-/Dest [73 0 R /FitH 566.4]
+/Parent 232 0 R
+/Dest [73 0 R /FitH 403.2]
 /Previous 242 0 R
 /Next 244 0 R
-/Title (ptr_fun_binary)
+/Title (bind2nd)
 >>
 endobj
 244 0 obj
 <<
-/Parent 229 0 R
-/Dest [73 0 R /FitH 528]
+/Parent 232 0 R
+/Dest [73 0 R /FitH 340.8]
 /Previous 243 0 R
 /Next 245 0 R
-/Title (logical_and)
+/Title (mem_fun)
 >>
 endobj
 245 0 obj
 <<
-/Parent 229 0 R
-/Dest [73 0 R /FitH 489.6]
+/Parent 232 0 R
+/Dest [73 0 R /FitH 266.4]
 /Previous 244 0 R
 /Next 246 0 R
-/Title (logical_or)
+/Title (ptr_fun)
 >>
 endobj
 246 0 obj
 <<
-/Parent 229 0 R
-/Dest [73 0 R /FitH 451.2]
+/Parent 232 0 R
+/Dest [73 0 R /FitH 228]
 /Previous 245 0 R
 /Next 247 0 R
-/Title (multiplies)
+/Title (ptr_fun_binary)
 >>
 endobj
 247 0 obj
 <<
-/Parent 229 0 R
-/Dest [73 0 R /FitH 388.8]
+/Parent 232 0 R
+/Dest [73 0 R /FitH 189.6]
 /Previous 246 0 R
 /Next 248 0 R
-/Title (divides)
+/Title (logical_and)
 >>
 endobj
 248 0 obj
 <<
-/Parent 229 0 R
-/Dest [73 0 R /FitH 326.4]
+/Parent 232 0 R
+/Dest [73 0 R /FitH 151.2]
 /Previous 247 0 R
 /Next 249 0 R
-/Title (plus)
+/Title (logical_or)
 >>
 endobj
 249 0 obj
 <<
-/Parent 229 0 R
-/Dest [73 0 R /FitH 264]
+/Parent 232 0 R
+/Dest [73 0 R /FitH 112.8]
 /Previous 248 0 R
 /Next 250 0 R
-/Title (minus)
+/Title (multiplies)
 >>
 endobj
 250 0 obj
 <<
-/Parent 229 0 R
-/Dest [73 0 R /FitH 201.6]
+/Parent 232 0 R
+/Dest [77 0 R /FitH 792]
 /Previous 249 0 R
-/Title (modulus.)
+/Next 251 0 R
+/Title (divides)
 >>
 endobj
 251 0 obj
 <<
-/Parent 107 0 R
-/Dest [73 0 R /FitH 126]
-/Previous 228 0 R
-/Next 274 0 R
-/First 252 0 R
-/Last 273 0 R
-/Count 22 
-/Title (CLASS Class::STL::Iterators)
+/Parent 232 0 R
+/Dest [77 0 R /FitH 729.6]
+/Previous 250 0 R
+/Next 252 0 R
+/Title (plus)
 >>
 endobj
 252 0 obj
 <<
-/Parent 251 0 R
-/Dest [77 0 R /FitH 792]
-/Next 273 0 R
-/First 253 0 R
-/Last 272 0 R
-/Count 20 
-/Title (Exports)
+/Parent 232 0 R
+/Dest [77 0 R /FitH 667.2]
+/Previous 251 0 R
+/Next 253 0 R
+/Title (minus)
 >>
 endobj
 253 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 741.6]
-/Next 254 0 R
-/Title (new)
+/Parent 232 0 R
+/Dest [77 0 R /FitH 604.8]
+/Previous 252 0 R
+/Title (modulus.)
 >>
 endobj
 254 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 727.2]
-/Previous 253 0 R
-/Next 255 0 R
-/Title (p_container)
+/Parent 107 0 R
+/Dest [77 0 R /FitH 529.2]
+/Previous 231 0 R
+/Next 277 0 R
+/First 255 0 R
+/Last 276 0 R
+/Count 22 
+/Title (CLASS Class::STL::Iterators)
 >>
 endobj
 255 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 688.8]
-/Previous 254 0 R
-/Next 256 0 R
-/Title (p_element)
+/Parent 254 0 R
+/Dest [77 0 R /FitH 482.4]
+/Next 276 0 R
+/First 256 0 R
+/Last 275 0 R
+/Count 20 
+/Title (Exports)
 >>
 endobj
 256 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 650.4]
-/Previous 255 0 R
+/Parent 255 0 R
+/Dest [77 0 R /FitH 432]
 /Next 257 0 R
-/Title (distance)
+/Title (new)
 >>
 endobj
 257 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 588]
+/Parent 255 0 R
+/Dest [77 0 R /FitH 417.6]
 /Previous 256 0 R
 /Next 258 0 R
-/Title (advance)
+/Title (p_container)
 >>
 endobj
 258 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 525.6]
+/Parent 255 0 R
+/Dest [77 0 R /FitH 379.2]
 /Previous 257 0 R
 /Next 259 0 R
-/Title (inserter)
+/Title (p_element)
 >>
 endobj
 259 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 463.2]
+/Parent 255 0 R
+/Dest [77 0 R /FitH 340.8]
 /Previous 258 0 R
 /Next 260 0 R
-/Title (front_inserter)
+/Title (distance)
 >>
 endobj
 260 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 400.8]
+/Parent 255 0 R
+/Dest [77 0 R /FitH 278.4]
 /Previous 259 0 R
 /Next 261 0 R
-/Title (back_inserter)
+/Title (advance)
 >>
 endobj
 261 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 338.4]
+/Parent 255 0 R
+/Dest [77 0 R /FitH 216]
 /Previous 260 0 R
 /Next 262 0 R
-/Title (first)
+/Title (inserter)
 >>
 endobj
 262 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 324]
+/Parent 255 0 R
+/Dest [77 0 R /FitH 153.6]
 /Previous 261 0 R
 /Next 263 0 R
-/Title (next)
+/Title (front_inserter)
 >>
 endobj
 263 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 309.6]
+/Parent 255 0 R
+/Dest [77 0 R /FitH 91.2000000000002]
 /Previous 262 0 R
 /Next 264 0 R
-/Title (last)
+/Title (back_inserter)
 >>
 endobj
 264 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 295.2]
+/Parent 255 0 R
+/Dest [81 0 R /FitH 741.6]
 /Previous 263 0 R
 /Next 265 0 R
-/Title (prev)
+/Title (first)
 >>
 endobj
 265 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 280.8]
+/Parent 255 0 R
+/Dest [81 0 R /FitH 727.2]
 /Previous 264 0 R
 /Next 266 0 R
-/Title (at_end)
+/Title (next)
 >>
 endobj
 266 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 266.4]
+/Parent 255 0 R
+/Dest [81 0 R /FitH 712.8]
 /Previous 265 0 R
 /Next 267 0 R
-/Title (eq)
+/Title (last)
 >>
 endobj
 267 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 252]
+/Parent 255 0 R
+/Dest [81 0 R /FitH 698.4]
 /Previous 266 0 R
 /Next 268 0 R
-/Title (ne)
+/Title (prev)
 >>
 endobj
 268 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 237.6]
+/Parent 255 0 R
+/Dest [81 0 R /FitH 684]
 /Previous 267 0 R
 /Next 269 0 R
-/Title (lt)
+/Title (at_end)
 >>
 endobj
 269 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 223.2]
+/Parent 255 0 R
+/Dest [81 0 R /FitH 669.6]
 /Previous 268 0 R
 /Next 270 0 R
-/Title (le)
+/Title (eq)
 >>
 endobj
 270 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 208.8]
+/Parent 255 0 R
+/Dest [81 0 R /FitH 655.2]
 /Previous 269 0 R
 /Next 271 0 R
-/Title (gt)
+/Title (ne)
 >>
 endobj
 271 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 194.4]
+/Parent 255 0 R
+/Dest [81 0 R /FitH 640.8]
 /Previous 270 0 R
 /Next 272 0 R
-/Title (ge)
+/Title (lt)
 >>
 endobj
 272 0 obj
 <<
-/Parent 252 0 R
-/Dest [77 0 R /FitH 180]
+/Parent 255 0 R
+/Dest [81 0 R /FitH 626.4]
 /Previous 271 0 R
-/Title (cmp)
+/Next 273 0 R
+/Title (le)
 >>
 endobj
 273 0 obj
 <<
-/Parent 251 0 R
-/Dest [77 0 R /FitH 150]
-/Previous 252 0 R
-/Title (Examples)
+/Parent 255 0 R
+/Dest [81 0 R /FitH 612]
+/Previous 272 0 R
+/Next 274 0 R
+/Title (gt)
 >>
 endobj
 274 0 obj
 <<
-/Parent 107 0 R
-/Dest [81 0 R /FitH 681]
-/Previous 251 0 R
+/Parent 255 0 R
+/Dest [81 0 R /FitH 597.6]
+/Previous 273 0 R
 /Next 275 0 R
-/Title (SEE ALSO)
+/Title (ge)
 >>
 endobj
 275 0 obj
 <<
-/Parent 107 0 R
-/Dest [81 0 R /FitH 624.6]
+/Parent 255 0 R
+/Dest [81 0 R /FitH 583.2]
 /Previous 274 0 R
-/Next 276 0 R
-/Title (AUTHOR)
+/Title (cmp)
 >>
 endobj
 276 0 obj
 <<
+/Parent 254 0 R
+/Dest [81 0 R /FitH 553.2]
+/Previous 255 0 R
+/Title (Examples)
+>>
+endobj
+277 0 obj
+<<
 /Parent 107 0 R
-/Dest [81 0 R /FitH 580.2]
-/Previous 275 0 R
+/Dest [81 0 R /FitH 367.200000000001]
+/Previous 254 0 R
+/Next 278 0 R
+/Title (SEE ALSO)
+>>
+endobj
+278 0 obj
+<<
+/Parent 107 0 R
+/Dest [81 0 R /FitH 310.800000000001]
+/Previous 277 0 R
+/Next 279 0 R
+/Title (AUTHOR)
+>>
+endobj
+279 0 obj
+<<
+/Parent 107 0 R
+/Dest [81 0 R /FitH 266.400000000001]
+/Previous 278 0 R
 /Title (COPYRIGHT AND LICENSE)
 >>
 endobj
 106 0 obj
 <<
 /Type /Outlines
-/Count 170
+/Count 173
 /First 107 0 R
-/Last 276 0 R
+/Last 279 0 R
 >>
 endobj
 3 0 obj
@@ -10984,12 +11173,12 @@ endobj
 >>
 endobj
 xref
-0 277
+0 280
 0000000000 65535 f 
 0000000015 00000 n 
 0000000171 00000 n 
-0000156235 00000 n 
-0000156325 00000 n 
+0000159677 00000 n 
+0000159767 00000 n 
 0000000281 00000 n 
 0000002381 00000 n 
 0000002480 00000 n 
@@ -11004,270 +11193,273 @@ xref
 0000003392 00000 n 
 0000003498 00000 n 
 0000003612 00000 n 
-0000009995 00000 n 
-0000010016 00000 n 
-0000010142 00000 n 
-0000010225 00000 n 
-0000017655 00000 n 
-0000017676 00000 n 
-0000017826 00000 n 
-0000017909 00000 n 
-0000025428 00000 n 
-0000025449 00000 n 
-0000025599 00000 n 
-0000025682 00000 n 
-0000032897 00000 n 
-0000032918 00000 n 
-0000033068 00000 n 
-0000033151 00000 n 
-0000040608 00000 n 
-0000040629 00000 n 
-0000040767 00000 n 
-0000040850 00000 n 
-0000047001 00000 n 
-0000047022 00000 n 
-0000047160 00000 n 
-0000047243 00000 n 
-0000053178 00000 n 
-0000053199 00000 n 
-0000053349 00000 n 
-0000053432 00000 n 
-0000060131 00000 n 
-0000060152 00000 n 
-0000060290 00000 n 
-0000060373 00000 n 
-0000066820 00000 n 
-0000066841 00000 n 
-0000066991 00000 n 
-0000067074 00000 n 
-0000076035 00000 n 
-0000076056 00000 n 
-0000076194 00000 n 
-0000076277 00000 n 
-0000082754 00000 n 
-0000082775 00000 n 
-0000082913 00000 n 
-0000082996 00000 n 
-0000088897 00000 n 
-0000088918 00000 n 
-0000089068 00000 n 
-0000089151 00000 n 
-0000097505 00000 n 
-0000097526 00000 n 
-0000097676 00000 n 
-0000097759 00000 n 
-0000104791 00000 n 
-0000104812 00000 n 
-0000104950 00000 n 
-0000105033 00000 n 
-0000111615 00000 n 
-0000111636 00000 n 
-0000111786 00000 n 
-0000111869 00000 n 
-0000114676 00000 n 
-0000114697 00000 n 
-0000114823 00000 n 
-0000114906 00000 n 
-0000120758 00000 n 
-0000120779 00000 n 
-0000120893 00000 n 
-0000120976 00000 n 
-0000127351 00000 n 
-0000127372 00000 n 
-0000127486 00000 n 
-0000127569 00000 n 
-0000133475 00000 n 
-0000133496 00000 n 
-0000133610 00000 n 
-0000133693 00000 n 
-0000134010 00000 n 
-0000134030 00000 n 
-0000134132 00000 n 
-0000134215 00000 n 
-0000134299 00000 n 
-0000134699 00000 n 
-0000134720 00000 n 
-0000134847 00000 n 
-0000135166 00000 n 
-0000135187 00000 n 
-0000135290 00000 n 
-0000156156 00000 n 
-0000135376 00000 n 
-0000135503 00000 n 
-0000135597 00000 n 
-0000135711 00000 n 
-0000135881 00000 n 
-0000135992 00000 n 
-0000136120 00000 n 
-0000136249 00000 n 
-0000136377 00000 n 
-0000136532 00000 n 
-0000136656 00000 n 
-0000136782 00000 n 
-0000136929 00000 n 
-0000137062 00000 n 
-0000137186 00000 n 
-0000137325 00000 n 
-0000137441 00000 n 
-0000137618 00000 n 
-0000137745 00000 n 
-0000137882 00000 n 
-0000138014 00000 n 
-0000138156 00000 n 
-0000138300 00000 n 
-0000138453 00000 n 
-0000138554 00000 n 
-0000138727 00000 n 
-0000138810 00000 n 
-0000138994 00000 n 
-0000139148 00000 n 
-0000139252 00000 n 
-0000139365 00000 n 
-0000139480 00000 n 
-0000139593 00000 n 
-0000139707 00000 n 
-0000139816 00000 n 
-0000139928 00000 n 
-0000140041 00000 n 
-0000140154 00000 n 
-0000140276 00000 n 
-0000140390 00000 n 
-0000140502 00000 n 
-0000140614 00000 n 
-0000140727 00000 n 
-0000140841 00000 n 
-0000140951 00000 n 
-0000141061 00000 n 
-0000141192 00000 n 
-0000141312 00000 n 
-0000141416 00000 n 
-0000141597 00000 n 
-0000141761 00000 n 
-0000141858 00000 n 
-0000141956 00000 n 
-0000142057 00000 n 
-0000142251 00000 n 
-0000142417 00000 n 
-0000142527 00000 n 
-0000142654 00000 n 
-0000142777 00000 n 
-0000142890 00000 n 
-0000142986 00000 n 
-0000143168 00000 n 
-0000143321 00000 n 
-0000143421 00000 n 
-0000143522 00000 n 
-0000143704 00000 n 
-0000143859 00000 n 
-0000143953 00000 n 
-0000144064 00000 n 
-0000144176 00000 n 
-0000144273 00000 n 
-0000144455 00000 n 
-0000144610 00000 n 
-0000144704 00000 n 
-0000144815 00000 n 
-0000144912 00000 n 
-0000145093 00000 n 
-0000145257 00000 n 
-0000145341 00000 n 
-0000145443 00000 n 
-0000145633 00000 n 
-0000145759 00000 n 
-0000145932 00000 n 
-0000146026 00000 n 
-0000146137 00000 n 
-0000146248 00000 n 
-0000146349 00000 n 
-0000146525 00000 n 
-0000146660 00000 n 
-0000146758 00000 n 
-0000146875 00000 n 
-0000146986 00000 n 
-0000147102 00000 n 
-0000147214 00000 n 
-0000147329 00000 n 
-0000147441 00000 n 
-0000147560 00000 n 
-0000147674 00000 n 
-0000147791 00000 n 
-0000147910 00000 n 
-0000148032 00000 n 
-0000148145 00000 n 
-0000148263 00000 n 
-0000148383 00000 n 
-0000148506 00000 n 
-0000148622 00000 n 
-0000148738 00000 n 
-0000148850 00000 n 
-0000148964 00000 n 
-0000149077 00000 n 
-0000149192 00000 n 
-0000149310 00000 n 
-0000149424 00000 n 
-0000149543 00000 n 
-0000149660 00000 n 
-0000149784 00000 n 
-0000149901 00000 n 
-0000150020 00000 n 
-0000150134 00000 n 
-0000150253 00000 n 
-0000150360 00000 n 
-0000150462 00000 n 
-0000150637 00000 n 
-0000150760 00000 n 
-0000150858 00000 n 
-0000150976 00000 n 
-0000151091 00000 n 
-0000151212 00000 n 
-0000151324 00000 n 
-0000151442 00000 n 
-0000151555 00000 n 
-0000151670 00000 n 
-0000151788 00000 n 
-0000151914 00000 n 
-0000152029 00000 n 
-0000152144 00000 n 
-0000152259 00000 n 
-0000152381 00000 n 
-0000152498 00000 n 
-0000152616 00000 n 
-0000152734 00000 n 
-0000152849 00000 n 
-0000152961 00000 n 
-0000153072 00000 n 
-0000153174 00000 n 
-0000153347 00000 n 
-0000153482 00000 n 
-0000153575 00000 n 
-0000153694 00000 n 
-0000153811 00000 n 
-0000153927 00000 n 
-0000154040 00000 n 
-0000154156 00000 n 
-0000154278 00000 n 
-0000154399 00000 n 
-0000154512 00000 n 
-0000154622 00000 n 
-0000154734 00000 n 
-0000154846 00000 n 
-0000154960 00000 n 
-0000155070 00000 n 
-0000155178 00000 n 
-0000155288 00000 n 
-0000155398 00000 n 
-0000155508 00000 n 
-0000155618 00000 n 
-0000155713 00000 n 
-0000155813 00000 n 
-0000155927 00000 n 
-0000156041 00000 n 
+0000009993 00000 n 
+0000010014 00000 n 
+0000010140 00000 n 
+0000010223 00000 n 
+0000017635 00000 n 
+0000017656 00000 n 
+0000017806 00000 n 
+0000017889 00000 n 
+0000025451 00000 n 
+0000025472 00000 n 
+0000025622 00000 n 
+0000025705 00000 n 
+0000032503 00000 n 
+0000032524 00000 n 
+0000032674 00000 n 
+0000032757 00000 n 
+0000040658 00000 n 
+0000040679 00000 n 
+0000040817 00000 n 
+0000040900 00000 n 
+0000048200 00000 n 
+0000048221 00000 n 
+0000048359 00000 n 
+0000048442 00000 n 
+0000053789 00000 n 
+0000053810 00000 n 
+0000053960 00000 n 
+0000054043 00000 n 
+0000060127 00000 n 
+0000060148 00000 n 
+0000060298 00000 n 
+0000060381 00000 n 
+0000067086 00000 n 
+0000067107 00000 n 
+0000067245 00000 n 
+0000067328 00000 n 
+0000074807 00000 n 
+0000074828 00000 n 
+0000074978 00000 n 
+0000075061 00000 n 
+0000082619 00000 n 
+0000082640 00000 n 
+0000082778 00000 n 
+0000082861 00000 n 
+0000088927 00000 n 
+0000088948 00000 n 
+0000089086 00000 n 
+0000089169 00000 n 
+0000096643 00000 n 
+0000096664 00000 n 
+0000096814 00000 n 
+0000096897 00000 n 
+0000104601 00000 n 
+0000104622 00000 n 
+0000104760 00000 n 
+0000104843 00000 n 
+0000111962 00000 n 
+0000111983 00000 n 
+0000112121 00000 n 
+0000112204 00000 n 
+0000117230 00000 n 
+0000117251 00000 n 
+0000117401 00000 n 
+0000117484 00000 n 
+0000123384 00000 n 
+0000123405 00000 n 
+0000123519 00000 n 
+0000123602 00000 n 
+0000129991 00000 n 
+0000130012 00000 n 
+0000130126 00000 n 
+0000130209 00000 n 
+0000136295 00000 n 
+0000136316 00000 n 
+0000136430 00000 n 
+0000136513 00000 n 
+0000136947 00000 n 
+0000136967 00000 n 
+0000137081 00000 n 
+0000137164 00000 n 
+0000137248 00000 n 
+0000137648 00000 n 
+0000137669 00000 n 
+0000137796 00000 n 
+0000138113 00000 n 
+0000138134 00000 n 
+0000138237 00000 n 
+0000159598 00000 n 
+0000138323 00000 n 
+0000138450 00000 n 
+0000138544 00000 n 
+0000138658 00000 n 
+0000138828 00000 n 
+0000138939 00000 n 
+0000139067 00000 n 
+0000139196 00000 n 
+0000139324 00000 n 
+0000139479 00000 n 
+0000139603 00000 n 
+0000139729 00000 n 
+0000139876 00000 n 
+0000140009 00000 n 
+0000140133 00000 n 
+0000140272 00000 n 
+0000140388 00000 n 
+0000140566 00000 n 
+0000140693 00000 n 
+0000140830 00000 n 
+0000140973 00000 n 
+0000141104 00000 n 
+0000141238 00000 n 
+0000141378 00000 n 
+0000141522 00000 n 
+0000141665 00000 n 
+0000141819 00000 n 
+0000141920 00000 n 
+0000142095 00000 n 
+0000142176 00000 n 
+0000142362 00000 n 
+0000142505 00000 n 
+0000142598 00000 n 
+0000142711 00000 n 
+0000142826 00000 n 
+0000142937 00000 n 
+0000143051 00000 n 
+0000143162 00000 n 
+0000143274 00000 n 
+0000143387 00000 n 
+0000143500 00000 n 
+0000143609 00000 n 
+0000143723 00000 n 
+0000143835 00000 n 
+0000143947 00000 n 
+0000144060 00000 n 
+0000144174 00000 n 
+0000144284 00000 n 
+0000144392 00000 n 
+0000144523 00000 n 
+0000144643 00000 n 
+0000144749 00000 n 
+0000144930 00000 n 
+0000145096 00000 n 
+0000145191 00000 n 
+0000145289 00000 n 
+0000145390 00000 n 
+0000145573 00000 n 
+0000145726 00000 n 
+0000145825 00000 n 
+0000145941 00000 n 
+0000146053 00000 n 
+0000146166 00000 n 
+0000146260 00000 n 
+0000146442 00000 n 
+0000146595 00000 n 
+0000146695 00000 n 
+0000146798 00000 n 
+0000146980 00000 n 
+0000147133 00000 n 
+0000147227 00000 n 
+0000147338 00000 n 
+0000147450 00000 n 
+0000147549 00000 n 
+0000147731 00000 n 
+0000147884 00000 n 
+0000147978 00000 n 
+0000148089 00000 n 
+0000148186 00000 n 
+0000148367 00000 n 
+0000148533 00000 n 
+0000148615 00000 n 
+0000148715 00000 n 
+0000148905 00000 n 
+0000149033 00000 n 
+0000149208 00000 n 
+0000149300 00000 n 
+0000149411 00000 n 
+0000149533 00000 n 
+0000149645 00000 n 
+0000149832 00000 n 
+0000149980 00000 n 
+0000150078 00000 n 
+0000150195 00000 n 
+0000150308 00000 n 
+0000150424 00000 n 
+0000150534 00000 n 
+0000150649 00000 n 
+0000150761 00000 n 
+0000150882 00000 n 
+0000150996 00000 n 
+0000151111 00000 n 
+0000151230 00000 n 
+0000151352 00000 n 
+0000151467 00000 n 
+0000151585 00000 n 
+0000151703 00000 n 
+0000151826 00000 n 
+0000151942 00000 n 
+0000152060 00000 n 
+0000152172 00000 n 
+0000152284 00000 n 
+0000152397 00000 n 
+0000152512 00000 n 
+0000152632 00000 n 
+0000152746 00000 n 
+0000152863 00000 n 
+0000152980 00000 n 
+0000153104 00000 n 
+0000153234 00000 n 
+0000153353 00000 n 
+0000153467 00000 n 
+0000153586 00000 n 
+0000153693 00000 n 
+0000153795 00000 n 
+0000153981 00000 n 
+0000154115 00000 n 
+0000154224 00000 n 
+0000154355 00000 n 
+0000154481 00000 n 
+0000154613 00000 n 
+0000154725 00000 n 
+0000154843 00000 n 
+0000154958 00000 n 
+0000155073 00000 n 
+0000155189 00000 n 
+0000155304 00000 n 
+0000155419 00000 n 
+0000155534 00000 n 
+0000155649 00000 n 
+0000155769 00000 n 
+0000155888 00000 n 
+0000156006 00000 n 
+0000156124 00000 n 
+0000156237 00000 n 
+0000156349 00000 n 
+0000156462 00000 n 
+0000156564 00000 n 
+0000156739 00000 n 
+0000156876 00000 n 
+0000156967 00000 n 
+0000157086 00000 n 
+0000157203 00000 n 
+0000157319 00000 n 
+0000157434 00000 n 
+0000157548 00000 n 
+0000157670 00000 n 
+0000157802 00000 n 
+0000157915 00000 n 
+0000158027 00000 n 
+0000158139 00000 n 
+0000158251 00000 n 
+0000158363 00000 n 
+0000158473 00000 n 
+0000158583 00000 n 
+0000158693 00000 n 
+0000158803 00000 n 
+0000158911 00000 n 
+0000159021 00000 n 
+0000159118 00000 n 
+0000159220 00000 n 
+0000159347 00000 n 
+0000159472 00000 n 
 trailer
 <<
-/Size 277
+/Size 280
 /Root 3 0 R
 /Info 2 0 R
 >>
 startxref
-156558
+160000
 %%EOF

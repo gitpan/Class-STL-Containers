@@ -4,7 +4,7 @@ use warnings;
 use stl;
 
 print ">>>$0>>>>:\n";
-my $v = list(data_type => 'MyElem', qw(first second third fourth fifth));
+my $v = list(element_type => 'MyElem', qw(first second third fourth fifth));
 for_each($v->begin(), $v->end(), ptr_fun('::myprint'));
 
 print 'for_each($v->begin(), $v->end(), ptr_fun(\'uc\'));', "\n";
@@ -17,7 +17,7 @@ for_each($v->begin(), $v->end(), mem_fun('something'));
 print "Static Foreach with unary-function-object:\n";
 for_each($v->begin(), $v->end(), ptr_fun('::myprint'));
 
-my $v2 = list(data_type => 'MyElem', qw(red blue green yellow white));
+my $v2 = list(element_type => 'MyElem', qw(red blue green yellow white));
 my $t1 = tree($v);
 my $t2 = tree($v2);
 my $tree = tree();

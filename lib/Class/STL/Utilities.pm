@@ -97,10 +97,8 @@ $BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Utilities::FunctionObject;
-	use Class::STL::ClassMembers (
-			qw(result_type),
-			Class::STL::ClassMembers::FunctionMember::New->new(),
-	); 
+	use Class::STL::ClassMembers qw(result_type);
+	use Class::STL::ClassMembers::Constructor;
 	sub function_operator
 	{
 		my $self = shift;

@@ -4,7 +4,7 @@ use warnings;
 use stl;
 
 print ">>>$0>>>>:\n";
-my $v = list(data_type => 'MyElem');
+my $v = list(element_type => 'MyElem');
 $v->push_back($v->factory(data => 'first'));
 $v->push_back($v->factory(data => 'second'));
 $v->push_back($v->factory(data => 'third'));

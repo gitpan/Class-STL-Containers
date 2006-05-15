@@ -34,41 +34,32 @@ use warnings;
 use vars qw($VERSION $BUILD);
 use Class::STL::ClassMembers::DataMember;
 use Class::STL::ClassMembers::FunctionMember;
-$VERSION = '0.18';
-$BUILD = 'Thursday April 27 23:08:34 GMT 2006';
+$VERSION = '0.19';
+$BUILD = 'Saturday May 6 17:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Element;
 	use UNIVERSAL qw(isa can);
 	use Carp qw(confess);
-	use Class::STL::ClassMembers qw(data data_type); 
-	sub new
+	use Class::STL::ClassMembers qw( data ),
+		Class::STL::ClassMembers::DataMember->new(name => 'data_type', default => 'string',
+			validate => '^(string|array|numeric|ref)$');
+	use Class::STL::ClassMembers::Constructor;
+	sub new_extra # static function
 	{
-		my $proto = shift;
-		my $class = ref($proto) || $proto;
-		my $self = {};
-		bless($self, $class);
-		$self->data_type('string');
+		my $self = shift;
 		while (@_)
 		{
 			my $p = shift;
-			if (!ref($p) && $p eq 'data') {
-				$self->data(shift);
-			}
-			elsif (!ref($p) && $p eq 'data_type') {
-				$self->data_type(shift);
-			}
-			elsif (ref($p) eq 'ARRAY') {
-				$self->data($p);
-			}
-			elsif (ref($p) && $p->isa(__PACKAGE__)) # copy ctor
+			if (!ref($p) && exists(${$self->members()}{$p}))
 			{
-				$self->data($p->data());
-				$self->data_type($p->data_type());
+				shift;
 			}
-			else
-			{
-				$self->data($p);
+			elsif (!ref($p) && scalar @_ != 0) {
+				shift;
+			}
+			else {
+				$self->data($p); # new(<scalar>) called.
 			}
 		}
 		return $self;

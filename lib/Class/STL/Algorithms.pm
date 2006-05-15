@@ -32,8 +32,8 @@ use strict;
 use attributes qw(get reftype);
 use warnings;
 use vars qw($VERSION $BUILD);
-$VERSION = '0.18';
-$BUILD = 'Thursday April 27 23:08:34 GMT 2006';
+$VERSION = '0.21';
+$BUILD = 'Monday May 8 23:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Algorithms;
@@ -793,10 +793,13 @@ $BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 #TODO:}
 	sub _usage_check
 	{
+		use Carp qw(confess);
 		my $function_name = shift;
 		my @format = split(//, shift);
 		my $check=0;
 		foreach my $arg (0..$#_) {
+			confess "Undefined arg $arg"
+				if ($format[$arg] ne 'S' && !ref($_[$arg]));
 			++$check 
 				if 
 				(

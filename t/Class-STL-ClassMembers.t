@@ -5,7 +5,7 @@
 
 use Test;
 use stl;
-BEGIN { plan tests => 5 }
+BEGIN { plan tests => 10 }
 
 #########################
 
@@ -14,7 +14,7 @@ BEGIN { plan tests => 5 }
 
 {
 	package MyPack;
-	use Class::STL::ClassMembers (
+	use Class::STL::ClassMembers 
 			qw(msg_text msg_type),
 			Class::STL::ClassMembers::DataMember->new(
 				name => 'on', validate => '^(input|output)$', default => 'input'),
@@ -24,16 +24,15 @@ BEGIN { plan tests => 5 }
 				name => 'count', validate => '^\d+$', default => '100'),
 			Class::STL::ClassMembers::DataMember->new(
 				name => 'comment', validate => '^\w+$', default => 'hello'),
-			Class::STL::ClassMembers::FunctionMember::New->new(),
-			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(somfunc)),
-	); 
+			Class::STL::ClassMembers::FunctionMember::Disable->new(qw(somfunc));
+	use Class::STL::ClassMembers::Constructor;
 }
 
 my $att = MyPack->new();
-ok ($att->member_print(), "comment=hello|count=100|display_target=STDERR|msg_text=NULL|msg_type=NULL|on=input", 'member_print()');
+ok ($att->members_print(), "comment=hello|count=100|display_target=STDERR|msg_text=NULL|msg_type=NULL|on=input", 'members_print()');
 
 $att->count(25);
-ok ($att->member_print(), "comment=hello|count=25|display_target=STDERR|msg_text=NULL|msg_type=NULL|on=input", 'put()');
+ok ($att->members_print(), "comment=hello|count=25|display_target=STDERR|msg_text=NULL|msg_type=NULL|on=input", 'put()');
 
 ok ($att->comment(), "hello", 'get()');
 
@@ -42,19 +41,46 @@ ok ($att->comment($att->comment() . 'world'), "helloworld", 'put() + get()');
 my $n = MyElem2->new(name => 'hello', name2 => 'world', data => '123');
 ok (join(' ', $n->name(), $n->name2(), $n->data()), 'hello world 123', 'members_init()');
 
+my $emp = MyElemEmpty->ctor(data_type => 'array', data => [ qw(aaa bbb ccc) ]);
+ok ($emp->data_type(), "array", 'empty data member list');
+ok (join(' ', @{$emp->data()}), "aaa bbb ccc", 'empty data member list');
+
+my $s = MySingleton->new(name => 'Single', f1 => 'just', f2 => 'the one');
+my $s2 = MySingleton->new();
+ok (join(' ', $s2->name(), $s2->f1(), $s2->f2()), 'Single just the one', 'singleton');
+
+my $c1 = MyClass->new(data2 => 555);
+ok ($c1->data1(), "100", "DataMember");
+ok ($c1->data2(), "555", "DataMember");
+
 {
 	package MyElem;
 	use base qw(Class::STL::Element);
-	use Class::STL::ClassMembers (
-		qw(name),
-		Class::STL::ClassMembers::FunctionMember::New->new(),
-	); 
+	use Class::STL::ClassMembers qw(name);
+	use Class::STL::ClassMembers::Constructor;
 }
 {
 	package MyElem2;
 	use base qw(MyElem);
-	use Class::STL::ClassMembers (
-		qw(name2 name3 add1 add2 zip country ),
-		Class::STL::ClassMembers::FunctionMember::New->new(),
-	); 
+	use Class::STL::ClassMembers qw(name2 name3 add1 add2 zip country );
+	use Class::STL::ClassMembers::Constructor;
+}
+{
+	package MyElemEmpty;
+	use base qw(Class::STL::Element);
+	use Class::STL::ClassMembers::Constructor qw( ctor );
+}
+{
+	package MySingleton;
+	use Class::STL::ClassMembers qw( name f1 f2 );
+	use Class::STL::ClassMembers::SingletonConstructor;
+}
+{
+	package MyClass;
+	use base qw(Class::STL::Element);
+	use Class::STL::ClassMembers qw(name),
+		Class::STL::ClassMembers::DataMember->new(name => 'data1', default => '100',
+			validate => '^(100|200|300|400)$'),
+		Class::STL::ClassMembers::DataMember->new(name => 'data2');
+	use Class::STL::ClassMembers::Constructor;
 }
