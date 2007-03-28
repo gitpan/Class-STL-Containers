@@ -9,44 +9,44 @@ Class::STL::Containers - Perl extension for STL-like object management
   use stl;
 
   # Deque container...
-  my $d = deque(qw(first second third fourth));
+  my $d = stl::deque(qw(first second third fourth));
   $d->push_back($d->factory('fifth'));
   $d->push_front($d->factory('seventh'));
   $d->pop_front(); # remove element at front.
   $d->pop_back(); # remove element at back.
-  for_each($d->begin(), $d->end(), ptr_fun('::myprint'));
+  stl::for_each($d->begin(), $d->end(), ptr_fun('::myprint'));
   
   sub myprint { print "Data:", @_, "\n"; }
 
   # Copy constructor...
-  my $d_copy = deque($d);
+  my $d_copy = stl::deque($d);
 
   # Algorithms -- find_if()
   print "Element 'second' was ", 
-    find_if($d->begin(), $d->end(), bind1st(equal_to(), 'second')) 
+    stl::find_if($d->begin(), $d->end(), stl::bind1st(stl::equal_to(), 'second')) 
       ? 'found' : 'not found', "\n";
 
   # Algorithms -- count_if()
   print "Number of elements matching /o/ = ",
-    count_if($d->begin(), $d->end(), bind2nd(matches(), 'o')),
+    stl::count_if($d->begin(), $d->end(), stl::bind2nd(stl::matches(), 'o')),
 	"\n"; # prints '2' -- matches 'second' and 'fourth'
 
   # Algorithms -- transform()
-  transform($d->begin(), $d->end(), $d2->begin(), ptr_fun('ucfirst'));
-  transform($d->begin(), $d->end(), $d2->begin(), $d3->begin(), ptr_fun_binary('::mybfun'));
+  stl::transform($d->begin(), $d->end(), $d2->begin(), stl::ptr_fun('ucfirst'));
+  stl::transform($d->begin(), $d->end(), $d2->begin(), $d3->begin(), stl::ptr_fun_binary('::mybfun'));
   sub mybfun { return $_[0] . '-' . $_[1]; }
 
   # Function Adaptors -- bind1st
-  remove_if($v->begin(), $v->end(), bind1st(equal_to(), $v->back()));
+  stl::remove_if($v->begin(), $v->end(), stl::bind1st(stl::equal_to(), $v->back()));
     # remove element equal to back() -- ie remove last element.
-  remove_if($v->begin(), $v->end(), bind2nd(matches(), '^fi'));
+  stl::remove_if($v->begin(), $v->end(), stl::bind2nd(stl::matches(), '^fi'));
     # remove all elements that match reg-ex '^fi'
 
   # Sort list according to elements cmp() function
   $v->sort();
 
   # Queue containers -- FIFO
-  my $v = queue(qw(first second third fourth fifth));
+  my $v = stl::queue(qw(first second third fourth fifth));
   print 'Back:', $v->back()->data(), "\n" # Back:fifth
   print 'Front:', $v->front()->data(), "\n" # Front:first
   $v->pop(); # pop element first in
@@ -61,7 +61,7 @@ Class::STL::Containers - Perl extension for STL-like object management
   }
 
   # Iterators -- reverse_iterator
-  my $ri = reverse_iterator($v->iter())->first();
+  my $ri = stl::reverse_iterator($v->iter())->first();
   while (!$ri->at_end())
   {
 	print "Data:", $ri->p_element()->data();
@@ -69,18 +69,18 @@ Class::STL::Containers - Perl extension for STL-like object management
   }
 
   # Inserters
-  my $three2one = list(qw(3 2 1));
-  my $four2six = list(qw(4 5 6));
-  my $seven2nine = list(qw(7 8 9));
-  my $result = list();
-  copy($three2one->begin(), $three2one->end(), front_inserter($result));
-  copy($seven2nine->begin(), $seven2nine->end(), back_inserter($result));
-  my $iseven = find($result->begin(), $result->end(), 7);
-  copy($four2six->begin(), $four2six->end(), inserter($result, $iseven));
+  my $three2one = stl::list(qw(3 2 1));
+  my $four2six = stl::list(qw(4 5 6));
+  my $seven2nine = stl::list(qw(7 8 9));
+  my $result = stl::list();
+  stl::copy($three2one->begin(), $three2one->end(), stl::front_inserter($result));
+  stl::copy($seven2nine->begin(), $seven2nine->end(), stl::back_inserter($result));
+  my $iseven = stl::find($result->begin(), $result->end(), 7);
+  stl::copy($four2six->begin(), $four2six->end(), stl::inserter($result, $iseven));
   # $result now contains (1, 2, 3, 4, 5, 6, 7, 8, 9);
 
   # Vector container...
-  my $v = vector(qw(first second third fourth fifth));
+  my $v = stl::vector(qw(first second third fourth fifth));
   
   my $e = $v->at(0); # return pointer to first element.
   print 'Element-0:', $e->data(), "\n";   # Element-0:first
@@ -90,7 +90,7 @@ Class::STL::Containers - Perl extension for STL-like object management
   print 'Element-2:', $e->data(), "\n";   # Element-2:third
 
   # Priority Queue
-  my $p = priority_queue();
+  my $p = stl::priority_queue();
   $p->push($p->factory(priority => 10, data => 'ten'));
   $p->push($p->factory(priority => 2, data => 'two'));
   $p->push($p->factory(priority => 12, data => 'twelve'));
@@ -110,7 +110,7 @@ Class::STL::Containers - Perl extension for STL-like object management
   # Clone $d container into $d1...
   my $d1 = $d->clone();
 
-  my $d2 = deque(qw(sixth seventh eight));
+  my $d2 = stl::deque(qw(sixth seventh eight));
 
   # Append $d container to end of $d2 container...
   $d2 += $d;
@@ -1321,11 +1321,11 @@ Sourceforge Project Page: C<http://sourceforge.net/projects/pstl>
 
 =head1 AUTHOR
 
-m gaffiero, E<lt>gaffie@users.sourceforge.net<gt>
+m gaffiero, E<lt>gaffie@users.sourceforge.netE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2006 by Mario Gaffiero
+Copyright E<copy>1999-2007, Mario Gaffiero. All Rights Reserved.
 
 
 This file is part of Class::STL::Containers(TM).
@@ -1333,8 +1333,7 @@ This file is part of Class::STL::Containers(TM).
 
 Class::STL::Containers is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+the Free Software Foundation; version 2 of the License.
 
 
 Class::STL::Containers is distributed in the hope that it will be useful,

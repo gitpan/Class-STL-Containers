@@ -4,14 +4,13 @@
 #  Created	: 22 February 2006
 #  Author	: Mario Gaffiero (gaffie)
 #
-# Copyright 2006 Mario Gaffiero.
+# Copyright 2006-2007 Mario Gaffiero.
 # 
 # This file is part of Class::STL::Containers(TM).
 # 
 # Class::STL::Containers is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# the Free Software Foundation; version 2 of the License.
 # 
 # Class::STL::Containers is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -31,34 +30,15 @@ package Class::STL::Utilities;
 require 5.005_62;
 use strict;
 use warnings;
-use vars qw( $VERSION $BUILD @EXPORT );
+use vars qw( $VERSION $BUILD @EXPORT_OK %EXPORT_TAGS );
 use Exporter;
-@EXPORT = qw( 
-	equal_to 
-	not_equal_to 
-	greater 
-	greater_equal 
-	less 
-	less_equal 
-	compare 
-	bind1st 
-	bind2nd 
-	mem_fun 
-	ptr_fun 
-	ptr_fun_binary 
-	matches 
-	matches_ic 
-	logical_and 
-	logical_or 
-	multiplies 
-	divides 
-	plus 
-	minus 
-	modulus 
-	not1
-	not2
-	negate
+my @export_names = qw( 
+	equal_to not_equal_to greater greater_equal less less_equal compare bind1st bind2nd 
+	mem_fun ptr_fun ptr_fun_binary matches matches_ic logical_and logical_or 
+	multiplies divides plus minus modulus not1 not2 negate not_null
 );
+@EXPORT_OK = (@export_names);
+%EXPORT_TAGS = ( all => [@export_names] );
 $VERSION = '0.18';
 $BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
@@ -92,6 +72,7 @@ $BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 		return Class::STL::Utilities::UnaryNegate->new(@_)		if ($func eq 'not1');
 		return Class::STL::Utilities::BinaryNegate->new(@_)		if ($func eq 'not2');
 		return Class::STL::Utilities::Negate->new(@_)			if ($func eq 'negate');
+		return Class::STL::Utilities::NotNull->new(@_)			if ($func eq 'not_null');
 	}
 }
 # ----------------------------------------------------------------------------------------------------
@@ -423,6 +404,17 @@ $BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 				: (ref($arg1) && $arg1->isa('Class::STL::Element'))
 					? ($arg1->data_type() eq 'string') ? $arg1->data() ne $arg2 : $arg1->data() != $arg2
 					: $arg1 != $arg2;
+	}
+}
+# ----------------------------------------------------------------------------------------------------
+{
+	package Class::STL::Utilities::NotNull;
+	use base qw(Class::STL::Utilities::FunctionObject::UnaryPredicate);
+	sub function_operator
+	{
+		my $self = shift;
+		my $arg = shift; 
+		return defined($arg) && (ref($arg) || $arg != 0);
 	}
 }
 # ----------------------------------------------------------------------------------------------------

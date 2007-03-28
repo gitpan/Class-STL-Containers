@@ -4,14 +4,13 @@
 #  Created	: 22 February 2006
 #  Author	: Mario Gaffiero (gaffie)
 #
-# Copyright 2006 Mario Gaffiero.
+# Copyright 2006-2007 Mario Gaffiero.
 # 
 # This file is part of Class::STL::Containers(TM).
 # 
 # Class::STL::Containers is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# the Free Software Foundation; version 2 of the License.
 # 
 # Class::STL::Containers is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -31,11 +30,12 @@ package Class::STL::Containers;
 require 5.005_62;
 use strict;
 use warnings;
-use vars qw( $VERSION $BUILD @EXPORT );
+use vars qw( $VERSION $BUILD @EXPORT_OK %EXPORT_TAGS );
 use Exporter;
-@EXPORT = qw( vector list deque queue priority_queue stack tree );
-$VERSION = '0.26';
-$BUILD = 'Monday May 15 23:08:34 GMT 2006';
+@EXPORT_OK = qw( vector list deque queue priority_queue stack tree );
+%EXPORT_TAGS = ( all => [qw( vector list deque queue priority_queue stack tree )] );
+$VERSION = '0.34';
+$BUILD = 'Thursday January 18 22:24:53 GMT 2006';
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Containers;
@@ -56,9 +56,8 @@ $BUILD = 'Monday May 15 23:08:34 GMT 2006';
 {
 	package Class::STL::Containers::Abstract;
 	use base qw(Class::STL::Element); # container is also an element
-	use overload '+' => 'append', '+=' => 'append', '=' => 'clone', '""' => 'str',
-		'==' => 'eq', '!=' => 'ne';
-	use Class::STL::Iterators;
+	use overload '+' => 'append', '+=' => 'append', '=' => 'clone', '""' => 'str', '==' => 'eq', '!=' => 'ne';
+	use Class::STL::Iterators qw(:all);
 	use UNIVERSAL qw(isa can);
 	use Carp qw(confess);
 	use Class::STL::ClassMembers
@@ -82,7 +81,7 @@ $BUILD = 'Monday May 15 23:08:34 GMT 2006';
 		while (@_)
 		{
 			my $p = shift;
-			if (!ref($p) && exists(${$self->members()}{$p}))
+			if (!ref($p) && int(@_) && (exists(${$self->members()}{$p}) || $self->can($p)))
 			{
 				shift;
 			}
@@ -92,7 +91,7 @@ $BUILD = 'Monday May 15 23:08:34 GMT 2006';
 			}
 			elsif (ref($p) && $p->isa(__PACKAGE__))
 			{
-				shift;
+#?				shift; # ??? why???
 			}
 			elsif (ref($p) && $p->isa('Class::STL::Element'))
 			{
@@ -126,9 +125,29 @@ $BUILD = 'Monday May 15 23:08:34 GMT 2006';
 	{
 		my $self = shift;
 		return Class::STL::Element->new(@_) if	($self->element_type() eq 'Class::STL::Element');
-		my $e = eval("@{[ $self->element_type() ]}->new(\@_);");
-		confess "**Error in eval for @{[ $self->element_type() ]} factory creation:\n$@" if ($@);
-		return $e;
+		our %__factfun;
+		if (!exists($__factfun{$self->element_type()}))
+		{
+			$__factfun{$self->element_type()} = eval("
+			{
+				package @{[ ref($self) ]}\::Factory::__@{[ do{my $f=uc($self->element_type());$f=~s/\W+/_/g;$f} ]};
+				use base qw(Class::STL::Element);
+				sub _FACTORY
+				{
+					my \$self = shift;
+					return @{[ $self->element_type() ]}\->new(\@_);
+				}
+			}
+			@{[ ref($self) ]}\::Factory::__@{[ do{my $f=uc($self->element_type());$f=~s/\W+/_/g;$f} ]}->new();
+			");
+			confess "**Error in eval for @{[ __PACKAGE__ ]} ptr_fun dynamic class creation:\n$@" if ($@);
+		}
+		return $__factfun{$self->element_type()}->_FACTORY(@_);
+
+#<		return Class::STL::Element->new(@_) if	($self->element_type() eq 'Class::STL::Element');
+#<		my $e = eval("@{[ $self->element_type() ]}->new(\@_);"); # TODO: pre-gen factory sub code instead!
+#<		confess "**Error in eval for @{[ $self->element_type() ]} factory creation:\n$@" if ($@);
+#<		return $e;
 	}
 	sub push # (element [, ...] ) -- append elements to container...
 	{

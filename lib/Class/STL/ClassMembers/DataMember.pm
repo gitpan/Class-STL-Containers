@@ -4,14 +4,13 @@
 #  Created	: 27 April 2006
 #  Author	: Mario Gaffiero (gaffie)
 #
-# Copyright 2006 Mario Gaffiero.
+# Copyright 2006-2007 Mario Gaffiero.
 # 
 # This file is part of Class::STL::Containers(TM).
 # 
 # Class::STL::Containers is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# the Free Software Foundation; version 2 of the License.
 # 
 # Class::STL::Containers is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -60,20 +59,20 @@ $BUILD = 'Monday May 15 23:08:34 GMT 2006';
 		my $self = shift;
 		my $member = shift;
 		my $n = $self->name();
-		my $c = $self->_caller_str();
+#<		my $c = $self->_caller_str();
 		my $tab = ' ' x 4;
-		my $code = "sub $n {\n${tab}my \$self = shift;\n";
-	
+		my $code = "sub $n { # Data Member\n";
+		$code .= "${tab}my \$self = shift;\n";
 		$code .= "${tab}use Carp qw(confess);\n";
 		$code .= "${tab}my \$v = shift;\n";
 		$code .= "${tab}if (defined(\$v) && ref(\$v) eq 'ARRAY') {\n";
-		$code .= "${tab}${tab}\$self->{$c}->{@{[ uc($n) ]}} = [];\n";
+		$code .= "${tab}${tab}\$self->{@{[ uc($n) ]}} = [];\n";
 		$code .= "${tab}${tab}foreach (\@{\$v}) {\n";
 		if (defined($self->validate())) {
 			$code .= "${tab}${tab}${tab}confess \"**Field '$n' value '\$_' failed validation ('\" . '@{[ $self->validate() ]}' . \"')\"\n";
 			$code .= "${tab}${tab}${tab}${tab}unless (!defined(\$_) || \$_ =~ /@{[ $self->validate() ]}/);\n";
 		}
-		$code .= "${tab}${tab}${tab}push(\@{\$self->{$c}->{@{[ uc($n) ]}}}, ref(\$_) && \$_->can('clone') ? \$_->clone() : \$_);\n";
+		$code .= "${tab}${tab}${tab}push(\@{\$self->{@{[ uc($n) ]}}}, ref(\$_) && \$_->can('clone') ? \$_->clone() : \$_);\n";
 		$code .= "${tab}${tab}}\n";
 		$code .= "${tab}}\n";
 
@@ -83,10 +82,10 @@ $BUILD = 'Monday May 15 23:08:34 GMT 2006';
 			$code .= "${tab}${tab}confess \"**Field '$n' value '\$v' failed validation ('\" . '@{[ $self->validate() ]}' . \"')\"\n";
 			$code .= "${tab}${tab}${tab}unless (!defined(\$v) || \$v =~ /@{[ $self->validate() ]}/);\n";
 		}
-		$code .= "${tab}${tab}\$self->{$c}->{@{[ uc($n) ]}} = \$v if (defined(\$v));\n";
+		$code .= "${tab}${tab}\$self->{@{[ uc($n) ]}} = \$v if (defined(\$v));\n";
 		$code .= "${tab}}\n";
 	
-		$code .= "${tab}return \$self->{$c}->{@{[ uc($n) ]}};\n";
+		$code .= "${tab}return \$self->{@{[ uc($n) ]}};\n";
 		$code .= "}\n";
 		return $code;
 	}
@@ -95,10 +94,15 @@ $BUILD = 'Monday May 15 23:08:34 GMT 2006';
 		my $self = shift;
 		my $code = "@{[ $self->name() ]} => [ " 
 			. "'@{[ defined($self->default()) ? $self->default() : q## ]}', "
-			. "'@{[ defined($self->validate()) ? $self->validate() : q## ]}'" 
+			. "'@{[ defined($self->validate()) ? $self->validate() : q## ]}',"
+			. "'@{[ ref($self) ]}'" 
 			. " ]";
 		return $code;	
-
+	}
+	sub code_memdata
+	{
+		my $self = shift;
+		return "@{[ $self->name() ]} => \$self->{@{[ uc($self->name()) ]}}";
 	}
 	sub _caller_str
 	{
@@ -109,23 +113,23 @@ $BUILD = 'Monday May 15 23:08:34 GMT 2006';
 	}
 	sub name {
 		my $self = shift;
-		$self->{__PACKAGE__}->{NAME} = shift if (@_);
-		return $self->{__PACKAGE__}->{NAME};
+		$self->{NAME} = shift if (@_);
+		return $self->{NAME};
 	}
 	sub default {
 		my $self = shift;
-		$self->{__PACKAGE__}->{DEFAULT} = shift if (@_);
-		return $self->{__PACKAGE__}->{DEFAULT};
+		$self->{DEFAULT} = shift if (@_);
+		return $self->{DEFAULT};
 	}
 	sub validate {
 		my $self = shift;
-		$self->{__PACKAGE__}->{VALIDATE} = shift if (@_);
-		return $self->{__PACKAGE__}->{VALIDATE};
+		$self->{VALIDATE} = shift if (@_);
+		return $self->{VALIDATE};
 	}
 	sub _caller {
 		my $self = shift;
-		$self->{__PACKAGE__}->{_CALLER} = shift if (@_);
-		return $self->{__PACKAGE__}->{_CALLER};
+		$self->{_CALLER} = shift if (@_);
+		return $self->{_CALLER};
 	}
 	sub members_init {
 		my $self = shift;
@@ -202,6 +206,10 @@ $BUILD = 'Monday May 15 23:08:34 GMT 2006';
 		$clone->validate($self->validate());
 		$clone->_caller($self->_caller());
 		return $clone;
+	}
+	sub undefine {
+		my $self = shift;
+		map($self->{"@{[ uc($_) ]}"} = undef, @_);
 	}
 }
 1;

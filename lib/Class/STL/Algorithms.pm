@@ -4,14 +4,13 @@
 #  Created	: 22 February 2006
 #  Author	: Mario Gaffiero (gaffie)
 #
-# Copyright 2006 Mario Gaffiero.
+# Copyright 2006-2007 Mario Gaffiero.
 # 
 # This file is part of Class::STL::Containers(TM).
 # 
 # Class::STL::Containers is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# the Free Software Foundation; version 2 of the License.
 # 
 # Class::STL::Containers is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -38,9 +37,9 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 {
 	package Class::STL::Algorithms;
 	use UNIVERSAL qw(isa can);
-	use vars qw( @EXPORT );
+	use vars qw( @EXPORT_OK %EXPORT_TAGS );
 	use Exporter;
-	@EXPORT = qw( 
+	my @export_names = qw( 
 		find 
 		find_if 
 		for_each 
@@ -73,12 +72,14 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		unique 
 		unique_copy
 		adjacent_find
-		sort
+		_sort
 		stable_sort
 		qsort
 		stable_qsort
 		accumulate
 	);
+	@EXPORT_OK = (@export_names);
+	%EXPORT_TAGS = ( all => [@export_names] );
 	sub new
 	{
 		use Carp qw(confess);
@@ -96,7 +97,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 			: _usage_check('accumulate', 'IIE', $iter_start, $iter_finish, $element);
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
-			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
+			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree'))
 			{
 				accumulate($iter->p_element()->begin(), $iter->p_element()->end(), $element, $binary_op); # its a tree -- recurse
 			}
@@ -112,21 +113,21 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 	sub qsort # (iterator-start, iterator-finish [, binary-function ] )
 	{
 		use sort qw(_qsort);
-		::sort(@_);
+		_sort(@_);
 	}
 	sub stable_qsort # (iterator-start, iterator-finish [, binary-function ] )
 	{
 		use sort qw(stable _qsort); 
-		::sort(@_);
+		_sort(@_);
 	}
 	sub stable_sort # (iterator-start, iterator-finish [, binary-function ] )
 	{
 		use sort qw(stable); 
-		::sort(@_);
+		_sort(@_);
 	}
-	sub sort # (iterator-start, iterator-finish [, binary-function ] )
+	sub _sort # (iterator-start, iterator-finish [, binary-function ] )
 	{
-		use Class::STL::Iterators;
+		use Class::STL::Iterators qw(distance);
 		int(@_) == 2 ? _usage_check('sort(1)', 'II', @_) : _usage_check('sort(2)', 'IIB', @_);
 		my $iter_start = shift;
 		my $iter_finish = shift;
@@ -153,7 +154,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		my $unary_op = shift; # unary-function
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
-			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
+			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::AbstracTree'))
 			{
 				transform_1($iter->p_element()->begin(), $iter->p_element()->end(), $iter_result, $unary_op); # its a tree -- recurse
 			}
@@ -187,7 +188,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 			++$iter, ++$iter2
 		)
 		{
-			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
+			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::AbstracTree'))
 			{
 				transform_2($iter->p_element()->begin(), $iter->p_element()->end(), $iter_start2, $iter_result, $binary_op); # its a tree -- recurse
 			}
@@ -215,7 +216,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		my $iter_prev = $iter_start->clone();
 		for (my $iter = $iter_start->clone()+1; $iter != $iter_prev && $iter <= $iter_finish; )
 		{
-			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
+			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree'))
 			{
 				unique($iter->p_element()->begin(), $iter->p_element()->end(), $binary_op); # its a tree -- recurse
 				++$iter;
@@ -414,7 +415,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		my $function = shift; # unary-function
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
-			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract')
+			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree')
 				? for_each($iter->p_element()->begin(), $iter->p_element()->end(), $function) # its a tree -- recurse
 				: $function->function_operator($iter->p_element());
 		}
@@ -428,7 +429,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		my $function = shift; # generator-function
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
-			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract')
+			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree')
 				? generate($iter->p_element()->begin(), $iter->p_element()->end(), $function) # its a tree -- recurse
 				: $iter->p_element()->swap($function->function_operator());
 		}
@@ -444,7 +445,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		my $start_idx = $iter->arr_idx();
 		for (; $iter->arr_idx() - $start_idx < $size; ++$iter)
 		{
-			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract')
+			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree')
 				? generate_n($iter->p_element()->begin(), $size, $function) # its a tree -- recurse
 				: $iter->p_element()->swap($function->function_operator());
 		}
@@ -460,7 +461,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		_usage_check('fill', 'IIE', $iter_start, $iter_finish, $element);
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
-			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract')
+			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree')
 				? fill($iter->p_element()->begin(), $iter->p_element()->end(), $element) # its a tree -- recurse
 				: $iter->p_element()->swap($element->clone());
 		}
@@ -478,7 +479,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		my $start_idx = $iter->arr_idx();
 		for (; $iter->arr_idx() - $start_idx < $size; ++$iter)
 		{
-			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract')
+			ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree')
 				? fill_n($iter->p_element()->begin(), $size, $element) # its a tree -- recurse
 				: $iter->p_element()->swap($element->clone());
 		}
@@ -492,7 +493,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		my $function = shift; # unary-function 
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
-			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
+			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree'))
 			{	# its a tree -- recurse
 				if (my $i = find_if($iter->p_element()->begin(), $iter->p_element()->end(), $function))
 				{
@@ -516,7 +517,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		_usage_check('find', 'IIE', $iter_start, $iter_finish, $element);
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
-			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
+			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree'))
 			{
 				if (my $i = find($iter->p_element()->begin(), $iter->p_element()->end(), $element)) # its a tree -- recurse
 				{
@@ -540,7 +541,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
 			$count +=
-				ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract')
+				ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree')
 					? count_if($iter->p_element()->begin(), $iter->p_element()->end(), $function) # its a tree -- recurse
 					: ($function->function_operator($iter->p_element()) ? 1 : 0);
 		}
@@ -558,7 +559,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
 			$count +=
-				ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract')
+				ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree')
 					? count($iter->p_element()->begin(), $iter->p_element()->end(), $element) # its a tree -- recurse
 					: ($element->eq($iter->p_element()) ? 1 : 0);
 		}
@@ -572,7 +573,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		my $function = shift; # unary-function or class-member-name
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; )
 		{
-			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
+			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree'))
 			{
 				remove_if($iter->p_element()->begin(), $iter->p_element()->end(), $function); # its a tree -- recurse
 				++$iter;
@@ -594,7 +595,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		_usage_check('remove', 'IIE', $iter_start, $iter_finish, $element);
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; )
 		{
-			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
+			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree'))
 			{
 				remove($iter->p_element()->begin(), $iter->p_element()->end(), $element); # its a tree -- recurse
 				++$iter;
@@ -615,7 +616,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		my $function = shift; # unary-function or class-member-name
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
-			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
+			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree'))
 			{
 				remove_copy_if($iter->p_element()->begin(), $iter->p_element()->end(), $iter_result, $function); # its a tree -- recurse
 			}
@@ -637,7 +638,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		_usage_check('remove_copy', 'IIIE', $iter_start, $iter_finish, $iter_result, $element);
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
-			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
+			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree'))
 			{
 				remove_copy($iter->p_element()->begin(), $iter->p_element()->end(), $iter_result, $element); # its a tree -- recurse
 			}
@@ -683,7 +684,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		_usage_check('replace_if', 'IIFE', $iter_start, $iter_finish, $function, $new_element);
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; )
 		{
-			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
+			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree'))
 			{
 				replace_if($iter->p_element()->begin(), $iter->p_element()->end(), $function, $new_element); # its a tree -- recurse
 			}
@@ -712,7 +713,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		_usage_check('replace', 'IIEE', $iter_start, $iter_finish, $old_element, $new_element);
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; )
 		{
-			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
+			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree'))
 			{
 				replace($iter->p_element()->begin(), $iter->p_element()->end(), $old_element, $new_element); # its a tree -- recurse
 			}
@@ -740,7 +741,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		_usage_check('replace_copy_if', 'IIIFE', $iter_start, $iter_finish, $iter_result, $function, $new_element);
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
-			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
+			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree'))
 			{
 #? 				Insert tree here???
 				replace_copy_if($iter->p_element()->begin(), $iter->p_element()->end(), $iter_result, $function, $new_element); # its a tree -- recurse
@@ -767,7 +768,7 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		_usage_check('replace_copy', 'IIIEE', $iter_start, $iter_finish, $iter_result, $old_element, $new_element);
 		for (my $iter = $iter_start->clone(); $iter <= $iter_finish; ++$iter)
 		{
-			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Abstract'))
+			if (ref($iter->p_element()) && $iter->p_element()->isa('Class::STL::Containers::Tree'))
 			{
 				replace_copy($iter->p_element()->begin(), $iter->p_element()->end(), $iter_result, $old_element, $new_element); # its a tree -- recurse
 			}
@@ -803,13 +804,17 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 			++$check 
 				if 
 				(
-					($format[$arg] eq 'I' && $_[$arg]->isa('Class::STL::Iterators::Abstract'))
-					|| ($format[$arg] eq 'F' && $_[$arg]->isa('Class::STL::Utilities::FunctionObject'))
-					|| ($format[$arg] eq 'B' && $_[$arg]->isa('Class::STL::Utilities::FunctionObject::BinaryFunction'))
-					|| ($format[$arg] eq 'U' && $_[$arg]->isa('Class::STL::Utilities::FunctionObject::UnaryFunction'))
-					|| ($format[$arg] eq 'G' && $_[$arg]->isa('Class::STL::Utilities::FunctionObject::Generator'))
-					|| ($format[$arg] eq 'E' && $_[$arg]->isa('Class::STL::Element'))
-					|| ($format[$arg] eq 'S' && !ref($_[$arg])) # Scalar
+					defined($_[$arg]) 
+					&& 
+					(
+						($format[$arg] eq 'I' && $_[$arg]->isa('Class::STL::Iterators::Abstract'))
+						|| ($format[$arg] eq 'F' && $_[$arg]->isa('Class::STL::Utilities::FunctionObject'))
+						|| ($format[$arg] eq 'B' && $_[$arg]->isa('Class::STL::Utilities::FunctionObject::BinaryFunction'))
+						|| ($format[$arg] eq 'U' && $_[$arg]->isa('Class::STL::Utilities::FunctionObject::UnaryFunction'))
+						|| ($format[$arg] eq 'G' && $_[$arg]->isa('Class::STL::Utilities::FunctionObject::Generator'))
+						|| ($format[$arg] eq 'E' && $_[$arg]->isa('Class::STL::Element'))
+						|| ($format[$arg] eq 'S' && !ref($_[$arg])) # Scalar
+					)
 				)
 		}
 		if ($check != int(@_)) {

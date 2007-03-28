@@ -4,14 +4,13 @@
 #  Created	: 22 February 2006
 #  Author	: Mario Gaffiero (gaffie)
 #
-# Copyright 2006 Mario Gaffiero.
+# Copyright 2006-2007 Mario Gaffiero.
 # 
 # This file is part of Class::STL::Containers(TM).
 # 
 # Class::STL::Containers is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# the Free Software Foundation; version 2 of the License.
 # 
 # Class::STL::Containers is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -31,9 +30,9 @@ package Class::STL::Iterators;
 require 5.005_62;
 use strict;
 use warnings;
-use vars qw( $VERSION $BUILD @EXPORT );
+use vars qw( $VERSION $BUILD @EXPORT_OK %EXPORT_TAGS );
 use Exporter;
-@EXPORT = qw( 
+my @export_names = qw( 
 	iterator 
 	bidirectional_iterator 
 	reverse_iterator 
@@ -47,6 +46,8 @@ use Exporter;
 	insert_iterator 
 	inserter 
 );
+@EXPORT_OK = (@export_names);
+%EXPORT_TAGS = ( all => [@export_names] );
 $VERSION = '0.18';
 $BUILD = 'Thursday April 27 23:08:34 GMT 2006';
 # ----------------------------------------------------------------------------------------------------

@@ -11,7 +11,7 @@
 #BEGIN { use_ok('Class::STL::Element') };
 
 use Test;
-use stl;
+use stl qw(:containers);
 BEGIN { plan tests => 53 }
 
 #########################

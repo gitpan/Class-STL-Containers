@@ -24,12 +24,12 @@ use stl;
 print ">>>$0>>>>:\n";
 
 my $p = MyPack->new();
-print "\$p->member_print():", $p->member_print(), "\n";
+print "\$p->member_print():", $p->members_print(), "\n";
 
 print "\$p->count(25);\n";
 $p->count(25);
-print "\$p->member_print():", $p->member_print(), "\n";
+print "\$p->member_print():", $p->members_print(), "\n";
 
 print "\$p->comment(\$p->comment() . 'world');\n";
 $p->comment($p->comment() . 'world');
-print "\$p->member_print(\"\\n\"):\n", $p->member_print("\n"), "\n";
+print "\$p->member_print(\"\\n\"):\n", $p->members_print("\n"), "\n";

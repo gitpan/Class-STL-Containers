@@ -1,4 +1,4 @@
-Class-STL-Containers version 0.26
+Class-STL-Containers version 0.34
 =================================
 
 These modules provide object container management with a framework similar to STL 
@@ -26,14 +26,13 @@ DEPENDENCIES
 
 COPYRIGHT AND LICENCE
 
-Copyright (C) 2006 by Mario Gaffiero
+Copyright (C) 2006-2007 by Mario Gaffiero
 
 This file is part of Class::STL::Containers(TM).
 
 Class::STL::Containers is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+the Free Software Foundation; version 2 of the License.
 
 Class::STL::Containers is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of

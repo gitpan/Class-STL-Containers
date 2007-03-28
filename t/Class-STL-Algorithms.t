@@ -9,7 +9,7 @@
 #BEGIN { use_ok('Class::STL::Utilities') };
 
 use Test;
-use stl;
+use stl qw(:containers :algorithms :utilities);
 BEGIN { plan tests => 64 }
 
 #########################
@@ -136,10 +136,10 @@ $l4 = list(qw(1 2 3 4 5 6 7));
 $i = $l4->begin();
 $i++;
 $i++;
-reverse($i, $l4->end());
+stl::reverse($i, $l4->end());
 ok (join(' ', map($_->data(), $l4->to_array())), "1 2 7 6 5 4 3", 'reverse()');
 
-reverse($l4->begin(), $i);
+stl::reverse($l4->begin(), $i);
 ok (join(' ', map($_->data(), $l4->to_array())), "7 2 1 6 5 4 3", 'reverse()');
 
 $l2->clear();
@@ -199,7 +199,7 @@ ok (adjacent_find($l2->begin(), $l2->end())->arr_idx(), "1", 'adjacent_find() --
 ok (adjacent_find($l2->begin(), $l2->end(), equal_to())->arr_idx(), "1", 'adjacent_find() -- 2');
 
 $l3 = list(qw(4 5 5 9 -1 -1 -1 3 7 5 5 5 6 7 7 7 4 2 1 1));
-::sort($l3->begin(), $l3->end());
+_sort($l3->begin(), $l3->end());
 ok ($l3->join(' '), "-1 -1 -1 1 1 2 3 4 4 5 5 5 5 5 6 7 7 7 7 9", 'sort() -- 1');
 
 $l3 = list(qw(4 5 5 9 -1 -1 -1 3 7 5 5 5 6 7 7 7 4 2 1 1));

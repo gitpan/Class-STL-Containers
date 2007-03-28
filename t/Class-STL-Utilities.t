@@ -9,7 +9,7 @@
 #BEGIN { use_ok('Class::STL::Utilities') };
 
 use Test;
-use stl;
+use stl qw(:containers :algorithms :utilities :iterators);
 BEGIN { plan tests => 60 }
 
 #########################

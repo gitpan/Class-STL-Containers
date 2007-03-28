@@ -1,5 +1,30 @@
 Revision history for Perl extension Class::STL::Containers.
 
+0.34 Thu Jan 18 19:33:14 GMT 2007
+	- Public release;
+
+0.33 Wed Nov 14 23:44:24 GMT 2006
+	- Changed default import method for all modules; all module now require explicit function/member export; 
+		export names ':all', ':containers', ':algorithms', ':utilities', ':iterators';
+
+0.32 Fri Nov 10 20:29:15 GMT 2006
+	- Changed factory() container member function to eval factory function just once.
+
+0.31 Wed Sep 27 19:08:14 GMT 2006
+	- changed 'sort' to '_sort' (algorithm) to avoid confusion with perl sort.
+	- _new() constructor -- same as new() but without call to new_extra.
+	- Algorithms to correctly traverse Tree nodes.
+	- Added datamember 'undefine' function. 
+	- Removed caller_str from datamember hash-key.
+	- In container ctor distinguish between raw data and derived class members.
+
+0.28 Wed May 24 18:44:32 GMTDT 2006
+	- Added data member class name to members() and members_local() array info.
+
+0.27 Tue May 16 19:20:22 GMTDT 2006
+	- Combine SingletonConstructor into Constructor via 'singleton' parameter.
+	- Pass through named parameter initialisation list with Constructor.
+
 0.26 Mon May 15 18:19:37 GMTDT 2006
 	- Changed Class::STL::Containers::Abstract->data_type member to 'element_type'.
 	- Deep container inheritence corrected.

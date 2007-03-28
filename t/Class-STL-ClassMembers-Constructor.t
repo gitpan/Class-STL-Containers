@@ -9,8 +9,8 @@
 #BEGIN { use_ok('Class::STL::Utilities') };
 
 use Test;
-use stl;
-BEGIN { plan tests => 8 }
+use stl qw(:containers);
+BEGIN { plan tests => 10 }
 
 #########################
 
@@ -45,6 +45,13 @@ ok (join(' ', $e3->name(), $e3->name2(), $e3->name3(), $e3->zip(), $e3->country(
 my $e4 = MyClass3->new($e3);
 ok (join(' ', $e4->name(), $e4->name2(), $e4->name3(), $e4->zip(), $e4->country(), 
 	$e4->phone(), $e4->state()), "n3 n2-3 n3-3 2065 au 02897733 SA", 'inheritance');
+
+my $c2 = MyInitCtor->new();
+ok (join(' ', $c2->name(), $c2->zip()), 'hello 52101', 'ctor with init list');
+
+my $s3 = MySingleton2->new(name => 'Single', f1 => 'just', f2 => 'the one');
+ok (join(' ', $s3->name(), $s3->f1(), $s3->f2()), 'Single just the one', 'singleton');
+
 {
 	package MyClass;
 	use base qw(Class::STL::Element);
@@ -66,4 +73,14 @@ ok (join(' ', $e4->name(), $e4->name2(), $e4->name3(), $e4->zip(), $e4->country(
 	use base qw(MyClass2);
 	use Class::STL::ClassMembers qw( name3 );
 	use Class::STL::ClassMembers::Constructor;
+}
+{
+	package MyInitCtor;
+	use Class::STL::ClassMembers qw(name zip);
+	use Class::STL::ClassMembers::Constructor (name => 'hello', zip => '52101');
+}
+{
+	package MySingleton2;
+	use Class::STL::ClassMembers qw( name f1 f2 );
+	use Class::STL::ClassMembers::Constructor (singleton => 1);
 }
