@@ -11,7 +11,7 @@
 #BEGIN { use_ok('Class::STL::Element') };
 
 use Test;
-use stl qw(:containers);
+use stl; # qw(:containers);
 BEGIN { plan tests => 53 }
 
 #########################
@@ -19,7 +19,7 @@ BEGIN { plan tests => 53 }
 # Insert your test code below, the Test::More module is use()ed here so read
 # its man page ( perldoc Test::More ) for help writing this test script.
 
-my $l = list(qw(first second third fourth fifth));
+my $l = stl::list(qw(first second third fourth fifth));
 ok ($l->size(), "5", 'list->size()');
 
 ok ($l->begin()->p_element()->data(), "first", "list->begin()");
@@ -86,7 +86,7 @@ $l->insert($istart, $l->factory('tenth'), $l->factory('eleventh'));
 ok ($l->size(), "2", 'list->insert()'); # test-25
 ok (join(' ', map($_->data(), $l->to_array())), "tenth eleventh", 'list->insert(pos, element)');
 
-my $l2 = list(qw(red blue yellow));
+my $l2 = stl::list(qw(red blue yellow));
 $l->insert($l->begin(), $l2->begin(), $l2->end());
 ok (join(' ', map($_->data(), $l->to_array())), "red blue yellow tenth eleventh", 'list->insert(pos, start, finish)');
 
@@ -98,15 +98,15 @@ ok (join(' ', map($_->data(), $l->to_array())), "red blue yellow", 'list->swap()
 # test-30
 ok (join(' ', map($_->data(), $l2->to_array())), "repeated repeated repeated red blue yellow tenth eleventh", 'list->swap()');
 
-my $l3 = vector($l);
+my $l3 = stl::vector($l);
 ok (join(' ', map($_->data(), $l3->to_array())), "red blue yellow", 'copy ctor(container)');
 
-my $l4 = vector($l3->begin());
+my $l4 = stl::vector($l3->begin());
 ok (join(' ', map($_->data(), $l4->to_array())), "red blue yellow", 'copy ctor(iterator-start)');
 
 $istart = $l4->begin();
 $istart++;
-my $l5 = vector($istart, $l4->end());
+my $l5 = stl::vector($istart, $l4->end());
 ok (join(' ', map($_->data(), $l5->to_array())), "blue yellow", 'copy ctor(iterator-start, iterator-finish)');
 
 $l4 += $l4;
@@ -133,7 +133,7 @@ ok ($l->size(), "0", 'list->clear()'); # test-46
 
 $i = $l3->begin();
 $i++;
-my $l8 = vector($i);
+my $l8 = stl::vector($i);
 ok (join(' ', map($_->data(), $l8->to_array())), "blue yellow", 'ctor(iterator-start)');
 
 $l8->insert($l8->begin(), 3, $l8->factory('repeated'));
@@ -141,10 +141,10 @@ $start = $l8->begin();
 $ifinish = $l8->end();
 $start++;
 $ifinish--;
-my $l9 = vector($start, $ifinish);
+my $l9 = stl::vector($start, $ifinish);
 ok (join(' ', map($_->data(), $l9->to_array())), "repeated repeated blue", 'ctor(iterator-start, iterator-finish)');
 
-my $l10 = vector(element_type => 'MyElem');
+my $l10 = stl::vector(element_type => 'MyElem');
 $l10->push_back($l10->factory(name => 'one', data => '_one'));
 $l10->push_back($l10->factory(name => 'two', data => '_two'));
 $l10->push_back($l10->factory(name => 'three', data => '_three'));

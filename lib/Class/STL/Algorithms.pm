@@ -110,20 +110,32 @@ $BUILD = 'Monday May 8 23:08:34 GMT 2006';
 		}
 		return $element;
 	}
-	sub qsort # (iterator-start, iterator-finish [, binary-function ] )
+	sub BEGIN
 	{
-		use sort qw(_qsort);
-		_sort(@_);
-	}
-	sub stable_qsort # (iterator-start, iterator-finish [, binary-function ] )
-	{
-		use sort qw(stable _qsort); 
-		_sort(@_);
-	}
-	sub stable_sort # (iterator-start, iterator-finish [, binary-function ] )
-	{
-		use sort qw(stable); 
-		_sort(@_);
+		eval "use sort qw(stable)";
+		my $have_sort = !$@;
+		my $eval =
+			"
+			sub qsort # (iterator-start, iterator-finish [, binary-function ] )
+			{
+				@{[ $have_sort ? 'use sort qw(_qsort);' : '' ]}
+				_sort(\@_);
+			}
+			sub stable_qsort # (iterator-start, iterator-finish [, binary-function ] )
+			{
+				@{[ $have_sort ? 'use sort qw(stable _qsort);' : '' ]}
+				_sort(\@_);
+			}
+			sub stable_sort # (iterator-start, iterator-finish [, binary-function ] )
+			{
+				@{[ $have_sort ? 'use sort qw(stable);' : '' ]}
+				_sort(\@_);
+			}
+			"
+		;
+		eval($eval);
+		confess "@{[ __PACKAGE__ ]} Invalid sort pragma usage!\n" if ($@);
+
 	}
 	sub _sort # (iterator-start, iterator-finish [, binary-function ] )
 	{

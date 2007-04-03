@@ -1,5 +1,10 @@
 Revision history for Perl extension Class::STL::Containers.
 
+0.35 Tue April 3 19:33:14 GMT 2007
+	- Fixed sort pragma usage when perl version <5.8.
+	- In tests qualify all stl imports instead of importing names due to some odd
+		import handling with perl 5.9.
+
 0.34 Thu Jan 18 19:33:14 GMT 2007
 	- Public release;
 

@@ -11,7 +11,7 @@
 #BEGIN { use_ok('Class::STL::Element') };
 
 use Test;
-use stl qw(:containers :algorithms :utilities :iterators);
+use stl; # qw(:containers :algorithms :utilities :iterators);
 BEGIN { plan tests => 34 }
 
 #########################
@@ -19,7 +19,7 @@ BEGIN { plan tests => 34 }
 # Insert your test code below, the Test::More module is use()ed here so read
 # its man page ( perldoc Test::More ) for help writing this test script.
 
-my $l = list(qw(red blue green white yellow));
+my $l = stl::list(qw(red blue green white yellow));
 
 my $iter2 = $l->end();
 $iter2 -= 2;
@@ -77,7 +77,7 @@ for (my $oi = $l->rend(); !$oi->at_end(); $oi--) {
 }
 ok (join(' ', @data), "red blue green white yellow", "reverse_iterator->operator --");
 
-my $ri = reverse_iterator($l->rbegin());
+my $ri = stl::reverse_iterator($l->rbegin());
 ok ($ri->p_element()->data(), 'yellow', 'reverse_iterator->first()');
 $ri->next();
 ok ($ri->p_element()->data(), 'white', 'reverse_iterator->next()');
@@ -90,48 +90,48 @@ $ri = $l->begin();
 $ri += 2;
 ok ($ri->p_element()->data(), 'green', 'iterator->operator +=');
 
-my $ri2 = forward_iterator($ri);
+my $ri2 = stl::forward_iterator($ri);
 ok ($ri2->p_element()->data(), 'green', 'forward_iterator');
 
-ok (distance($l->begin(), $ri2), '2', 'distance');
-ok (distance($l->begin(), $l->end()), $l->size()-1, 'distance');
+ok (stl::distance($l->begin(), $ri2), '2', 'distance');
+ok (stl::distance($l->begin(), $l->end()), $l->size()-1, 'distance');
 
-ok (advance($ri, 2)->p_element()->data(), 'yellow', 'advance(+)');
+ok (stl::advance($ri, 2)->p_element()->data(), 'yellow', 'advance(+)');
 
-ok (advance($ri, -2)->p_element()->data(), 'green', 'advance(-)');
+ok (stl::advance($ri, -2)->p_element()->data(), 'green', 'advance(-)');
 
-my $l2 = list(qw(1 2 3 4 5 6 7 8 9));
-my $l3 = list();
-copy($l2->begin()+3, $l2->end(), back_inserter($l3));
+my $l2 = stl::list(qw(1 2 3 4 5 6 7 8 9));
+my $l3 = stl::list();
+stl::copy($l2->begin()+3, $l2->end(), stl::back_inserter($l3));
 ok (join(' ', map($_->data(), $l3->to_array())), "4 5 6 7 8 9", 'back_inserter()');
 
 $l3->clear();
-copy_backward($l2->begin()+3, $l2->end(), back_inserter($l3));
+stl::copy_backward($l2->begin()+3, $l2->end(), stl::back_inserter($l3));
 ok (join(' ', map($_->data(), $l3->to_array())), "9 8 7 6 5 4", 'back_inserter()');
 
 $l3->clear();
-copy($l2->begin()+3, $l2->end(), front_inserter($l3));
+stl::copy($l2->begin()+3, $l2->end(), stl::front_inserter($l3));
 ok (join(' ', map($_->data(), $l3->to_array())), "9 8 7 6 5 4", 'front_inserter()');
 
 $l3->clear();
-copy_backward($l2->begin()+3, $l2->end(), front_inserter($l3));
+stl::copy_backward($l2->begin()+3, $l2->end(), stl::front_inserter($l3));
 ok (join(' ', map($_->data(), $l3->to_array())), "4 5 6 7 8 9", 'front_inserter()');
 
-my $ins = inserter($l3, $l3->begin()+2);
+my $ins = stl::inserter($l3, $l3->begin()+2);
 $ins->assign($l3->factory(qw(10)));
 $ins->assign($l3->factory(qw(11)));
 ok (join(' ', map($_->data(), $l3->to_array())), "4 5 10 11 6 7 8 9", 'inserter()');
 
-transform($l3->begin(), $l3->end(), front_inserter($l2), bind1st(multiplies(), 2));
+stl::transform($l3->begin(), $l3->end(), stl::front_inserter($l2), stl::bind1st(stl::multiplies(), 2));
 ok (join(' ', map($_->data(), $l2->to_array())), "18 16 14 12 22 20 10 8 1 2 3 4 5 6 7 8 9", 'front_inserter()');
 
-my $ll1 = list(qw(3 2 1));
-my $ll2 = list(qw(4 5 6));
-my $ll3 = list(qw(7 8 9));
-my $ll4 = list();
-copy($ll1->begin(), $ll1->end(), front_inserter($ll4));
-copy($ll3->begin(), $ll3->end(), back_inserter($ll4));
+my $ll1 = stl::list(qw(3 2 1));
+my $ll2 = stl::list(qw(4 5 6));
+my $ll3 = stl::list(qw(7 8 9));
+my $ll4 = stl::list();
+stl::copy($ll1->begin(), $ll1->end(), stl::front_inserter($ll4));
+stl::copy($ll3->begin(), $ll3->end(), stl::back_inserter($ll4));
 ok (join(' ', map($_->data(), $ll4->to_array())), "1 2 3 7 8 9", 'inserters');
-my $iseven = find($ll4->begin(), $ll4->end(), 7);
-copy($ll2->begin(), $ll2->end(), inserter($ll4, $iseven));
+my $iseven = stl::find($ll4->begin(), $ll4->end(), 7);
+stl::copy($ll2->begin(), $ll2->end(), stl::inserter($ll4, $iseven));
 ok (join(' ', map($_->data(), $ll4->to_array())), "1 2 3 4 5 6 7 8 9", 'inserters');

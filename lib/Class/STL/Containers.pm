@@ -34,8 +34,8 @@ use vars qw( $VERSION $BUILD @EXPORT_OK %EXPORT_TAGS );
 use Exporter;
 @EXPORT_OK = qw( vector list deque queue priority_queue stack tree );
 %EXPORT_TAGS = ( all => [qw( vector list deque queue priority_queue stack tree )] );
-$VERSION = '0.34';
-$BUILD = 'Thursday January 18 22:24:53 GMT 2006';
+$VERSION = '0.35';
+$BUILD = 'Tue April 3 19:33:14 GMT 2007';
 # ----------------------------------------------------------------------------------------------------
 {
 	package Class::STL::Containers;

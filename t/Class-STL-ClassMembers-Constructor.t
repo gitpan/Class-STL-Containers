@@ -9,7 +9,7 @@
 #BEGIN { use_ok('Class::STL::Utilities') };
 
 use Test;
-use stl qw(:containers);
+use stl; # qw(:containers);
 BEGIN { plan tests => 10 }
 
 #########################
@@ -18,9 +18,9 @@ BEGIN { plan tests => 10 }
 # its man page ( perldoc Test::More ) for help writing this test script.
 
 # Copy Constructor:
-my $l1 = deque(qw(1 2 3 4));
+my $l1 = stl::deque(qw(1 2 3 4));
 ok (join(' ', map($_->data(), $l1->to_array())), "1 2 3 4", 'copy ctor');
-my $l2 = deque($l1);
+my $l2 = stl::deque($l1);
 ok (join(' ', map($_->data(), $l2->to_array())), "1 2 3 4", 'copy ctor');
 
 $l2->push_back($l2->factory(data => 5));
